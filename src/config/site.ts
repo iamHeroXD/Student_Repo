@@ -2,9 +2,9 @@ export const siteConfig = {
   name: "Student_Repo",
   shortName: "Student_Repo",
   description: "A calm, fast, and structured academic resource library for Kerala State Board students and teachers. Discover revision notes, previous-year question papers, model papers, and practical records without clutter.",
-  tagline: "Everything you need to study smarter, in one clean repository.",
-  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  author: "Student_Repo Community",
+  tagline: "All your study materials in one place.",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://studentrepo.vercel.app",
+  author: "Student_Repo",
   links: {
     github: "https://github.com",
     guidelines: "/guidelines",
@@ -13,8 +13,9 @@ export const siteConfig = {
     copyright: "/copyright",
   },
   theme: {
-    accentColor: "#f59e0b", // Amber/Gold warm accent
-    primaryBg: "#faf9f6",   // Warm off-white
+    primaryColor: "#10B981", // Emerald Green
+    primaryDark: "#0A0D0B",  // Deep Black
+    surfaceBg: "#FFFFFF",
   },
   boardDefault: "Kerala State Board (SCERT / DHSE)",
   supportedClasses: [

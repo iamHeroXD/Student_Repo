@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFF8EF;
-  --foreground: #172633;
-  --navy-deep: #172633;
-  --navy-dark: #101C28;
-  --orange-warm: #FF7A00;
-  --cream-soft: #FFF8EF;
-  --text-muted: #687481;
-  --border-subtle: #E8E2D9;
+  --background: #FFFFFF;
+  --foreground: #090A0B;
+  --forest-dark: #0A0D0B;
+  --forest-surface: #121713;
+  --emerald-primary: #10B981;
+  --emerald-hover: #059669;
+  --emerald-subtle: #ECFDF5;
+  --emerald-border: #A7F3D0;
+  --text-primary: #090A0B;
+  --text-muted: #64748B;
+  --border-subtle: #E2E8F0;
+  --card-bg: #FFFFFF;
 }
 
 @theme inline {
@@ -20,10 +24,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #101C28;
-    --foreground: #FFF8EF;
-    --border-subtle: #223344;
-    --text-muted: #A0AAB4;
+    --background: #090A0B;
+    --foreground: #F8FAFC;
+    --card-bg: #0F1310;
+    --border-subtle: #1E2922;
+    --text-muted: #94A3B8;
   }
 }
 
@@ -32,4 +37,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle transitions and hover feedback */
+a, button, input, select, textarea {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

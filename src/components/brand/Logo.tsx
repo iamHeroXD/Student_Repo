@@ -1,7 +1,5 @@
 "use client";
 
-import { useId } from "react";
-
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
@@ -9,12 +7,10 @@ interface LogoProps {
 }
 
 export function Logo({ className = "", size = "md", showWordmark = true }: LogoProps) {
-  const gradientId = useId();
-
   const iconSizes = {
     sm: "w-7 h-7",
     md: "w-9 h-9",
-    lg: "w-12 h-12",
+    lg: "w-11 h-11",
   };
 
   const textSizes = {
@@ -25,7 +21,7 @@ export function Logo({ className = "", size = "md", showWordmark = true }: LogoP
 
   return (
     <div className={`inline-flex items-center gap-2.5 ${className}`}>
-      {/* Precision Document-Folder with Warm Orange Tab and Bookmark Cutout */}
+      {/* Precision Document-Folder: Deep Charcoal/Black with Emerald Accent Tab & Bookmark */}
       <svg
         className={`${iconSizes[size]} shrink-0 transition-transform duration-200 group-hover:scale-105`}
         viewBox="0 0 48 48"
@@ -33,41 +29,41 @@ export function Logo({ className = "", size = "md", showWordmark = true }: LogoP
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Back folder base plate (Deep Navy) */}
-        <rect x="4" y="10" width="40" height="32" rx="5" fill="#172633" />
+        {/* Back folder plate (Deep Minimal Black) */}
+        <rect x="4" y="10" width="40" height="32" rx="6" fill="#0A0D0B" />
         
-        {/* Warm Orange Folder Tab with Subtle Curvature */}
+        {/* Emerald Green Folder Tab */}
         <path
           d="M4 14C4 11.7909 5.79086 10 8 10H19.5L24 15H40C42.2091 15 44 16.7909 44 19V22H4V14Z"
-          fill="#FF7A00"
+          fill="#10B981"
         />
 
-        {/* Inner white academic document preview layer */}
-        <rect x="9" y="16" width="30" height="22" rx="3" fill="#FFF8EF" opacity="0.95" />
-        <line x1="14" y1="21" x2="28" y2="21" stroke="#172633" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
-        <line x1="14" y1="26" x2="34" y2="26" stroke="#172633" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
-        <line x1="14" y1="31" x2="24" y2="31" stroke="#172633" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+        {/* White inner document paper preview layer */}
+        <rect x="9" y="16" width="30" height="22" rx="3" fill="#FFFFFF" opacity="0.95" />
+        <line x1="14" y1="21" x2="26" y2="21" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+        <line x1="14" y1="26" x2="33" y2="26" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+        <line x1="14" y1="31" x2="22" y2="31" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
 
-        {/* Front folder layer with gentle perspective and bookmark notch */}
+        {/* Front folder layer with depth */}
         <path
-          d="M4 22C4 19.7909 5.79086 18 8 18H40C42.2091 18 44 19.7909 44 22V37C44 39.2091 42.2091 41 40 41H8C5.79086 41 4 39.2091 4 37V22Z"
-          fill="#101C28"
+          d="M4 22C4 19.7909 5.79086 18 8 18H40C42.2091 18 44 19.7909 44 22V36C44 38.2091 42.2091 40 40 40H8C5.79086 40 4 38.2091 4 36V22Z"
+          fill="#121713"
         />
 
-        {/* Elegant Bookmark Cutout ribbon on front folder */}
+        {/* Emerald Bookmark cutout ribbon */}
         <path
-          d="M31 18V30L35 27.5L39 30V18H31Z"
-          fill="#FF7A00"
+          d="M31 18V29L35 26.5L39 29V18H31Z"
+          fill="#10B981"
         />
       </svg>
 
       {showWordmark && (
         <div className="flex flex-col">
-          <span className={`font-bold tracking-tight text-[#172633] dark:text-[#FFF8EF] ${textSizes[size]}`}>
+          <span className={`font-bold tracking-tight text-[#090A0B] dark:text-[#F8FAFC] ${textSizes[size]}`}>
             Student_Repo
           </span>
           {size === "lg" && (
-            <span className="text-xs text-[#687481] dark:text-[#A0AAB4]">
+            <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
               All your study materials in one place
             </span>
           )}
