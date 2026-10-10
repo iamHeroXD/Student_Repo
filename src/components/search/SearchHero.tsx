@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search, Sparkles, X } from "lucide-react";
 
 interface SearchHeroProps {
   placeholder?: string;
 }
 
-export function SearchHero({ placeholder = "Search Plus Two Physics notes, Class 10 Maths previous questions..." }: SearchHeroProps) {
+export function SearchHero({ 
+  placeholder = "Search Plus Two Physics notes, Class 10 Maths previous questions..." 
+}: SearchHeroProps) {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -21,24 +23,61 @@ export function SearchHero({ placeholder = "Search Plus Two Physics notes, Class
     }
   };
 
+  const handleQuickSuggestion = (tag: string) => {
+    setQuery(tag);
+    router.push(`/explore?q=${encodeURIComponent(tag)}`);
+  };
+
   return (
-    <form onSubmit={handleSearch} className="w-full max-w-2xl relative">
-      <div className="relative flex items-center">
-        <Search className="absolute left-4 h-5 w-5 text-stone-400 pointer-events-none" />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={placeholder}
-          className="w-full rounded-xl border border-stone-300 bg-white py-3.5 pl-11 pr-28 text-sm text-stone-900 placeholder:text-stone-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:placeholder:text-stone-500 transition"
-        />
-        <button
-          type="submit"
-          className="absolute right-2 top-2 bottom-2 rounded-lg bg-stone-900 px-4 text-xs font-semibold text-white hover:bg-stone-800 dark:bg-amber-600 dark:hover:bg-amber-500 transition"
-        >
-          Search
-        </button>
+    <div className="w-full max-w-2xl flex flex-col items-center">
+      <form onSubmit={handleSearch} className="w-full relative group">
+        <div className="relative flex items-center">
+          <Search className="absolute left-4.5 h-5 w-5 text-[#64748B] group-focus-within:text-[#10B981] transition duration-150 pointer-events-none" />
+          
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={placeholder}
+            className="w-full rounded-2xl border border-[#E2E8F0] bg-white py-4 pl-12 pr-32 text-xs sm:text-sm text-[#090A0B] placeholder:text-[#94A3B8] shadow-xs focus:border-[#10B981] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:placeholder:text-[#64748B] dark:focus:border-[#10B981] dark:focus:ring-emerald-500/15 transition duration-150"
+          />
+
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="absolute right-24 text-[#94A3B8] hover:text-[#090A0B] dark:hover:text-[#F8FAFC] p-1 transition"
+              aria-label="Clear search query"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+
+          <button
+            type="submit"
+            className="absolute right-2.5 top-2.5 bottom-2.5 rounded-xl bg-[#0A0D0B] px-4 sm:px-5 text-xs font-semibold text-white shadow-2xs hover:bg-[#1E2922] active:scale-98 dark:bg-[#10B981] dark:text-[#0A0D0B] dark:hover:bg-[#059669] transition duration-150"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+
+      {/* Suggested quick chips */}
+      <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 text-2xs text-[#64748B] dark:text-[#94A3B8]">
+        <span className="flex items-center gap-1 text-[#94A3B8]">
+          <Sparkles className="h-3 w-3 text-[#10B981]" /> Popular:
+        </span>
+        {["Plus Two Physics", "SSLC Maths", "Biology Notes", "March 2025 Paper"].map((chip) => (
+          <button
+            key={chip}
+            type="button"
+            onClick={() => handleQuickSuggestion(chip)}
+            className="rounded-full border border-[#E2E8F0] bg-white px-2.5 py-0.5 text-2xs text-[#090A0B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition duration-150 active:scale-95"
+          >
+            {chip}
+          </button>
+        ))}
       </div>
-    </form>
+    </div>
   );
 }
