@@ -42,26 +42,28 @@ export default async function LeaderboardPage() {
     .sort((a, b) => b.score - a.score || b.approvedNotes - a.approvedNotes);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-10 sm:px-6 lg:px-8 animate-fade-up">
       <div className="mb-6 sm:mb-8">
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-[#10B981]/10 px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] dark:text-[#10B981] mb-3">
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-white px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] shadow-2xs dark:bg-[#0F1310] dark:text-[#10B981] mb-3">
           <Award className="h-3.5 w-3.5" /> Quality Recognition System
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F4EEE2] tracking-tight">
           Academic Leaderboard
         </h1>
-        <p className="text-xs sm:text-sm text-[#64748B] dark:text-[#94A3B8] mt-1.5 max-w-2xl">
+        <p className="text-xs sm:text-sm text-[#5C574F] dark:text-[#94A3B8] mt-1.5 max-w-2xl">
           Rankings are calculated dynamically from real contributor accounts, approved PDF study materials (+50 pts), and student star ratings.
         </p>
       </div>
 
       {rankedContributors.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-8 sm:p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <Users className="h-10 w-10 text-[#10B981] mx-auto mb-3" />
-          <h3 className="text-sm font-bold text-[#090A0B] dark:text-[#F8FAFC]">
+          <div className="animate-float-slow flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/12 text-[#10B981] mx-auto mb-3 ring-1 ring-[#10B981]/20">
+            <Users className="h-6 w-6" />
+          </div>
+          <h3 className="text-sm font-bold text-[#090A0B] dark:text-[#F4EEE2]">
             No Contributor Rankings Yet
           </h3>
-          <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1 max-w-md mx-auto">
+          <p className="text-xs text-[#5C574F] dark:text-[#94A3B8] mt-1 max-w-md mx-auto">
             Create a student or teacher account and upload verified study materials to appear on the official leaderboard.
           </p>
           <div className="mt-5 flex flex-col sm:flex-row justify-center gap-2.5 sm:gap-3">

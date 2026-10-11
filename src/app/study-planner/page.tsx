@@ -92,12 +92,12 @@ export default function StudyPlannerPage() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 animate-fade-up">
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F4EEE2] tracking-tight">
           Personal Study Planner
         </h1>
-        <p className="text-xs sm:text-sm text-[#64748B] dark:text-[#94A3B8] mt-1">
+        <p className="text-xs sm:text-sm text-[#5C574F] dark:text-[#94A3B8] mt-1">
           Plan chapter revisions, track your exam countdown, and save tasks directly in your browser.
         </p>
       </div>

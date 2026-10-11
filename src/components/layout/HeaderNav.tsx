@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "@/components/brand/Logo";
 import { ThemeToggle } from "./ThemeToggle";
 import { 
@@ -29,50 +30,50 @@ interface HeaderNavProps {
   } | null;
 }
 
+const NAV_LINKS = [
+  { href: "/explore", label: "Explore" },
+  { href: "/classes", label: "Classes" },
+  { href: "/question-papers", label: "Question Papers" },
+  { href: "/study-planner", label: "Study Planner" },
+  { href: "/leaderboard", label: "Leaderboard" },
+];
+
 export function HeaderNav({ session }: HeaderNavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#D8CEBE] bg-white/90 backdrop-blur-md dark:border-[#1E2922] dark:bg-[#090A0B]/90 transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-[#D8CEBE]/80 bg-white/85 backdrop-blur-xl dark:border-[#1E2922] dark:bg-[#090A0B]/85 transition-all">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3.5 sm:px-6 lg:px-8 gap-2">
         {/* Brand Logo & Desktop/Tablet Nav */}
-        <div className="flex items-center gap-4 lg:gap-8 min-w-0">
-          <Link href="/" className="group flex items-center shrink-0">
+        <div className="flex items-center gap-4 lg:gap-7 min-w-0">
+          <Link href="/" className="group flex items-center shrink-0 hover:opacity-90 transition">
             <Logo size="md" showWordmark={true} />
           </Link>
 
           {/* Primary Navigation Links (Tablet & Desktop) */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-6 text-xs lg:text-sm font-medium text-[#64748B] dark:text-[#94A3B8] whitespace-nowrap">
-            <Link 
-              href="/explore" 
-              className="hover:text-[#090A0B] dark:hover:text-[#F8FAFC] transition duration-150"
-            >
-              Explore
-            </Link>
-            <Link 
-              href="/classes" 
-              className="hover:text-[#090A0B] dark:hover:text-[#F8FAFC] transition duration-150"
-            >
-              Classes
-            </Link>
-            <Link 
-              href="/question-papers" 
-              className="hover:text-[#090A0B] dark:hover:text-[#F8FAFC] transition duration-150"
-            >
-              Question Papers
-            </Link>
-            <Link 
-              href="/study-planner" 
-              className="hover:text-[#090A0B] dark:hover:text-[#F8FAFC] transition duration-150"
-            >
-              Study Planner
-            </Link>
-            <Link 
-              href="/leaderboard" 
-              className="hover:text-[#090A0B] dark:hover:text-[#F8FAFC] transition duration-150"
-            >
-              Leaderboard
-            </Link>
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5 text-xs lg:text-sm font-medium whitespace-nowrap">
+            {NAV_LINKS.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href === "/classes" && pathname.startsWith("/class/"));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 transition-all ${
+                    isActive
+                      ? "bg-[#E8DFCE] font-semibold text-[#090A0B] dark:bg-[#161F19] dark:text-[#F4EEE2]"
+                      : "text-[#5C574F] hover:bg-[#E8DFCE]/60 hover:text-[#090A0B] dark:text-[#94A3B8] dark:hover:bg-[#121713] dark:hover:text-[#F4EEE2]"
+                  }`}
+                >
+                  {isActive && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                  )}
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
