@@ -23,7 +23,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col gap-10 sm:gap-16 pb-12 sm:pb-16">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-8 sm:pt-16 sm:pb-14 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+      <section className="relative overflow-hidden pt-8 pb-8 sm:pt-16 sm:pb-14 border-b border-[#D8CEBE] dark:border-[#1E2922]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-2xs sm:text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-4 sm:mb-6">
             <Sparkles className="h-3.5 w-3.5" />
@@ -48,7 +48,7 @@ export default async function HomePage() {
               <Link
                 key={c.id}
                 href={`/class/${c.slug}`}
-                className="rounded-xl border border-[#E2E8F0] bg-white px-3 py-1.5 text-xs shadow-2xs hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition active:scale-95"
+                className="rounded-xl border border-[#D8CEBE] bg-white px-3 py-1.5 text-xs shadow-2xs hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition active:scale-95"
               >
                 {c.name}
               </Link>
@@ -78,9 +78,9 @@ export default async function HomePage() {
             <Link
               key={item.id}
               href={`/class/${item.slug}`}
-              className="last:col-span-2 sm:last:col-span-1 flex flex-col items-center justify-center rounded-2xl border border-[#E2E8F0] bg-white p-4 sm:p-5 text-center shadow-2xs hover:border-[#10B981] hover:shadow-sm dark:border-[#1E2922] dark:bg-[#0F1310] transition group active:scale-[0.99]"
+              className="last:col-span-2 sm:last:col-span-1 flex flex-col items-center justify-center rounded-2xl border border-[#D8CEBE] bg-white p-4 sm:p-5 text-center shadow-2xs hover:border-[#10B981] hover:shadow-sm dark:border-[#1E2922] dark:bg-[#0F1310] transition group active:scale-[0.99]"
             >
-              <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#F1F5F9] text-[#090A0B] group-hover:bg-emerald-500/10 group-hover:text-[#10B981] dark:bg-[#1E2922] dark:text-[#F8FAFC] transition mb-2.5 sm:mb-3">
+              <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#E5DEC9] text-[#090A0B] group-hover:bg-emerald-500/10 group-hover:text-[#10B981] dark:bg-[#1E2922] dark:text-[#F8FAFC] transition mb-2.5 sm:mb-3">
                 <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6" />
               </div>
               <span className="font-semibold text-xs sm:text-sm text-[#090A0B] dark:text-[#F8FAFC]">
@@ -115,7 +115,7 @@ export default async function HomePage() {
         </div>
 
         {popularResources.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-8 sm:p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-8 sm:p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/10 text-[#10B981] mx-auto mb-3">
               <FileText className="h-6 w-6" />
             </div>
@@ -144,7 +144,7 @@ export default async function HomePage() {
 
       {/* 4. Core Features Showcase */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-6 sm:p-10 dark:border-[#1E2922] dark:bg-[#0A0D0B]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-[#E8DFCE] p-6 sm:p-10 dark:border-[#1E2922] dark:bg-[#0A0D0B]">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="flex flex-col gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-[#10B981] ring-1 ring-emerald-500/20">

@@ -70,7 +70,7 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
           className={`flex items-center justify-center gap-1.5 rounded-xl border py-2.5 font-semibold transition active:scale-[0.98] ${
             saved
               ? "border-[#10B981] bg-[#10B981]/10 text-[#059669] dark:text-[#10B981]"
-              : "border-[#E2E8F0] bg-white text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713]"
+              : "border-[#D8CEBE] bg-white text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713]"
           }`}
         >
           <Bookmark className={`h-4 w-4 ${saved ? "fill-current" : ""}`} />
@@ -78,7 +78,7 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
         </button>
         <button
           onClick={handleShare}
-          className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-white py-2.5 font-semibold text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition active:scale-[0.98]"
+          className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white py-2.5 font-semibold text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition active:scale-[0.98]"
         >
           {copied ? (
             <>
@@ -94,7 +94,7 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
       </div>
 
       {/* Interactive 1-5 Star Rating */}
-      <div className="rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-center dark:border-[#1E2922] dark:bg-[#0A0D0B]">
+      <div className="rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-center dark:border-[#1E2922] dark:bg-[#0A0D0B]">
         <span className="block text-2xs font-semibold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-1.5">
           {ratingSubmitted ? "Thanks for rating this material!" : "Rate this material"}
         </span>

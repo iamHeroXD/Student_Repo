@@ -52,7 +52,7 @@ export function LoginForm({ isTeacher = false }: LoginFormProps) {
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl border border-[#E2E8F0] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+        className="space-y-4 rounded-2xl border border-[#D8CEBE] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
       >
         {error && (
           <div className="flex items-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/25 p-3 text-xs text-rose-600 dark:text-rose-400">
@@ -74,7 +74,7 @@ export function LoginForm({ isTeacher = false }: LoginFormProps) {
               required
               autoCapitalize="none"
               autoCorrect="off"
-              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>
@@ -90,7 +90,7 @@ export function LoginForm({ isTeacher = false }: LoginFormProps) {
               name="password"
               placeholder="••••••••"
               required
-              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
             <button
               type="button"

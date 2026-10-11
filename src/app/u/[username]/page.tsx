@@ -44,7 +44,7 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6 sm:p-8 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
+      <div className="rounded-2xl border border-[#D8CEBE] bg-white p-6 sm:p-8 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#10B981]/15 text-[#10B981] font-black text-2xl">
@@ -73,7 +73,7 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-2.5 dark:border-[#1E2922] dark:bg-[#0A0D0B]">
+          <div className="flex items-center gap-4 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] px-4 py-2.5 dark:border-[#1E2922] dark:bg-[#0A0D0B]">
             <div className="text-center">
               <span className="block text-lg font-bold text-[#10B981]">
                 {profile.reputation_score || 0}
@@ -82,7 +82,7 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
                 Reputation
               </span>
             </div>
-            <div className="h-6 w-px bg-[#E2E8F0] dark:bg-[#1E2922]" />
+            <div className="h-6 w-px bg-[#D8CEBE] dark:bg-[#1E2922]" />
             <div className="text-center">
               <span className="block text-lg font-bold text-[#090A0B] dark:text-[#F8FAFC]">
                 {userResources.length}
@@ -103,7 +103,7 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
         </div>
 
         {userResources.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#E2E8F0] p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+          <div className="rounded-2xl border border-dashed border-[#D8CEBE] p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
             No approved public notes or question papers contributed yet.
           </div>
         ) : (

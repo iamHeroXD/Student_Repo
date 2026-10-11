@@ -52,7 +52,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl border border-[#E2E8F0] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+        className="space-y-4 rounded-2xl border border-[#D8CEBE] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
       >
         {error && (
           <div className="flex items-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/25 p-3 text-xs text-rose-600 dark:text-rose-400">
@@ -77,7 +77,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               maxLength={24}
               autoCapitalize="none"
               autoCorrect="off"
-              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
           <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] mt-1 block">
@@ -95,7 +95,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
             name="fullName"
             placeholder="Enter your full name"
             required
-            className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           />
         </div>
 
@@ -108,7 +108,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               </label>
               <select
                 name="targetClass"
-                className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 {siteConfig.supportedClasses.map((c) => (
                   <option key={c.id} value={c.slug}>
@@ -124,7 +124,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               </label>
               <select
                 name="targetStream"
-                className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 {siteConfig.streams.map((s) => (
                   <option key={s.id} value={s.slug}>
@@ -148,7 +148,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
                 type="text"
                 name="institutionName"
                 placeholder="Enter school or institution name"
-                className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
           </div>
@@ -167,7 +167,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               placeholder="Minimum 6 characters"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
             <button
               type="button"
@@ -193,7 +193,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               placeholder="Re-type password"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>

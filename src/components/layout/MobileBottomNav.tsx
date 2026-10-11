@@ -56,7 +56,7 @@ export function MobileBottomNav({ session }: MobileBottomNavProps) {
   return (
     <nav
       aria-label="Mobile quick navigation"
-      className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-[#E2E8F0] bg-white/95 backdrop-blur-md dark:border-[#1E2922] dark:bg-[#090A0B]/95 pb-[env(safe-area-inset-bottom)]"
+      className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-[#D8CEBE] bg-white/95 backdrop-blur-md dark:border-[#1E2922] dark:bg-[#090A0B]/95 pb-[env(safe-area-inset-bottom)]"
     >
       <div className="grid grid-cols-5 h-16 items-center px-1">
         {items.map((item) => {

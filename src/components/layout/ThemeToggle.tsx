@@ -28,7 +28,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="h-8 w-8 rounded-lg border border-[#E2E8F0] dark:border-[#1E2922]" />
+      <div className="h-8 w-8 rounded-lg border border-[#D8CEBE] dark:border-[#1E2922]" />
     );
   }
 
@@ -38,7 +38,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
       title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#E2E8F0] bg-white text-[#64748B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition active:scale-90"
+      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#D8CEBE] bg-white text-[#64748B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition active:scale-90"
     >
       {theme === "light" ? (
         <Moon className="h-4 w-4" />

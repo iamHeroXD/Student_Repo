@@ -42,7 +42,7 @@ export function ExploreFilters() {
   ].filter(Boolean).length;
 
   return (
-    <div className="flex flex-col rounded-2xl border border-[#E2E8F0] bg-white p-4 sm:p-5 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
+    <div className="flex flex-col rounded-2xl border border-[#D8CEBE] bg-white p-4 sm:p-5 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
       {/* Header bar — clickable on mobile/tablet to collapse/expand */}
       <div className="flex items-center justify-between">
         <button
@@ -83,7 +83,7 @@ export function ExploreFilters() {
       <div
         className={`${
           mobileOpen ? "grid" : "hidden lg:grid"
-        } grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 pt-4 mt-3 border-t border-[#E2E8F0] dark:border-[#1E2922]`}
+        } grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 pt-4 mt-3 border-t border-[#D8CEBE] dark:border-[#1E2922]`}
       >
         {/* Class Filter */}
         <div className="space-y-1.5">
@@ -94,7 +94,7 @@ export function ExploreFilters() {
             value={currentClass}
             onChange={(e) => updateParam("class", e.target.value)}
             aria-label="Filter by Academic Class"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="all">All Classes</option>
             {siteConfig.supportedClasses.map((c) => (
@@ -114,7 +114,7 @@ export function ExploreFilters() {
             value={currentStream}
             onChange={(e) => updateParam("stream", e.target.value)}
             aria-label="Filter by Subject Stream"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="all">All Streams</option>
             {siteConfig.streams.map((s) => (
@@ -134,7 +134,7 @@ export function ExploreFilters() {
             value={currentType}
             onChange={(e) => updateParam("type", e.target.value)}
             aria-label="Filter by Resource Type"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="all">All Material Types</option>
             {siteConfig.resourceTypes.map((t) => (
@@ -154,7 +154,7 @@ export function ExploreFilters() {
             value={currentSort}
             onChange={(e) => updateParam("sort", e.target.value)}
             aria-label="Sort Results"
-            className="w-full rounded-xl border border-[#E2E8F0] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="popular">Most Relevant & Popular</option>
             <option value="recent">Recently Added</option>

@@ -20,7 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: light)", color: "#F1E9DB" },
     { media: "(prefers-color-scheme: dark)", color: "#090A0B" },
   ],
 };
@@ -45,7 +45,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#FFFFFF] text-[#090A0B] dark:bg-[#090A0B] dark:text-[#F8FAFC] selection:bg-emerald-500/20 selection:text-emerald-600 transition-colors duration-200">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#F1E9DB] text-[#090A0B] dark:bg-[#090A0B] dark:text-[#F4EEE2] selection:bg-emerald-500/20 selection:text-emerald-600 transition-colors duration-200">
         <Header />
         <main className="flex-1 w-full">
           {children}

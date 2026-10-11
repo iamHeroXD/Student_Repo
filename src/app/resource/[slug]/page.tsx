@@ -59,14 +59,14 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
         <div className="lg:col-span-2 space-y-6">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="rounded-lg bg-[#F1F5F9] px-2.5 py-1 text-xs font-semibold text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
+              <span className="rounded-lg bg-[#E5DEC9] px-2.5 py-1 text-xs font-semibold text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
                 {resource.class_id.replace("-", " ")}
               </span>
               <span className="rounded-lg bg-[#10B981]/10 px-2.5 py-1 text-xs font-semibold text-[#059669] ring-1 ring-[#10B981]/20 dark:text-[#10B981] capitalize">
                 {resource.resource_type_id.replace("-", " ")}
               </span>
               {resource.stream_id && (
-                <span className="rounded-lg bg-[#F1F5F9] px-2.5 py-1 text-xs font-medium text-[#64748B] dark:bg-[#1E2922] dark:text-[#94A3B8] capitalize">
+                <span className="rounded-lg bg-[#E5DEC9] px-2.5 py-1 text-xs font-medium text-[#64748B] dark:bg-[#1E2922] dark:text-[#94A3B8] capitalize">
                   {resource.stream_id} Stream
                 </span>
               )}
@@ -95,7 +95,7 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
           />
 
           {/* Attribution & Rights Statement */}
-          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-2">
               Attribution & Rights Declaration
             </h3>
@@ -112,8 +112,8 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
 
         {/* Sidebar Information & Actions */}
         <div className="space-y-6">
-          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-xs font-semibold text-[#64748B] dark:text-[#94A3B8]">Document Rating</span>
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-[#10B981] text-[#10B981]" />
@@ -126,7 +126,7 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
           </div>
 
           {/* Contributor Card */}
-          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-3">
               Contributor Profile
             </h3>
@@ -153,32 +153,32 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
           </div>
 
           {/* Metadata Specs Card */}
-          <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 space-y-3 dark:border-[#1E2922] dark:bg-[#0F1310] text-xs">
+          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-3 dark:border-[#1E2922] dark:bg-[#0F1310] text-xs">
             <h3 className="font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-2">
               Document Specifications
             </h3>
             
-            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+            <div className="flex justify-between py-1.5 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">Board / Curriculum</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">Kerala SCERT / DHSE</span>
             </div>
 
-            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+            <div className="flex justify-between py-1.5 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">Total Pages</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{resource.page_count} Pages</span>
             </div>
 
-            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+            <div className="flex justify-between py-1.5 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">File Size</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{formatFileSize(resource.file_size_bytes)}</span>
             </div>
 
-            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+            <div className="flex justify-between py-1.5 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">Language</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{resource.language}</span>
             </div>
 
-            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+            <div className="flex justify-between py-1.5 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">Downloads</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{resource.downloads_count || 0}</span>
             </div>

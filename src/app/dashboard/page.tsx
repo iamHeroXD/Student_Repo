@@ -39,7 +39,7 @@ export default async function DashboardPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Welcome Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E8F0] pb-6 dark:border-[#1E2922]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D8CEBE] pb-6 dark:border-[#1E2922]">
         <div>
           <span className="text-xs font-semibold text-[#10B981] uppercase tracking-wider">
             {effectiveRole === "admin"
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
           {effectiveRole === "teacher" && effectiveVerification !== "verified" && (
             <Link
               href="/teacher/verification"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
             >
               <Award className="h-3.5 w-3.5 text-[#10B981]" />
               Verify Teacher Badge ({effectiveVerification})
@@ -91,7 +91,7 @@ export default async function DashboardPage() {
           <form action={logoutAction}>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition"
             >
               <LogOut className="h-3.5 w-3.5 text-rose-500" />
               Sign Out
@@ -102,7 +102,7 @@ export default async function DashboardPage() {
 
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 my-8">
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
             My Uploaded PDFs
           </span>
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
             Study Planner
           </span>
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
             Public Profile
           </span>
@@ -147,7 +147,7 @@ export default async function DashboardPage() {
         </h2>
 
         {myResources.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#E2E8F0] p-10 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+          <div className="rounded-2xl border border-dashed border-[#D8CEBE] p-10 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
             <p>You haven&apos;t uploaded any PDF notes or question papers yet.</p>
             <Link
               href="/upload"

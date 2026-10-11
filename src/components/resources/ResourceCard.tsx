@@ -13,11 +13,11 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     : null;
 
   return (
-    <div className="group flex flex-col justify-between rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-2xs hover:border-[#10B981]/50 hover:shadow-md dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981]/40 transition">
+    <div className="group flex flex-col justify-between rounded-xl border border-[#D8CEBE] bg-white p-5 shadow-2xs hover:border-[#10B981]/50 hover:shadow-md dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981]/40 transition">
       <div>
         {/* Top Badges */}
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span className="inline-flex items-center rounded-md bg-[#F1F5F9] px-2 py-0.5 text-xs font-medium text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
+          <span className="inline-flex items-center rounded-md bg-[#E5DEC9] px-2 py-0.5 text-xs font-medium text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
             {resource.class_id.replace("-", " ")}
           </span>
           <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-emerald-600/20 dark:bg-emerald-950/40 dark:text-emerald-400">

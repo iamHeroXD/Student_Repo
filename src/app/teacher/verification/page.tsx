@@ -49,8 +49,8 @@ export default async function TeacherVerificationPage() {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310] space-y-5">
-        <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#090A0B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#F8FAFC]">
+      <div className="rounded-2xl border border-[#D8CEBE] bg-white p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310] space-y-5">
+        <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#E8DFCE] border border-[#D8CEBE] text-xs text-[#090A0B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#F8FAFC]">
           <div className="flex items-center gap-2.5">
             {currentStatus === "verified" ? (
               <CheckCircle2 className="h-5 w-5 text-[#10B981] shrink-0" />
@@ -95,7 +95,7 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.school_name || userRecord?.institution_name || ""}
                 placeholder="e.g. Govt Higher Secondary School, Kozhikode"
                 required
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -109,7 +109,7 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.subject_specialization || ""}
                 placeholder="e.g. Higher Secondary Physics / Mathematics"
                 required
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -123,11 +123,11 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.experience_years || 3}
                 min={1}
                 required
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
-            <div className="rounded-xl bg-[#F8FAFC] p-3.5 border border-[#E2E8F0] text-2xs text-[#64748B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+            <div className="rounded-xl bg-[#E8DFCE] p-3.5 border border-[#D8CEBE] text-2xs text-[#64748B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#94A3B8]">
               {existingReq && existingReq.status === "pending"
                 ? "Your verification request has been submitted and is currently in the Administrator Review Queue. You can update your details below if needed."
                 : "Verification requests are reviewed in the Admin Console. Once approved, your profile receives the Verified Educator badge (+100 reputation points)."}

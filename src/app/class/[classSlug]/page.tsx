@@ -68,7 +68,7 @@ export default async function ClassOverviewPage({ params }: ClassOverviewPagePro
         </div>
 
         {classResources.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8]">
+          <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8]">
             <p>No materials uploaded for {targetClass.name} yet.</p>
             <Link
               href="/upload"

@@ -27,7 +27,7 @@ export default function ClassesIndexPage() {
           <Link
             key={item.id}
             href={`/class/${item.slug}`}
-            className="flex flex-col justify-between rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-2xs hover:border-[#10B981] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981]/60 group"
+            className="flex flex-col justify-between rounded-2xl border border-[#D8CEBE] bg-white p-6 shadow-2xs hover:border-[#10B981] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 dark:border-[#1E2922] dark:bg-[#0F1310] dark:hover:border-[#10B981]/60 group"
           >
             <div>
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#10B981]/10 text-[#10B981] mb-4 group-hover:bg-[#10B981] group-hover:text-white transition">
@@ -41,7 +41,7 @@ export default function ClassesIndexPage() {
               </p>
             </div>
 
-            <div className="mt-6 flex items-center justify-between border-t border-[#E2E8F0] pt-4 text-xs font-semibold text-[#10B981] dark:border-[#1E2922]">
+            <div className="mt-6 flex items-center justify-between border-t border-[#D8CEBE] pt-4 text-xs font-semibold text-[#10B981] dark:border-[#1E2922]">
               <span>View Materials</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition" />
             </div>

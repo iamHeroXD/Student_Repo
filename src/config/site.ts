@@ -15,7 +15,7 @@ export const siteConfig = {
   theme: {
     primaryColor: "#10B981", // Emerald Green
     primaryDark: "#0A0D0B",  // Deep Black
-    surfaceBg: "#FFFFFF",
+    surfaceBg: "#F1E9DB",    // Warm Parchment Cream
   },
   boardDefault: "Kerala State Board (SCERT / DHSE)",
   supportedClasses: [

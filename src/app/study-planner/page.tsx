@@ -107,7 +107,7 @@ export default function StudyPlannerPage() {
         <div className="md:col-span-1 space-y-6">
           <form
             onSubmit={addTask}
-            className="rounded-2xl border border-[#E2E8F0] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs"
+            className="rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs"
           >
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
               Add Study Task
@@ -123,7 +123,7 @@ export default function StudyPlannerPage() {
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder="e.g. Revise Electrostatics derivations"
                 required
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -134,7 +134,7 @@ export default function StudyPlannerPage() {
               <select
                 value={newSubject}
                 onChange={(e) => setNewSubject(e.target.value)}
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 <option value="Biology">Biology</option>
                 <option value="Physics">Physics</option>
@@ -157,7 +157,7 @@ export default function StudyPlannerPage() {
                 type="date"
                 value={newDueDate}
                 onChange={(e) => setNewDueDate(e.target.value)}
-                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -187,7 +187,7 @@ export default function StudyPlannerPage() {
                 type="date"
                 value={examDate}
                 onChange={(e) => handleExamDateChange(e.target.value)}
-                className="w-full rounded-lg border border-[#E2E8F0] bg-white px-2.5 py-1.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full rounded-lg border border-[#D8CEBE] bg-white px-2.5 py-1.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function StudyPlannerPage() {
           </div>
 
           {tasks.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+            <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
               <CalendarPlus className="h-9 w-9 text-[#10B981] mx-auto mb-2.5" />
               <h4 className="text-sm font-bold text-[#090A0B] dark:text-[#F8FAFC]">
                 Your Study Planner is Empty
@@ -227,8 +227,8 @@ export default function StudyPlannerPage() {
                   key={task.id}
                   className={`flex items-center justify-between rounded-2xl border p-4 transition duration-150 ${
                     task.completed
-                      ? "border-[#E2E8F0] bg-[#F8FAFC] opacity-60 dark:border-[#1E2922] dark:bg-[#0A0D0B]"
-                      : "border-[#E2E8F0] bg-white shadow-2xs hover:border-[#10B981]/50 dark:border-[#1E2922] dark:bg-[#0F1310]"
+                      ? "border-[#D8CEBE] bg-[#E8DFCE] opacity-60 dark:border-[#1E2922] dark:bg-[#0A0D0B]"
+                      : "border-[#D8CEBE] bg-white shadow-2xs hover:border-[#10B981]/50 dark:border-[#1E2922] dark:bg-[#0F1310]"
                   }`}
                 >
                   <div className="flex items-center gap-3">

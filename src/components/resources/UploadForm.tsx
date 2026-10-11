@@ -96,7 +96,7 @@ export function UploadForm() {
   if (submittedResult) {
     const isApproved = submittedResult.status === "approved";
     return (
-      <div className="rounded-2xl border border-[#E2E8F0] bg-white p-8 text-center dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
+      <div className="rounded-2xl border border-[#D8CEBE] bg-white p-8 text-center dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#10B981]/15 text-[#10B981] mx-auto mb-4">
           <CheckCircle className="h-6 w-6" />
         </div>
@@ -124,7 +124,7 @@ export function UploadForm() {
               setTitle("");
               setDescription("");
             }}
-            className="rounded-xl border border-[#E2E8F0] bg-white px-4 py-2.5 text-xs font-semibold text-[#090A0B] hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] transition"
+            className="rounded-xl border border-[#D8CEBE] bg-white px-4 py-2.5 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] transition"
           >
             Upload Another PDF
           </button>
@@ -136,7 +136,7 @@ export function UploadForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+      className="space-y-6 rounded-2xl border border-[#D8CEBE] bg-white p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
     >
       {errorMsg && (
         <div className="flex items-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/25 p-3 text-xs text-rose-600 dark:text-rose-400">
@@ -150,7 +150,7 @@ export function UploadForm() {
         <label className="block text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC] mb-2">
           1. Select PDF Document
         </label>
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#E2E8F0] p-6 hover:border-[#10B981] transition dark:border-[#1E2922]">
+        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#D8CEBE] p-6 hover:border-[#10B981] transition dark:border-[#1E2922]">
           <Upload className="h-8 w-8 text-[#10B981] mb-2" />
           <input
             type="file"
@@ -188,7 +188,7 @@ export function UploadForm() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Plus Two Physics - Electrostatics Complete Notes"
             required
-            className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           />
         </div>
 
@@ -203,7 +203,7 @@ export function UploadForm() {
                 const firstSub = mockSubjects.find((s) => s.class_id === nextClass);
                 if (firstSub) setSelectedSubject(firstSub.id);
               }}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             >
               {siteConfig.supportedClasses.map((c) => (
                 <option key={c.id} value={c.slug}>
@@ -218,7 +218,7 @@ export function UploadForm() {
             <select
               value={selectedStream}
               onChange={(e) => setSelectedStream(e.target.value)}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             >
               {siteConfig.streams.map((s) => (
                 <option key={s.id} value={s.slug}>
@@ -235,7 +235,7 @@ export function UploadForm() {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             >
               {siteConfig.resourceTypes.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -252,7 +252,7 @@ export function UploadForm() {
             <select
               value={selectedSubject}
               onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             >
               {filteredSubjects.length > 0 ? (
                 filteredSubjects.map((sub) => (
@@ -273,7 +273,7 @@ export function UploadForm() {
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             >
               <option value="English">English</option>
               <option value="Malayalam">Malayalam</option>
@@ -291,7 +291,7 @@ export function UploadForm() {
               max={500}
               value={pageCount}
               onChange={(e) => setPageCount(e.target.value)}
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>
@@ -306,7 +306,7 @@ export function UploadForm() {
             placeholder="Describe the chapters, derivations, or examination year covered in this PDF..."
             rows={3}
             required
-            className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           />
         </div>
 
@@ -320,7 +320,7 @@ export function UploadForm() {
               value={authorName}
               onChange={(e) => setAuthorName(e.target.value)}
               placeholder="Defaults to your profile name"
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
 
@@ -333,21 +333,21 @@ export function UploadForm() {
               value={institution}
               onChange={(e) => setInstitution(e.target.value)}
               placeholder="e.g. Govt Model HSS"
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>
       </div>
 
       {/* Step 3: Rights Declaration */}
-      <div className="rounded-xl bg-[#F8FAFC] p-4 border border-[#E2E8F0] dark:bg-[#0A0D0B] dark:border-[#1E2922]">
+      <div className="rounded-xl bg-[#E8DFCE] p-4 border border-[#D8CEBE] dark:bg-[#0A0D0B] dark:border-[#1E2922]">
         <label className="flex items-start gap-2.5 cursor-pointer">
           <input
             type="checkbox"
             checked={hasRights}
             onChange={(e) => setHasRights(e.target.checked)}
             required
-            className="mt-0.5 rounded border-[#E2E8F0] text-[#10B981] focus:ring-[#10B981]"
+            className="mt-0.5 rounded border-[#D8CEBE] text-[#10B981] focus:ring-[#10B981]"
           />
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8] leading-relaxed">
             I certify that I am the creator of this document or have permission to share it for open educational use under the {siteConfig.name} Community Guidelines.

@@ -33,7 +33,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#E2E8F0] bg-white/90 backdrop-blur-md dark:border-[#1E2922] dark:bg-[#090A0B]/90 transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-[#D8CEBE] bg-white/90 backdrop-blur-md dark:border-[#1E2922] dark:bg-[#090A0B]/90 transition-all">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3.5 sm:px-6 lg:px-8 gap-2">
         {/* Brand Logo & Desktop/Tablet Nav */}
         <div className="flex items-center gap-4 lg:gap-8 min-w-0">
@@ -82,7 +82,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
 
           <Link
             href="/explore"
-            className="flex h-9 w-9 items-center justify-center text-[#64748B] hover:text-[#090A0B] hover:bg-[#F8FAFC] rounded-xl dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E2922] transition"
+            className="flex h-9 w-9 items-center justify-center text-[#64748B] hover:text-[#090A0B] hover:bg-[#E8DFCE] rounded-xl dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E2922] transition"
             aria-label="Search resources"
           >
             <Search className="h-4 w-4" />
@@ -90,7 +90,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
 
           <Link
             href="/upload"
-            className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] shadow-2xs hover:bg-[#F8FAFC] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#151C17] transition active:scale-98"
+            className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] shadow-2xs hover:bg-[#E8DFCE] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#151C17] transition active:scale-98"
           >
             <Upload className="h-3.5 w-3.5 text-[#10B981]" />
             Upload PDF
@@ -135,7 +135,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
           {/* Mobile & Tablet Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-9 w-9 items-center justify-center text-[#090A0B] hover:bg-[#F8FAFC] rounded-xl md:hidden dark:text-[#F8FAFC] dark:hover:bg-[#1E2922] transition"
+            className="flex h-9 w-9 items-center justify-center text-[#090A0B] hover:bg-[#E8DFCE] rounded-xl md:hidden dark:text-[#F8FAFC] dark:hover:bg-[#1E2922] transition"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -146,12 +146,12 @@ export function HeaderNav({ session }: HeaderNavProps) {
 
       {/* Responsive Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#E2E8F0] bg-white px-4 pt-3 pb-6 dark:border-[#1E2922] dark:bg-[#090A0B] shadow-lg">
+        <div className="md:hidden border-b border-[#D8CEBE] bg-white px-4 pt-3 pb-6 dark:border-[#1E2922] dark:bg-[#090A0B] shadow-lg">
           <nav className="flex flex-col space-y-1.5 text-sm font-medium text-[#475569] dark:text-[#94A3B8]">
             <Link
               href="/explore"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F8FAFC] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
               <BookOpen className="h-4 w-4 text-[#10B981] shrink-0" />
               Explore Library
@@ -159,7 +159,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
             <Link
               href="/classes"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F8FAFC] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
               <GraduationCap className="h-4 w-4 text-[#10B981] shrink-0" />
               Curriculum & Classes
@@ -167,7 +167,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
             <Link
               href="/question-papers"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F8FAFC] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
               <FileText className="h-4 w-4 text-[#10B981] shrink-0" />
               Question Papers Archive
@@ -175,7 +175,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
             <Link
               href="/study-planner"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F8FAFC] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
               <Calendar className="h-4 w-4 text-[#10B981] shrink-0" />
               Personal Study Planner
@@ -183,13 +183,13 @@ export function HeaderNav({ session }: HeaderNavProps) {
             <Link
               href="/leaderboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#F8FAFC] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
               <Award className="h-4 w-4 text-[#10B981] shrink-0" />
               Contributor Leaderboard
             </Link>
 
-            <div className="pt-3 mt-2 border-t border-[#E2E8F0] dark:border-[#1E2922] flex flex-col gap-2.5">
+            <div className="pt-3 mt-2 border-t border-[#D8CEBE] dark:border-[#1E2922] flex flex-col gap-2.5">
               <Link
                 href="/upload"
                 onClick={() => setMobileMenuOpen(false)}
@@ -204,7 +204,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                   <Link
                     href="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
                     <LayoutDashboard className="h-3.5 w-3.5 text-[#10B981]" />
                     Dashboard
@@ -222,7 +222,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                     <Link
                       href={`/u/${session.username}`}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+                      className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                     >
                       <User className="h-3.5 w-3.5 text-[#10B981]" />
                       Profile
@@ -234,7 +234,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                   <Link
                     href="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
                     <LogIn className="h-3.5 w-3.5 text-[#10B981]" />
                     Log In
@@ -242,7 +242,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                   <Link
                     href="/register"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+                    className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
                     <UserPlus className="h-3.5 w-3.5 text-[#10B981]" />
                     Register

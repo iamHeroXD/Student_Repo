@@ -4,7 +4,7 @@ import { Logo } from "@/components/brand/Logo";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-[#E2E8F0] bg-[#FFFFFF] pb-20 md:pb-0 dark:border-[#1E2922] dark:bg-[#090A0B]">
+    <footer className="mt-auto border-t border-[#D8CEBE] bg-[#F1E9DB] pb-20 md:pb-0 dark:border-[#1E2922] dark:bg-[#090A0B]">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1 space-y-3">
@@ -55,7 +55,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-[#E2E8F0] dark:border-[#1E2922] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-[#64748B] dark:text-[#94A3B8]">
+        <div className="mt-8 border-t border-[#D8CEBE] dark:border-[#1E2922] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs text-[#64748B] dark:text-[#94A3B8]">
           <p>© 2026 {siteConfig.name}. All your study materials in one place.</p>
           <p>Public academic archive. Open access for students across Kerala.</p>
         </div>

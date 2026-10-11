@@ -39,7 +39,7 @@ export function SearchHero({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className="w-full rounded-2xl border border-[#E2E8F0] bg-white py-3.5 sm:py-4 pl-10 sm:pl-12 pr-24 sm:pr-32 text-base sm:text-sm text-[#090A0B] placeholder:text-[#94A3B8] shadow-xs focus:border-[#10B981] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:placeholder:text-[#64748B] dark:focus:border-[#10B981] dark:focus:ring-emerald-500/15 transition duration-150"
+            className="w-full rounded-2xl border border-[#D8CEBE] bg-white py-3.5 sm:py-4 pl-10 sm:pl-12 pr-24 sm:pr-32 text-base sm:text-sm text-[#090A0B] placeholder:text-[#94A3B8] shadow-xs focus:border-[#10B981] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:placeholder:text-[#64748B] dark:focus:border-[#10B981] dark:focus:ring-emerald-500/15 transition duration-150"
           />
 
           {query && (
@@ -72,7 +72,7 @@ export function SearchHero({
             key={chip}
             type="button"
             onClick={() => handleQuickSuggestion(chip)}
-            className="rounded-full border border-[#E2E8F0] bg-white px-2.5 py-1 text-2xs text-[#090A0B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition duration-150 active:scale-95"
+            className="rounded-full border border-[#D8CEBE] bg-white px-2.5 py-1 text-2xs text-[#090A0B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition duration-150 active:scale-95"
           >
             {chip}
           </button>

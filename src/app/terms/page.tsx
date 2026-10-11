@@ -20,7 +20,7 @@ export default function TermsPage() {
       </p>
 
       <div className="mt-8 space-y-6 text-xs sm:text-sm text-[#090A0B] dark:text-[#F8FAFC] leading-relaxed">
-        <section className="space-y-2 rounded-2xl border border-[#E2E8F0] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <section className="space-y-2 rounded-2xl border border-[#D8CEBE] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
           <h2 className="text-base font-bold text-[#090A0B] dark:text-[#F8FAFC]">
             1. Educational Non-Commercial Purpose
           </h2>
@@ -29,7 +29,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="space-y-2 rounded-2xl border border-[#E2E8F0] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <section className="space-y-2 rounded-2xl border border-[#D8CEBE] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
           <h2 className="text-base font-bold text-[#090A0B] dark:text-[#F8FAFC]">
             2. Contributor Responsibilities
           </h2>
@@ -38,7 +38,7 @@ export default function TermsPage() {
           </p>
         </section>
 
-        <section className="space-y-2 rounded-2xl border border-[#E2E8F0] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <section className="space-y-2 rounded-2xl border border-[#D8CEBE] bg-white p-6 dark:border-[#1E2922] dark:bg-[#0F1310]">
           <h2 className="text-base font-bold text-[#090A0B] dark:text-[#F8FAFC]">
             3. Disclaimer
           </h2>

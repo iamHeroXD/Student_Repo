@@ -64,7 +64,7 @@ export default async function AdminDashboardPage() {
           </Link>
           <Link
             href="/"
-            className="rounded-xl border border-[#E2E8F0] px-4 py-2.5 text-xs font-semibold text-[#090A0B] hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition"
+            className="rounded-xl border border-[#D8CEBE] px-4 py-2.5 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition"
           >
             Return Home
           </Link>
@@ -107,7 +107,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
       {/* Top Admin Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2E8F0] pb-6 dark:border-[#1E2922]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D8CEBE] pb-6 dark:border-[#1E2922]">
         <div className="flex items-center gap-3.5">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/25">
             <ShieldCheck className="h-6 w-6" />
@@ -146,7 +146,7 @@ export default async function AdminDashboardPage() {
           </form>
           <Link
             href="/dashboard"
-            className="rounded-xl border border-[#E2E8F0] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
+            className="rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
           >
             Dashboard
           </Link>
@@ -155,28 +155,28 @@ export default async function AdminDashboardPage() {
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Approved PDFs</span>
           <div className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] mt-1">
             {approvedResources}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Pending PDF Review</span>
           <div className="text-2xl font-extrabold text-[#10B981] mt-1">
             {pendingResources}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Teacher Verifications</span>
           <div className="text-2xl font-extrabold text-[#10B981] mt-1">
             {pendingVerifications} pending
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Registered Accounts</span>
           <div className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] mt-1">
             {totalUsers}
@@ -185,8 +185,8 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* 1. Resource Moderation Table */}
-      <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-        <div className="flex items-center justify-between border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+      <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="flex items-center justify-between border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
           <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
             PDF Submissions & Moderation Queue ({resources.length})
           </span>
@@ -202,7 +202,7 @@ export default async function AdminDashboardPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-[#E2E8F0] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+              <thead className="border-b border-[#D8CEBE] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
                 <tr>
                   <th className="px-5 py-3 font-semibold">Title</th>
                   <th className="px-5 py-3 font-semibold">Class / Type</th>
@@ -211,9 +211,9 @@ export default async function AdminDashboardPage() {
                   <th className="px-5 py-3 font-semibold text-right">Moderation Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
+              <tbody className="divide-y divide-[#D8CEBE] dark:divide-[#1E2922]">
                 {resources.map((res) => (
-                  <tr key={res.id} className="hover:bg-[#F8FAFC] dark:hover:bg-[#121713]/60 transition">
+                  <tr key={res.id} className="hover:bg-[#E8DFCE] dark:hover:bg-[#121713]/60 transition">
                     <td className="px-5 py-3.5 font-semibold text-[#090A0B] dark:text-[#F8FAFC] max-w-xs truncate">
                       <Link href={`/resource/${res.slug}`} className="hover:text-[#10B981] transition">
                         {res.title}
@@ -288,8 +288,8 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* 2. Teacher Verification Queue */}
-      <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-        <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+      <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
           <Award className="h-4 w-4 text-[#10B981]" />
           <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
             Educator Verification Requests ({state.verificationRequests.length})
@@ -303,7 +303,7 @@ export default async function AdminDashboardPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-[#E2E8F0] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+              <thead className="border-b border-[#D8CEBE] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
                 <tr>
                   <th className="px-5 py-3 font-semibold">Educator</th>
                   <th className="px-5 py-3 font-semibold">School / Institution</th>
@@ -312,7 +312,7 @@ export default async function AdminDashboardPage() {
                   <th className="px-5 py-3 font-semibold text-right">Decision</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
+              <tbody className="divide-y divide-[#D8CEBE] dark:divide-[#1E2922]">
                 {state.verificationRequests.map((req) => (
                   <tr key={req.id}>
                     <td className="px-5 py-3.5">
@@ -373,14 +373,14 @@ export default async function AdminDashboardPage() {
       {/* 3. Security Audit Log & Registered Users Management */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Registered Accounts Directory & Role Controls */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
             <Users className="h-4 w-4 text-[#10B981]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
               User Accounts & Role Management ({state.users.length})
             </span>
           </div>
-          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
+          <div className="divide-y divide-[#D8CEBE] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
             {state.users.map((u) => (
               <div
                 key={u.id}
@@ -427,7 +427,7 @@ export default async function AdminDashboardPage() {
                       <input type="hidden" name="operation" value="toggle_active" />
                       <button
                         type="submit"
-                        className="rounded-lg border border-[#E2E8F0] px-2 py-1 text-2xs font-semibold text-[#64748B] hover:text-rose-600 dark:border-[#1E2922] dark:text-[#94A3B8] transition"
+                        className="rounded-lg border border-[#D8CEBE] px-2 py-1 text-2xs font-semibold text-[#64748B] hover:text-rose-600 dark:border-[#1E2922] dark:text-[#94A3B8] transition"
                       >
                         {u.is_active ? "Suspend" : "Activate"}
                       </button>
@@ -440,14 +440,14 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Immutable Security Audit Log */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
             <Activity className="h-4 w-4 text-[#10B981]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
               Security Audit Trail
             </span>
           </div>
-          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
+          <div className="divide-y divide-[#D8CEBE] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
             {recentAuditLogs.map((log) => (
               <div key={log.id} className="px-5 py-3 text-xs flex items-start justify-between gap-3">
                 <div>

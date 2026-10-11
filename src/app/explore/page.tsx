@@ -77,7 +77,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1">
-          <Suspense fallback={<div className="h-64 rounded-2xl bg-[#F1F5F9] dark:bg-[#0F1310] animate-pulse" />}>
+          <Suspense fallback={<div className="h-64 rounded-2xl bg-[#E5DEC9] dark:bg-[#0F1310] animate-pulse" />}>
             <ExploreFilters />
           </Suspense>
         </aside>
@@ -88,7 +88,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
           </div>
 
           {resources.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
               <BookOpen className="h-10 w-10 text-[#10B981] mb-3" />
               <h3 className="font-bold text-[#090A0B] dark:text-[#F8FAFC] text-sm">
                 {allApproved.length === 0 ? "No PDFs Uploaded Yet" : "No matching resources found"}

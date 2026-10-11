@@ -34,7 +34,7 @@ export default async function QuestionPapersPage() {
       </div>
 
       {papers.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
           <FileText className="h-10 w-10 text-[#10B981] mx-auto mb-3" />
           <h3 className="text-sm font-bold text-[#090A0B] dark:text-[#F8FAFC]">
             No Question Papers Uploaded Yet

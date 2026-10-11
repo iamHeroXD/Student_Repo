@@ -23,7 +23,7 @@ export default async function UploadPage() {
       </div>
 
       {!session ? (
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-8 text-center shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="rounded-2xl border border-[#D8CEBE] bg-white p-8 text-center shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-[#10B981] mx-auto mb-3">
             <Lock className="h-6 w-6" />
           </div>
@@ -43,7 +43,7 @@ export default async function UploadPage() {
             </Link>
             <Link
               href="/register"
-              className="inline-flex items-center rounded-xl border border-[#E2E8F0] px-4 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:text-[#F8FAFC] transition"
+              className="inline-flex items-center rounded-xl border border-[#D8CEBE] px-4 py-2 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:text-[#F8FAFC] transition"
             >
               Create Free Account
             </Link>

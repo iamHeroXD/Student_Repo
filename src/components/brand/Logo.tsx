@@ -39,7 +39,7 @@ export function Logo({ className = "", size = "md", showWordmark = true }: LogoP
         />
 
         {/* White inner document paper preview layer */}
-        <rect x="9" y="16" width="30" height="22" rx="3" fill="#FFFFFF" opacity="0.95" />
+        <rect x="9" y="16" width="30" height="22" rx="3" fill="#F1E9DB" opacity="0.95" />
         <line x1="14" y1="21" x2="26" y2="21" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
         <line x1="14" y1="26" x2="33" y2="26" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
         <line x1="14" y1="31" x2="22" y2="31" stroke="#0A0D0B" strokeWidth="2" strokeLinecap="round" opacity="0.6" />

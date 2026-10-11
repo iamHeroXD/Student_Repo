@@ -18,7 +18,7 @@ export default function GuidelinesPage() {
         Last updated: October 2026 • {siteConfig.name} Standards
       </p>
 
-      <div className="mt-8 space-y-6 text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed rounded-2xl border border-[#E2E8F0] bg-white p-6 sm:p-8 dark:border-[#1E2922] dark:bg-[#0F1310]">
+      <div className="mt-8 space-y-6 text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed rounded-2xl border border-[#D8CEBE] bg-white p-6 sm:p-8 dark:border-[#1E2922] dark:bg-[#0F1310]">
         <section className="space-y-2">
           <h2 className="text-base font-bold text-[#090A0B] dark:text-[#F8FAFC]">
             1. Respect Copyright & Original Authorship
