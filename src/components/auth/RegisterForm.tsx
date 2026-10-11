@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { registerAction } from "@/lib/auth/actions";
 import { siteConfig } from "@/config/site";
-import { Eye, EyeOff, Lock, User, AlertCircle, School, BookOpen } from "lucide-react";
+import { Eye, EyeOff, Lock, User, AlertCircle, School } from "lucide-react";
 
 interface RegisterFormProps {
   isTeacher?: boolean;
@@ -37,22 +37,25 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12 sm:px-6">
-      <div className="flex flex-col items-center text-center mb-8">
+    <div className="mx-auto max-w-md px-4 py-10 sm:py-12 sm:px-6">
+      <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
         <Link href="/">
           <Logo size="lg" showWordmark={false} />
         </Link>
-        <h1 className="text-2xl font-extrabold text-[#172633] dark:text-[#FFF8EF] mt-4">
+        <h1 className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] mt-4 tracking-tight">
           {isTeacher ? "Create Teacher Account" : "Create Student Account"}
         </h1>
-        <p className="text-xs text-[#687481] dark:text-[#A0AAB4] mt-1 max-w-sm">
+        <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1 max-w-sm">
           No email address or phone number required. Your privacy is respected.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-[#E8E2D9] bg-white p-6 shadow-xs dark:border-[#223344] dark:bg-[#172633]">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 rounded-2xl border border-[#E2E8F0] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+      >
         {error && (
-          <div className="flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-200 p-3 text-xs text-rose-700 dark:bg-rose-950/40 dark:border-rose-900 dark:text-rose-300">
+          <div className="flex items-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/25 p-3 text-xs text-rose-600 dark:text-rose-400">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -60,59 +63,73 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
         {/* Username */}
         <div>
-          <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Choose Username</label>
-          <div className="relative mt-1">
-            <User className="absolute left-3 top-3 h-4 w-4 text-[#687481]" />
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+            Choose Username
+          </label>
+          <div className="relative mt-1.5">
+            <User className="absolute left-3.5 top-3.5 h-4 w-4 text-[#64748B]" />
             <input
               type="text"
               name="username"
-              placeholder="e.g. kiran_bio"
+              placeholder="e.g. student_user"
               required
               minLength={3}
               maxLength={24}
               autoCapitalize="none"
               autoCorrect="off"
-              className="w-full rounded-xl border border-[#E8E2D9] py-2.5 pl-9 pr-3 text-xs text-[#172633] placeholder:text-[#687481] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
-          <span className="text-2xs text-[#687481] mt-1 block">3–24 characters: letters, numbers, and underscores only.</span>
+          <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] mt-1 block">
+            3–24 characters: letters, numbers, and underscores only.
+          </span>
         </div>
 
         {/* Display Name */}
         <div>
-          <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Full Name or Display Name</label>
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+            Full Name or Display Name
+          </label>
           <input
             type="text"
             name="fullName"
-            placeholder={isTeacher ? "e.g. Dr. K. S. Radhakrishnan" : "e.g. Kiran Nair"}
+            placeholder="Enter your full name"
             required
-            className="w-full mt-1 rounded-xl border border-[#E8E2D9] p-2.5 text-xs text-[#172633] placeholder:text-[#687481] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+            className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           />
         </div>
 
         {/* Class Selection for Student */}
         {!isTeacher && (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Academic Class</label>
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                Academic Class
+              </label>
               <select
                 name="targetClass"
-                className="w-full mt-1 rounded-xl border border-[#E8E2D9] p-2.5 text-xs text-[#172633] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+                className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 {siteConfig.supportedClasses.map((c) => (
-                  <option key={c.id} value={c.slug}>{c.name}</option>
+                  <option key={c.id} value={c.slug}>
+                    {c.name}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Stream</label>
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                Stream
+              </label>
               <select
                 name="targetStream"
-                className="w-full mt-1 rounded-xl border border-[#E8E2D9] p-2.5 text-xs text-[#172633] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+                className="w-full mt-1.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 {siteConfig.streams.map((s) => (
-                  <option key={s.id} value={s.slug}>{s.name}</option>
+                  <option key={s.id} value={s.slug}>
+                    {s.name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -122,14 +139,16 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
         {/* Teacher Institution */}
         {isTeacher && (
           <div>
-            <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Institution / School Name (Optional)</label>
-            <div className="relative mt-1">
-              <School className="absolute left-3 top-3 h-4 w-4 text-[#687481]" />
+            <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+              Institution / School Name (Optional)
+            </label>
+            <div className="relative mt-1.5">
+              <School className="absolute left-3.5 top-3.5 h-4 w-4 text-[#64748B]" />
               <input
                 type="text"
                 name="institutionName"
-                placeholder="e.g. Govt Model HSS, Kozhikode"
-                className="w-full rounded-xl border border-[#E8E2D9] py-2.5 pl-9 pr-3 text-xs text-[#172633] placeholder:text-[#687481] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+                placeholder="Enter school or institution name"
+                className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
           </div>
@@ -137,22 +156,24 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
         {/* Password */}
         <div>
-          <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Password</label>
-          <div className="relative mt-1">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-[#687481]" />
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+            Password
+          </label>
+          <div className="relative mt-1.5">
+            <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-[#64748B]" />
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Minimum 6 characters"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#E8E2D9] py-2.5 pl-9 pr-10 text-xs text-[#172633] placeholder:text-[#687481] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
-              className="absolute right-3 top-2.5 text-[#687481] hover:text-[#172633] dark:hover:text-[#FFF8EF]"
+              className="absolute right-3 top-3 p-0.5 text-[#64748B] hover:text-[#090A0B] dark:hover:text-[#F8FAFC]"
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -161,16 +182,18 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
         {/* Confirm Password */}
         <div>
-          <label className="text-xs font-semibold text-[#172633] dark:text-[#FFF8EF]">Confirm Password</label>
-          <div className="relative mt-1">
-            <Lock className="absolute left-3 top-3 h-4 w-4 text-[#687481]" />
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+            Confirm Password
+          </label>
+          <div className="relative mt-1.5">
+            <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-[#64748B]" />
             <input
               type={showPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Re-type password"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#E8E2D9] py-2.5 pl-9 pr-3 text-xs text-[#172633] placeholder:text-[#687481] focus:border-[#FF7A00] focus:outline-none dark:border-[#223344] dark:bg-[#101C28] dark:text-[#FFF8EF]"
+              className="w-full rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>
@@ -178,22 +201,28 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-[#FF7A00] py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-[#E66E00] disabled:opacity-50 transition"
+          className="w-full rounded-xl bg-[#10B981] py-3 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] disabled:opacity-50 transition active:scale-[0.99]"
         >
           {loading ? "Creating Account..." : "Create Account"}
         </button>
 
-        <div className="pt-2 text-center text-xs text-[#687481] dark:text-[#A0AAB4] space-y-2">
+        <div className="pt-2 text-center text-xs text-[#64748B] dark:text-[#94A3B8] space-y-2">
           <p>
             Already registered?{" "}
-            <Link href={isTeacher ? "/teacher/login" : "/login"} className="font-semibold text-[#FF7A00] hover:underline">
+            <Link
+              href={isTeacher ? "/teacher/login" : "/login"}
+              className="font-semibold text-[#10B981] hover:underline"
+            >
               Log in with username
             </Link>
           </p>
           {!isTeacher && (
             <p>
               Are you a teacher?{" "}
-              <Link href="/teacher/register" className="text-xs underline text-[#172633] dark:text-[#FFF8EF]">
+              <Link
+                href="/teacher/register"
+                className="text-xs underline text-[#090A0B] dark:text-[#F8FAFC]"
+              >
                 Register as an Educator
               </Link>
             </p>
