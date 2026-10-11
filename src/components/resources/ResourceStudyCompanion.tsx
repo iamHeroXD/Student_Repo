@@ -151,12 +151,15 @@ export function ResourceStudyCompanion({
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#D8CEBE]/80 dark:border-[#1E2922]">
         <div className="flex items-center gap-2.5">
-          <div className="clay-pill flex h-9 w-9 items-center justify-center rounded-xl bg-[#2FB617]/12 text-[#2FB617] ring-1 ring-[#2FB617]/25">
-            <Sparkles className="h-4 w-4" />
-          </div>
+          <img
+            src="/brand/mascot.png"
+            alt="Repo Owl Study Companion"
+            className="h-10 w-10 rounded-xl object-cover ring-1 ring-[#2FB617]/35 shadow-2xs"
+          />
           <div>
-            <h2 className="text-sm sm:text-base font-extrabold text-[#090A0B] dark:text-[#F4EEE2]">
-              Smart Study Companion & PYQ Intelligence
+            <h2 className="text-sm sm:text-base font-extrabold text-[#090A0B] dark:text-[#F4EEE2] flex items-center gap-1.5">
+              <span>Repo Owl Study Companion & PYQ Intelligence</span>
+              <Sparkles className="h-3.5 w-3.5 text-[#2FB617]" />
             </h2>
             <p className="text-2xs text-[#5C574F] dark:text-[#94A3B8]">
               Quick revision notes, past year trend analysis & exam predictions for this PDF

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { SearchHero } from "@/components/search/SearchHero";
 import { ResourceCard } from "@/components/resources/ResourceCard";
+import { MascotHeroCard, ReplayIntroButton } from "@/components/brand/LogoIntroSplash";
 import { getApprovedResources } from "@/lib/supabase/persistence";
 import { 
   FileText, 
@@ -27,7 +28,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col gap-8 sm:gap-12 pb-12 sm:pb-16">
-      {/* 1. Minimalist Claymorphic Hero */}
+      {/* 1. Minimalist Claymorphic Hero with 3D Owl Mascot & Logo Intro */}
       <section className="relative overflow-hidden pt-7 pb-7 sm:pt-12 sm:pb-11 border-b border-[#D8CEBE] dark:border-[#1E2922]">
         <div
           className="pointer-events-none absolute inset-0 bg-minimal-grid opacity-75"
@@ -38,57 +39,68 @@ export default async function HomePage() {
         />
         <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-56 w-[26rem] sm:w-[36rem] rounded-full bg-[#2FB617]/8 blur-3xl dark:bg-[#2FB617]/10" />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-          <div className="animate-fade-up clay-pill inline-flex items-center gap-2 rounded-full border border-[#2FB617]/25 bg-white px-3.5 py-1 text-2xs sm:text-xs font-semibold text-[#259212] dark:border-[#2FB617]/30 dark:bg-[#0F1310] dark:text-[#2FB617] mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#2FB617] animate-pulse-subtle" />
-            <span>Kerala State Board • Classes 8–12</span>
-          </div>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-7 lg:gap-10">
+            {/* Left / Center Hero Content */}
+            <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="animate-fade-up clay-pill inline-flex items-center gap-2 rounded-full border border-[#2FB617]/25 bg-white px-3.5 py-1 text-2xs sm:text-xs font-semibold text-[#259212] dark:border-[#2FB617]/30 dark:bg-[#0F1310] dark:text-[#2FB617] mb-4">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#2FB617] animate-pulse-subtle" />
+                <span>Kerala State Board • Classes 8–12</span>
+              </div>
 
-          <h1 className="animate-fade-up delay-75 text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12] text-[#090A0B] dark:text-[#F4EEE2] max-w-2xl">
-            Study materials,{" "}
-            <span className="text-[#259212] dark:text-[#2FB617]">
-              without the clutter.
-            </span>
-          </h1>
+              <h1 className="animate-fade-up delay-75 text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12] text-[#090A0B] dark:text-[#F4EEE2] max-w-2xl">
+                Study materials,{" "}
+                <span className="text-[#259212] dark:text-[#2FB617]">
+                  without the clutter.
+                </span>
+              </h1>
 
-          <p className="animate-fade-up delay-150 mt-2.5 text-xs sm:text-sm text-[#5C574F] dark:text-[#94A3B8] max-w-md">
-            PDF notes, quick revision points, PYQ weightage analysis & exam predictions.
-          </p>
+              <p className="animate-fade-up delay-150 mt-2.5 text-xs sm:text-sm text-[#5C574F] dark:text-[#94A3B8] max-w-lg">
+                PDF notes, quick revision points, PYQ weightage analysis & exam predictions.
+              </p>
 
-          <div className="animate-fade-up delay-225 mt-5 sm:mt-6 w-full flex justify-center">
-            <SearchHero />
-          </div>
+              <div className="animate-fade-up delay-225 mt-5 sm:mt-6 w-full max-w-xl flex justify-center lg:justify-start">
+                <SearchHero />
+              </div>
 
-          {/* Quick Action Dock */}
-          <div className="animate-fade-up delay-300 mt-5 flex flex-wrap items-center justify-center gap-2">
-            <Link
-              href="/explore"
-              className="clay-btn inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition-all active:scale-96"
-            >
-              <FileText className="h-3.5 w-3.5" />
-              Browse Library ({approvedResources.length})
-            </Link>
-            <Link
-              href="/question-papers"
-              className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
-            >
-              <Target className="h-3.5 w-3.5 text-[#2FB617]" />
-              PYQ & Predictions
-            </Link>
-            <Link
-              href="/upload"
-              className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
-            >
-              <Upload className="h-3.5 w-3.5 text-[#2FB617]" />
-              Upload PDF
-            </Link>
-            <Link
-              href="/study-planner"
-              className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
-            >
-              <Calendar className="h-3.5 w-3.5 text-[#2FB617]" />
-              Planner
-            </Link>
+              {/* Quick Action Dock */}
+              <div className="animate-fade-up delay-300 mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                <Link
+                  href="/explore"
+                  className="clay-btn inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition-all active:scale-96"
+                >
+                  <FileText className="h-3.5 w-3.5" />
+                  Browse Library ({approvedResources.length})
+                </Link>
+                <Link
+                  href="/question-papers"
+                  className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
+                >
+                  <Target className="h-3.5 w-3.5 text-[#2FB617]" />
+                  PYQ & Predictions
+                </Link>
+                <Link
+                  href="/upload"
+                  className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
+                >
+                  <Upload className="h-3.5 w-3.5 text-[#2FB617]" />
+                  Upload PDF
+                </Link>
+                <Link
+                  href="/study-planner"
+                  className="clay-pill inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition-all active:scale-96"
+                >
+                  <Calendar className="h-3.5 w-3.5 text-[#2FB617]" />
+                  Planner
+                </Link>
+                <ReplayIntroButton />
+              </div>
+            </div>
+
+            {/* Right Hero 3D Clay Owl Mascot & Video Trigger */}
+            <div className="animate-fade-up delay-150 shrink-0">
+              <MascotHeroCard />
+            </div>
           </div>
         </div>
       </section>

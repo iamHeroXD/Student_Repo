@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LogoIntroSplash } from "@/components/brand/LogoIntroSplash";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,6 +33,10 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  icons: {
+    icon: "/brand/mascot.png",
+    apple: "/brand/mascot.png",
+  },
 };
 
 export default function RootLayout({
@@ -45,7 +50,8 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#F1E9DB] text-[#090A0B] dark:bg-[#090A0B] dark:text-[#F4EEE2] selection:bg-emerald-500/20 selection:text-emerald-600 transition-colors duration-200">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#F1E9DB] text-[#090A0B] dark:bg-[#090A0B] dark:text-[#F4EEE2] selection:bg-[#2FB617]/20 selection:text-[#259212] transition-colors duration-200">
+        <LogoIntroSplash />
         <Header />
         <main className="flex-1 w-full">
           {children}
@@ -55,3 +61,4 @@ export default function RootLayout({
     </html>
   );
 }
+
