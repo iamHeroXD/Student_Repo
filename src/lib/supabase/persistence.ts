@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import { getServiceRoleClient } from "./client";
-import { mockResources } from "@/lib/data/resources";
 import { Resource } from "@/types";
 
 const SYSTEM_BUCKET = "_system_db";
@@ -74,7 +73,7 @@ function getInitialState(): PlatformState {
         verification_status: "verified",
         education_board: "kerala-state",
         institution_name: "Student_Repo Directorate",
-        reputation_score: 1000,
+        reputation_score: 0,
         created_at: new Date().toISOString(),
         failed_attempts: 0,
       },
@@ -122,7 +121,12 @@ export async function loadPlatformState(): Promise<PlatformState> {
     }
     const text = await data.text();
     const parsed = JSON.parse(text) as PlatformState;
-    // Ensure default admin exists
+    if (!parsed.users) parsed.users = [];
+    if (!parsed.customResources) parsed.customResources = [];
+    if (!parsed.resourceStatusOverrides) parsed.resourceStatusOverrides = {};
+    if (!parsed.verificationRequests) parsed.verificationRequests = [];
+    if (!parsed.auditLogs) parsed.auditLogs = [];
+
     if (!parsed.users.find((u) => u.username_normalized === "studentrepo_admin")) {
       parsed.users.unshift(getInitialState().users[0]);
     }
@@ -164,13 +168,23 @@ export async function appendAuditLog(entry: Omit<AuditLogEntry, "id" | "timestam
 
 export async function getAllMergedResources(): Promise<Resource[]> {
   const state = await loadPlatformState();
-  const base = mockResources.map((r) => ({
+  return state.customResources.map((r) => ({
     ...r,
     status: state.resourceStatusOverrides[r.id] || r.status,
   }));
-  const custom = state.customResources.map((r) => ({
-    ...r,
-    status: state.resourceStatusOverrides[r.id] || r.status,
-  }));
-  return [...custom, ...base];
+}
+
+export async function getApprovedResources(): Promise<Resource[]> {
+  const all = await getAllMergedResources();
+  return all.filter((r) => r.status === "approved");
+}
+
+export async function getResourceBySlug(slug: string): Promise<Resource | null> {
+  const all = await getAllMergedResources();
+  return all.find((r) => r.slug === slug) || null;
+}
+
+export async function getResourceById(id: string): Promise<Resource | null> {
+  const all = await getAllMergedResources();
+  return all.find((r) => r.id === id) || null;
 }

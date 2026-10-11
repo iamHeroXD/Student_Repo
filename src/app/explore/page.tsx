@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import { mockResources } from "@/lib/data/resources";
+import { getApprovedResources } from "@/lib/supabase/persistence";
 import { ResourceCard } from "@/components/resources/ResourceCard";
 import { ExploreFilters } from "@/components/resources/ExploreFilters";
 import { SearchHero } from "@/components/search/SearchHero";
-import { siteConfig } from "@/config/site";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Upload } from "lucide-react";
+import Link from "next/link";
 
 interface ExplorePageProps {
   searchParams: Promise<{
@@ -31,8 +31,9 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
   const filterType = resolvedParams.type || "all";
   const sort = resolvedParams.sort || "popular";
 
-  // Filter resources
-  let resources = mockResources.filter((res) => {
+  const allApproved = await getApprovedResources();
+
+  let resources = allApproved.filter((res) => {
     if (filterClass !== "all" && res.class_id !== filterClass) return false;
     if (filterStream !== "all" && res.stream_id !== filterStream) return false;
     if (filterType !== "all" && res.resource_type_id !== filterType) return false;
@@ -45,7 +46,6 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
     return true;
   });
 
-  // Sort resources
   if (sort === "recent") {
     resources = [...resources].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   } else if (sort === "rating") {
@@ -57,20 +57,18 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
   } else if (sort === "downloads") {
     resources = [...resources].sort((a, b) => b.downloads_count - a.downloads_count);
   } else {
-    // popular default
     resources = [...resources].sort((a, b) => b.views_count - a.views_count);
   }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Search Header */}
       <div className="mb-8 flex flex-col gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-stone-100">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
             Academic Resource Library
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
-            Search across {mockResources.length}+ verified notes, question papers, and study materials.
+          <p className="text-xs sm:text-sm text-[#64748B] dark:text-[#94A3B8] mt-1">
+            Browse verified notes, question papers, and study materials ({allApproved.length} published).
           </p>
         </div>
 
@@ -78,28 +76,35 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Filter Sidebar */}
         <aside className="lg:col-span-1">
-          <Suspense fallback={<div className="h-64 rounded-xl bg-stone-100 animate-pulse" />}>
+          <Suspense fallback={<div className="h-64 rounded-2xl bg-[#F1F5F9] dark:bg-[#0F1310] animate-pulse" />}>
             <ExploreFilters />
           </Suspense>
         </aside>
 
-        {/* Right Resource Grid */}
         <main className="lg:col-span-3">
-          <div className="flex items-center justify-between mb-4 text-xs text-stone-500">
-            <span>Showing <strong className="text-stone-800 dark:text-stone-200">{resources.length}</strong> resources</span>
+          <div className="flex items-center justify-between mb-4 text-xs text-[#64748B] dark:text-[#94A3B8]">
+            <span>Showing <strong className="text-[#090A0B] dark:text-[#F8FAFC]">{resources.length}</strong> resources</span>
           </div>
 
           {resources.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-stone-300 p-12 text-center dark:border-stone-800">
-              <BookOpen className="h-10 w-10 text-stone-400 mb-3" />
-              <h3 className="font-semibold text-stone-800 dark:text-stone-200 text-sm">
-                No matching resources found
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#E2E8F0] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+              <BookOpen className="h-10 w-10 text-[#10B981] mb-3" />
+              <h3 className="font-bold text-[#090A0B] dark:text-[#F8FAFC] text-sm">
+                {allApproved.length === 0 ? "No PDFs Uploaded Yet" : "No matching resources found"}
               </h3>
-              <p className="text-xs text-stone-500 mt-1 max-w-sm">
-                Try clearing active filters or searching with different keywords like &quot;Physics&quot; or &quot;Maths&quot;.
+              <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1 max-w-sm">
+                {allApproved.length === 0
+                  ? "Upload the first study note or question paper PDF to populate the library."
+                  : "Try clearing active filters or searching with different keywords."}
               </p>
+              <Link
+                href="/upload"
+                className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-semibold text-white hover:bg-[#059669] transition"
+              >
+                <Upload className="h-3.5 w-3.5" />
+                Upload PDF Material
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

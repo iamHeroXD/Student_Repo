@@ -3,6 +3,8 @@ import {
   isAdminVaultUnlocked,
   lockAdminVaultAction,
   moderateResourceAction,
+  reviewTeacherVerificationAction,
+  manageUserAdminAction,
 } from "@/lib/auth/actions";
 import {
   loadPlatformState,
@@ -17,7 +19,9 @@ import {
   Lock,
   Activity,
   Users,
-  Database,
+  Upload,
+  Award,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -69,7 +73,6 @@ export default async function AdminDashboardPage() {
     );
   }
 
-  // Re-verify active status in backend state
   const state = await loadPlatformState();
   const dbAdmin = state.users.find(
     (u) => u.username_normalized === session.username.toLowerCase()
@@ -95,8 +98,11 @@ export default async function AdminDashboardPage() {
   const resources = await getAllMergedResources();
   const approvedResources = resources.filter((r) => r.status === "approved").length;
   const pendingResources = resources.filter((r) => r.status === "pending_review").length;
+  const pendingVerifications = state.verificationRequests.filter(
+    (v) => v.status === "pending"
+  ).length;
   const totalUsers = state.users.length;
-  const recentAuditLogs = state.auditLogs.slice(0, 12);
+  const recentAuditLogs = state.auditLogs.slice(0, 15);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
@@ -121,7 +127,14 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            href="/upload"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-semibold text-white hover:bg-[#059669] transition"
+          >
+            <Upload className="h-3.5 w-3.5" />
+            Upload & Publish PDF
+          </Link>
           <form action={lockAdminVaultAction}>
             <button
               type="submit"
@@ -141,18 +154,25 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Approved Materials</span>
+          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Approved PDFs</span>
           <div className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] mt-1">
             {approvedResources}
           </div>
         </div>
 
         <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Pending Moderation</span>
+          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Pending PDF Review</span>
           <div className="text-2xl font-extrabold text-[#10B981] mt-1">
             {pendingResources}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Teacher Verifications</span>
+          <div className="text-2xl font-extrabold text-[#10B981] mt-1">
+            {pendingVerifications} pending
           </div>
         </div>
 
@@ -162,103 +182,263 @@ export default async function AdminDashboardPage() {
             {totalUsers}
           </div>
         </div>
-
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Security Audit Events</span>
-          <div className="text-2xl font-extrabold text-[#10B981] mt-1">
-            {state.auditLogs.length}
-          </div>
-        </div>
       </div>
 
-      {/* Resource Moderation Table */}
+      {/* 1. Resource Moderation Table */}
       <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
         <div className="flex items-center justify-between border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
           <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
-            Academic Submissions & Moderation Queue
+            PDF Submissions & Moderation Queue ({resources.length})
           </span>
-          <span className="text-2xs text-[#64748B] dark:text-[#94A3B8]">
-            Server-enforced status controls
-          </span>
+          <Link href="/upload" className="text-2xs font-semibold text-[#10B981] hover:underline">
+            + Upload New PDF
+          </Link>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-[#E2E8F0] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
-              <tr>
-                <th className="px-5 py-3 font-semibold">Title</th>
-                <th className="px-5 py-3 font-semibold">Class / Subject</th>
-                <th className="px-5 py-3 font-semibold">Contributor</th>
-                <th className="px-5 py-3 font-semibold">Status</th>
-                <th className="px-5 py-3 font-semibold text-right">Moderation Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
-              {resources.map((res) => (
-                <tr key={res.id} className="hover:bg-[#F8FAFC] dark:hover:bg-[#121713]/60 transition">
-                  <td className="px-5 py-3.5 font-semibold text-[#090A0B] dark:text-[#F8FAFC] max-w-xs truncate">
-                    <Link href={`/resource/${res.slug}`} className="hover:text-[#10B981] transition">
-                      {res.title}
-                    </Link>
-                  </td>
-                  <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8] capitalize">
-                    {res.class_id} • {res.subject_id.replace("plus-two-", "").replace("class-10-", "")}
-                  </td>
-                  <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8]">
-                    @{res.uploader?.username || "contributor"}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {res.status === "approved" ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#10B981]/15 px-2.5 py-0.5 text-2xs font-bold text-[#059669] dark:text-[#10B981] capitalize">
-                        <CheckCircle2 className="h-3 w-3" /> Approved
-                      </span>
-                    ) : res.status === "rejected" ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2.5 py-0.5 text-2xs font-bold text-rose-600 dark:text-rose-400 capitalize">
-                        <XCircle className="h-3 w-3" /> Rejected
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-2xs font-bold text-amber-600 dark:text-amber-400 capitalize">
-                        Pending Review
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="inline-flex items-center gap-2">
-                      {res.status !== "approved" && (
-                        <form action={moderateResourceAction}>
-                          <input type="hidden" name="resourceId" value={res.id} />
-                          <input type="hidden" name="newStatus" value="approved" />
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-[#10B981] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#059669] transition"
-                          >
-                            Approve
-                          </button>
-                        </form>
-                      )}
-                      {res.status !== "rejected" && (
-                        <form action={moderateResourceAction}>
-                          <input type="hidden" name="resourceId" value={res.id} />
-                          <input type="hidden" name="newStatus" value="rejected" />
-                          <button
-                            type="submit"
-                            className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-1 text-2xs font-semibold text-rose-600 hover:bg-rose-500/20 dark:text-rose-400 transition"
-                          >
-                            Reject
-                          </button>
-                        </form>
-                      )}
-                    </div>
-                  </td>
+        {resources.length === 0 ? (
+          <div className="p-10 text-center text-xs text-[#64748B] dark:text-[#94A3B8]">
+            No PDFs have been uploaded yet. Click <strong>Upload & Publish PDF</strong> above to add the first document.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-[#E2E8F0] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Title</th>
+                  <th className="px-5 py-3 font-semibold">Class / Type</th>
+                  <th className="px-5 py-3 font-semibold">Contributor</th>
+                  <th className="px-5 py-3 font-semibold">Status</th>
+                  <th className="px-5 py-3 font-semibold text-right">Moderation Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
+                {resources.map((res) => (
+                  <tr key={res.id} className="hover:bg-[#F8FAFC] dark:hover:bg-[#121713]/60 transition">
+                    <td className="px-5 py-3.5 font-semibold text-[#090A0B] dark:text-[#F8FAFC] max-w-xs truncate">
+                      <Link href={`/resource/${res.slug}`} className="hover:text-[#10B981] transition">
+                        {res.title}
+                      </Link>
+                    </td>
+                    <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8] capitalize">
+                      {res.class_id} • {res.resource_type_id}
+                    </td>
+                    <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8]">
+                      @{res.uploader?.username || "contributor"}
+                    </td>
+                    <td className="px-5 py-3.5">
+                      {res.status === "approved" ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#10B981]/15 px-2.5 py-0.5 text-2xs font-bold text-[#059669] dark:text-[#10B981] capitalize">
+                          <CheckCircle2 className="h-3 w-3" /> Approved
+                        </span>
+                      ) : res.status === "rejected" ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2.5 py-0.5 text-2xs font-bold text-rose-600 dark:text-rose-400 capitalize">
+                          <XCircle className="h-3 w-3" /> Rejected
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-2xs font-bold text-amber-600 dark:text-amber-400 capitalize">
+                          Pending Review
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-5 py-3.5 text-right">
+                      <div className="inline-flex items-center gap-2">
+                        {res.status !== "approved" && (
+                          <form action={moderateResourceAction}>
+                            <input type="hidden" name="resourceId" value={res.id} />
+                            <input type="hidden" name="newStatus" value="approved" />
+                            <button
+                              type="submit"
+                              className="rounded-lg bg-[#10B981] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#059669] transition"
+                            >
+                              Approve
+                            </button>
+                          </form>
+                        )}
+                        {res.status !== "rejected" && (
+                          <form action={moderateResourceAction}>
+                            <input type="hidden" name="resourceId" value={res.id} />
+                            <input type="hidden" name="newStatus" value="rejected" />
+                            <button
+                              type="submit"
+                              className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-2xs font-semibold text-amber-600 hover:bg-amber-500/20 dark:text-amber-400 transition"
+                            >
+                              Reject
+                            </button>
+                          </form>
+                        )}
+                        <form action={moderateResourceAction}>
+                          <input type="hidden" name="resourceId" value={res.id} />
+                          <input type="hidden" name="newStatus" value="delete" />
+                          <button
+                            type="submit"
+                            title="Delete PDF permanently"
+                            className="rounded-lg border border-rose-500/30 bg-rose-500/10 p-1 text-rose-600 hover:bg-rose-500/20 dark:text-rose-400 transition"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
-      {/* Security Audit Log & Registered Users */}
+      {/* 2. Teacher Verification Queue */}
+      <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+        <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+          <Award className="h-4 w-4 text-[#10B981]" />
+          <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
+            Educator Verification Requests ({state.verificationRequests.length})
+          </span>
+        </div>
+
+        {state.verificationRequests.length === 0 ? (
+          <div className="p-8 text-center text-xs text-[#64748B] dark:text-[#94A3B8]">
+            No educator verification requests pending right now.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-[#E2E8F0] text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">Educator</th>
+                  <th className="px-5 py-3 font-semibold">School / Institution</th>
+                  <th className="px-5 py-3 font-semibold">Specialization</th>
+                  <th className="px-5 py-3 font-semibold">Status</th>
+                  <th className="px-5 py-3 font-semibold text-right">Decision</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
+                {state.verificationRequests.map((req) => (
+                  <tr key={req.id}>
+                    <td className="px-5 py-3.5">
+                      <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                        {req.full_name}
+                      </span>
+                      <span className="text-[#64748B] dark:text-[#94A3B8] ml-1.5">
+                        @{req.username}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8]">
+                      {req.school_name}
+                    </td>
+                    <td className="px-5 py-3.5 text-[#64748B] dark:text-[#94A3B8]">
+                      {req.subject_specialization} ({req.experience_years} yrs)
+                    </td>
+                    <td className="px-5 py-3.5">
+                      <span className="rounded-full bg-[#10B981]/10 px-2.5 py-0.5 text-2xs font-bold text-[#10B981] uppercase">
+                        {req.status}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right">
+                      <div className="inline-flex items-center gap-2">
+                        {req.status !== "verified" && (
+                          <form action={reviewTeacherVerificationAction}>
+                            <input type="hidden" name="requestId" value={req.id} />
+                            <input type="hidden" name="decision" value="verified" />
+                            <button
+                              type="submit"
+                              className="rounded-lg bg-[#10B981] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#059669] transition"
+                            >
+                              Verify Educator
+                            </button>
+                          </form>
+                        )}
+                        {req.status !== "rejected" && (
+                          <form action={reviewTeacherVerificationAction}>
+                            <input type="hidden" name="requestId" value={req.id} />
+                            <input type="hidden" name="decision" value="rejected" />
+                            <button
+                              type="submit"
+                              className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-2.5 py-1 text-2xs font-semibold text-rose-600 hover:bg-rose-500/20 dark:text-rose-400 transition"
+                            >
+                              Reject
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* 3. Security Audit Log & Registered Users Management */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Registered Accounts Directory & Role Controls */}
+        <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
+            <Users className="h-4 w-4 text-[#10B981]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
+              User Accounts & Role Management ({state.users.length})
+            </span>
+          </div>
+          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
+            {state.users.map((u) => (
+              <div
+                key={u.id}
+                className="px-5 py-3.5 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+              >
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={`/u/${u.username}`}
+                      className="font-semibold text-[#090A0B] hover:text-[#10B981] dark:text-[#F8FAFC]"
+                    >
+                      {u.full_name}
+                    </Link>
+                    {u.verification_status === "verified" && (
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
+                    )}
+                    {!u.is_active && (
+                      <span className="rounded bg-rose-500/15 px-1.5 py-0.5 text-2xs font-bold text-rose-600">
+                        SUSPENDED
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-2xs text-[#64748B] dark:text-[#94A3B8]">
+                    @{u.username} • Role: <strong className="uppercase">{u.role}</strong> • {u.reputation_score || 0} pts
+                  </span>
+                </div>
+
+                {u.username_normalized !== "studentrepo_admin" && (
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {u.role !== "teacher" && (
+                      <form action={manageUserAdminAction}>
+                        <input type="hidden" name="targetUsername" value={u.username} />
+                        <input type="hidden" name="operation" value="make_teacher" />
+                        <button
+                          type="submit"
+                          className="rounded-lg border border-[#10B981]/30 bg-[#10B981]/10 px-2 py-1 text-2xs font-semibold text-[#059669] dark:text-[#10B981] hover:bg-[#10B981]/20 transition"
+                        >
+                          Verify Teacher
+                        </button>
+                      </form>
+                    )}
+                    <form action={manageUserAdminAction}>
+                      <input type="hidden" name="targetUsername" value={u.username} />
+                      <input type="hidden" name="operation" value="toggle_active" />
+                      <button
+                        type="submit"
+                        className="rounded-lg border border-[#E2E8F0] px-2 py-1 text-2xs font-semibold text-[#64748B] hover:text-rose-600 dark:border-[#1E2922] dark:text-[#94A3B8] transition"
+                      >
+                        {u.is_active ? "Suspend" : "Activate"}
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Immutable Security Audit Log */}
         <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
@@ -267,7 +447,7 @@ export default async function AdminDashboardPage() {
               Security Audit Trail
             </span>
           </div>
-          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-80 overflow-y-auto">
+          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-96 overflow-y-auto">
             {recentAuditLogs.map((log) => (
               <div key={log.id} className="px-5 py-3 text-xs flex items-start justify-between gap-3">
                 <div>
@@ -294,35 +474,6 @@ export default async function AdminDashboardPage() {
                 <span className="text-2xs text-[#94A3B8] whitespace-nowrap">
                   {new Date(log.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Registered Accounts Directory */}
-        <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="flex items-center gap-2 border-b border-[#E2E8F0] bg-[#F8FAFC] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
-            <Users className="h-4 w-4 text-[#10B981]" />
-            <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
-              Registered Accounts ({state.users.length})
-            </span>
-          </div>
-          <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922] max-h-80 overflow-y-auto">
-            {state.users.map((u) => (
-              <div key={u.id} className="px-5 py-3 text-xs flex items-center justify-between">
-                <div>
-                  <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
-                    {u.full_name}
-                  </span>
-                  <span className="text-[#64748B] dark:text-[#94A3B8] ml-1.5">
-                    @{u.username}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="rounded-full bg-[#F1F5F9] px-2.5 py-0.5 text-2xs font-semibold text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] uppercase">
-                    {u.role}
-                  </span>
-                </div>
               </div>
             ))}
           </div>

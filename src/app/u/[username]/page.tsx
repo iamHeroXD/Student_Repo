@@ -1,6 +1,9 @@
-import { mockResources } from "@/lib/data/resources";
+import { notFound } from "next/navigation";
+import { loadPlatformState } from "@/lib/supabase/persistence";
 import { ResourceCard } from "@/components/resources/ResourceCard";
 import { CheckCircle2 } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 interface ProfilePageProps {
   params: Promise<{
@@ -20,25 +23,27 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
   const resolved = await params;
   const username = resolved.username.toLowerCase();
 
-  // Look for author in existing resources
-  const userResources = mockResources.filter(
-    (r) => r.uploader?.username.toLowerCase() === username
-  );
+  const state = await loadPlatformState();
+  const profile = state.users.find((u) => u.username_normalized === username);
 
-  const fallbackUser = userResources[0]?.uploader;
+  if (!profile) {
+    notFound();
+  }
 
-  const profile = fallbackUser || {
-    username: resolved.username,
-    full_name: resolved.username.replace(/_/g, " "),
-    role: "student" as const,
-    verification_status: "none" as const,
-    reputation_score: 50,
-    created_at: "2026-03-01T00:00:00Z",
-  };
+  const userResources = state.customResources
+    .map((r) => ({
+      ...r,
+      status: state.resourceStatusOverrides[r.id] || r.status,
+    }))
+    .filter(
+      (r) =>
+        r.status === "approved" &&
+        (r.uploader_id === profile.id ||
+          r.uploader?.username.toLowerCase() === username)
+    );
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-      {/* Profile Header Card */}
       <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6 sm:p-8 dark:border-[#1E2922] dark:bg-[#0F1310] shadow-2xs">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
@@ -57,26 +62,39 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
                 )}
               </div>
               <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-0.5">
-                @{profile.username} • {profile.role === "teacher" ? "Verified Educator" : "Student Member"}
+                @{profile.username} •{" "}
+                {profile.role === "admin"
+                  ? "Platform Administrator"
+                  : profile.role === "teacher"
+                  ? "Educator"
+                  : "Student Member"}
+                {profile.institution_name ? ` • ${profile.institution_name}` : ""}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-4 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] px-4 py-2.5 dark:border-[#1E2922] dark:bg-[#0A0D0B]">
             <div className="text-center">
-              <span className="block text-lg font-bold text-[#10B981]">{profile.reputation_score}</span>
-              <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] uppercase font-semibold">Reputation</span>
+              <span className="block text-lg font-bold text-[#10B981]">
+                {profile.reputation_score || 0}
+              </span>
+              <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] uppercase font-semibold">
+                Reputation
+              </span>
             </div>
             <div className="h-6 w-px bg-[#E2E8F0] dark:bg-[#1E2922]" />
             <div className="text-center">
-              <span className="block text-lg font-bold text-[#090A0B] dark:text-[#F8FAFC]">{userResources.length}</span>
-              <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] uppercase font-semibold">Materials</span>
+              <span className="block text-lg font-bold text-[#090A0B] dark:text-[#F8FAFC]">
+                {userResources.length}
+              </span>
+              <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] uppercase font-semibold">
+                Materials
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Contributions Section */}
       <div className="mt-10">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-[#090A0B] dark:text-[#F8FAFC]">
@@ -86,7 +104,7 @@ export default async function UserProfilePage({ params }: ProfilePageProps) {
 
         {userResources.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-[#E2E8F0] p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
-            No public notes or question papers contributed yet.
+            No approved public notes or question papers contributed yet.
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

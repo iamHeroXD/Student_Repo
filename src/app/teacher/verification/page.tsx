@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation";
 import { getCurrentSession } from "@/lib/auth/session";
-import { Award, CheckCircle2 } from "lucide-react";
+import { loadPlatformState } from "@/lib/supabase/persistence";
+import { submitTeacherVerificationAction } from "@/lib/auth/actions";
+import { Award, CheckCircle2, Clock } from "lucide-react";
+import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Teacher Verification",
@@ -12,6 +17,22 @@ export default async function TeacherVerificationPage() {
 
   if (!session) {
     redirect("/teacher/login");
+  }
+
+  const state = await loadPlatformState();
+  const userRecord = state.users.find(
+    (u) => u.username_normalized === session.username.toLowerCase()
+  );
+  const currentStatus =
+    userRecord?.verification_status || session.verificationStatus;
+
+  const existingReq = state.verificationRequests.find(
+    (v) => v.username.toLowerCase() === session.username.toLowerCase()
+  );
+
+  async function handleFormSubmit(formData: FormData) {
+    "use server";
+    await submitTeacherVerificationAction(formData);
   }
 
   return (
@@ -29,57 +50,99 @@ export default async function TeacherVerificationPage() {
       </div>
 
       <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310] space-y-5">
-        <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#090A0B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#F8FAFC]">
-          <CheckCircle2 className="h-5 w-5 text-[#10B981] shrink-0" />
-          <div>
-            <strong>Current Status: </strong>
-            <span className="capitalize">{session.verificationStatus === "none" ? "Unverified (Standard Contributor)" : session.verificationStatus}</span>
+        <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#090A0B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#F8FAFC]">
+          <div className="flex items-center gap-2.5">
+            {currentStatus === "verified" ? (
+              <CheckCircle2 className="h-5 w-5 text-[#10B981] shrink-0" />
+            ) : (
+              <Clock className="h-5 w-5 text-[#10B981] shrink-0" />
+            )}
+            <div>
+              <strong>Current Status: </strong>
+              <span className="capitalize font-semibold text-[#10B981]">
+                {currentStatus === "none"
+                  ? "Unverified (Standard Contributor)"
+                  : currentStatus}
+              </span>
+            </div>
           </div>
+          <Link
+            href="/dashboard"
+            className="text-2xs font-semibold text-[#64748B] hover:text-[#10B981]"
+          >
+            Dashboard →
+          </Link>
         </div>
 
-        <form className="space-y-4">
-          <div>
-            <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">Institution / School Name</label>
-            <input
-              type="text"
-              placeholder="e.g. Govt Higher Secondary School, Calicut"
-              required
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
-            />
+        {currentStatus === "verified" ? (
+          <div className="rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 p-5 text-center">
+            <h3 className="text-sm font-bold text-[#059669] dark:text-[#10B981]">
+              Your Educator Account is Verified!
+            </h3>
+            <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">
+              All your uploaded notes and question papers automatically display the Verified Educator badge.
+            </p>
           </div>
+        ) : (
+          <form action={handleFormSubmit} className="space-y-4">
+            <div>
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                Institution / School Name
+              </label>
+              <input
+                type="text"
+                name="schoolName"
+                defaultValue={existingReq?.school_name || userRecord?.institution_name || ""}
+                placeholder="e.g. Govt Higher Secondary School, Kozhikode"
+                required
+                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              />
+            </div>
 
-          <div>
-            <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">Subject Specialization</label>
-            <input
-              type="text"
-              placeholder="e.g. Higher Secondary Zoology / Botany"
-              required
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
-            />
-          </div>
+            <div>
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                Subject Specialization
+              </label>
+              <input
+                type="text"
+                name="specialization"
+                defaultValue={existingReq?.subject_specialization || ""}
+                placeholder="e.g. Higher Secondary Physics / Mathematics"
+                required
+                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              />
+            </div>
 
-          <div>
-            <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">Teaching Experience (Years)</label>
-            <input
-              type="number"
-              placeholder="5"
-              min={1}
-              required
-              className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
-            />
-          </div>
+            <div>
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+                Teaching Experience (Years)
+              </label>
+              <input
+                type="number"
+                name="experienceYears"
+                defaultValue={existingReq?.experience_years || 3}
+                min={1}
+                required
+                className="w-full mt-1 rounded-xl border border-[#E2E8F0] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              />
+            </div>
 
-          <div className="rounded-xl bg-[#F8FAFC] p-3.5 border border-[#E2E8F0] text-2xs text-[#64748B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#94A3B8]">
-            Verification requests are reviewed manually by platform administrators. No private documents or certificates are exposed publicly.
-          </div>
+            <div className="rounded-xl bg-[#F8FAFC] p-3.5 border border-[#E2E8F0] text-2xs text-[#64748B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#94A3B8]">
+              {existingReq && existingReq.status === "pending"
+                ? "Your verification request has been submitted and is currently in the Administrator Review Queue. You can update your details below if needed."
+                : "Verification requests are reviewed in the Admin Console. Once approved, your profile receives the Verified Educator badge (+100 reputation points)."}
+            </div>
 
-          <button
-            type="button"
-            className="w-full rounded-xl bg-[#10B981] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] transition"
-          >
-            Submit Verification Request
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="w-full rounded-xl bg-[#10B981] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] transition"
+            >
+              {existingReq?.status === "pending"
+                ? "Update Verification Request"
+                : "Submit Verification Request"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

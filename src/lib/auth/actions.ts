@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { getServiceRoleClient } from "@/lib/supabase/client";
-import { createSessionToken, verifySessionToken } from "./jwt";
+import { createSessionToken } from "./jwt";
 import { SESSION_COOKIE_NAME, getCurrentSession, validateUsername } from "./session";
 import {
   loadPlatformState,
@@ -13,6 +13,7 @@ import {
   appendAuditLog,
   StoredUser,
 } from "@/lib/supabase/persistence";
+import { Resource } from "@/types";
 
 const ADMIN_VAULT_COOKIE = "sr_admin_vault";
 const MAX_FAILED_ATTEMPTS = 5;
@@ -22,6 +23,8 @@ export interface AuthResult {
   success: boolean;
   error?: string;
   redirectTo?: string;
+  slug?: string;
+  status?: string;
 }
 
 function getAdminPasscodeHash(): string {
@@ -58,40 +61,7 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
 
   try {
     const state = await loadPlatformState();
-    let targetUser = state.users.find((u) => u.username_normalized === normalized);
-
-    // Also check PostgreSQL auth_credentials if table exists
-    try {
-      const supabase = getServiceRoleClient();
-      const { data: pgCred, error: pgErr } = await supabase
-        .from("auth_credentials")
-        .select("id, username, password_hash, role, is_active")
-        .eq("username_normalized", normalized)
-        .maybeSingle();
-
-      if (!pgErr && pgCred) {
-        const { data: pgProfile } = await supabase
-          .from("profiles")
-          .select("full_name, verification_status")
-          .eq("id", pgCred.id)
-          .maybeSingle();
-
-        targetUser = {
-          id: pgCred.id,
-          username: pgCred.username,
-          username_normalized: normalized,
-          password_hash: pgCred.password_hash,
-          role: pgCred.role,
-          is_active: pgCred.is_active,
-          full_name: pgProfile?.full_name || pgCred.username,
-          verification_status: pgProfile?.verification_status || "none",
-          reputation_score: 50,
-          created_at: new Date().toISOString(),
-        };
-      }
-    } catch {
-      // Fallback to Supabase Storage state seamlessly
-    }
+    const targetUser = state.users.find((u) => u.username_normalized === normalized);
 
     if (!targetUser || !targetUser.is_active) {
       await appendAuditLog({
@@ -100,7 +70,7 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
         action: "AUTH_LOGIN_FAILED",
         target: "/login",
         status: "warning",
-        details: "Unknown or inactive username login attempt",
+        details: "Unknown or suspended username login attempt",
       });
       return { success: false, error: "Invalid username or password." };
     }
@@ -146,7 +116,6 @@ export async function loginAction(formData: FormData): Promise<AuthResult> {
       return { success: false, error: "Invalid username or password." };
     }
 
-    // Reset failed attempts & record last_login_at
     const idx = state.users.findIndex((u) => u.username_normalized === normalized);
     if (idx !== -1) {
       state.users[idx].failed_attempts = 0;
@@ -215,7 +184,6 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
     return { success: false, error: "Passwords do not match." };
   }
 
-  // Strictly prevent privilege escalation: only 'student' or 'teacher' allowed on public signup
   const safeRole: "student" | "teacher" = requestedRole === "teacher" ? "teacher" : "student";
   const normalized = username.toLowerCase();
 
@@ -242,38 +210,13 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
       target_stream: targetStream || null,
       education_board: educationBoard,
       institution_name: institutionName || null,
-      reputation_score: 50,
+      reputation_score: 10,
       created_at: new Date().toISOString(),
       failed_attempts: 0,
     };
 
     state.users.push(newUser);
     await savePlatformState(state);
-
-    // Also write to PostgreSQL tables if they exist
-    try {
-      const supabase = getServiceRoleClient();
-      await supabase.from("auth_credentials").insert({
-        id: newUserId,
-        username,
-        username_normalized: normalized,
-        password_hash: passwordHash,
-        role: safeRole,
-      });
-      await supabase.from("profiles").insert({
-        id: newUserId,
-        username,
-        full_name: fullName,
-        role: safeRole,
-        verification_status: "none",
-        target_class: targetClass || null,
-        target_stream: targetStream || null,
-        education_board: educationBoard,
-        institution_name: institutionName || null,
-      });
-    } catch {
-      // Handled by Supabase Storage persistence state
-    }
 
     const token = await createSessionToken({
       userId: newUser.id,
@@ -318,6 +261,271 @@ export async function logoutAction(): Promise<void> {
 }
 
 /**
+ * Real PDF Upload Server Action -> Uploads PDF to Supabase 'resources' bucket & creates Resource record
+ */
+export async function uploadResourceAction(formData: FormData): Promise<AuthResult> {
+  const session = await getCurrentSession();
+  if (!session) {
+    return { success: false, error: "You must be signed in to upload academic materials." };
+  }
+
+  const file = formData.get("file") as File | null;
+  const title = (formData.get("title") as string)?.trim();
+  const description = (formData.get("description") as string)?.trim();
+  const classId = (formData.get("classId") as string) || "plus-two";
+  const streamId = (formData.get("streamId") as string) || "science";
+  const subjectId = (formData.get("subjectId") as string) || `${classId}-general`;
+  const resourceTypeId = (formData.get("resourceTypeId") as string) || "notes";
+  const language = (formData.get("language") as string) || "English";
+  const authorName = (formData.get("authorName") as string)?.trim() || session.fullName;
+  const institution = (formData.get("institution") as string)?.trim() || "";
+  const pageCount = Math.max(1, parseInt((formData.get("pageCount") as string) || "1", 10) || 1);
+
+  if (!file || file.size === 0) {
+    return { success: false, error: "Please select a valid PDF file to upload." };
+  }
+  if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+    return { success: false, error: "Only PDF documents (.pdf) are allowed." };
+  }
+  if (file.size > 25 * 1024 * 1024) {
+    return { success: false, error: "File size exceeds the 25 MB maximum limit." };
+  }
+  if (!title || title.length < 4) {
+    return { success: false, error: "Please enter a clear title (at least 4 characters)." };
+  }
+  if (!description || description.length < 10) {
+    return { success: false, error: "Please provide a description of the material." };
+  }
+
+  try {
+    const state = await loadPlatformState();
+    const uploaderUser = state.users.find(
+      (u) => u.username_normalized === session.username.toLowerCase()
+    );
+
+    if (uploaderUser && !uploaderUser.is_active) {
+      return { success: false, error: "Your account is currently suspended from uploading." };
+    }
+
+    const resourceId = `res-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const baseSlug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 60);
+    const slug = `${baseSlug}-${Date.now().toString(36)}`;
+    const storagePath = `uploads/${resourceId}.pdf`;
+
+    // Upload binary PDF to Supabase 'resources' storage bucket
+    const supabase = getServiceRoleClient();
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const { error: uploadErr } = await supabase.storage
+      .from("resources")
+      .upload(storagePath, buffer, {
+        contentType: "application/pdf",
+        upsert: true,
+      });
+
+    if (uploadErr) {
+      return { success: false, error: `Storage upload failed: ${uploadErr.message}` };
+    }
+
+    // Admins & Moderators auto-approve; others enter pending_review queue
+    const initialStatus: Resource["status"] =
+      session.role === "admin" || session.role === "moderator"
+        ? "approved"
+        : "pending_review";
+
+    const newResource: Resource = {
+      id: resourceId,
+      title,
+      slug,
+      description,
+      board_id: "kerala-state",
+      class_id: classId,
+      stream_id: streamId,
+      subject_id: subjectId,
+      resource_type_id: resourceTypeId,
+      language,
+      download_allowed: true,
+      has_answer_key: resourceTypeId === "answer-key" || resourceTypeId === "question-paper",
+      storage_path: storagePath,
+      file_size_bytes: file.size,
+      page_count: pageCount,
+      file_type: "application/pdf",
+      author_name: authorName,
+      school_or_institution: institution || uploaderUser?.institution_name || undefined,
+      rights_declaration: "Authorized for open educational use on Student_Repo.",
+      uploader_id: session.userId,
+      uploader: {
+        id: session.userId,
+        username: session.username,
+        full_name: uploaderUser?.full_name || session.fullName,
+        role: uploaderUser?.role || session.role,
+        verification_status: uploaderUser?.verification_status || session.verificationStatus,
+        reputation_score: uploaderUser?.reputation_score || 10,
+        created_at: uploaderUser?.created_at || new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+      status: initialStatus,
+      views_count: 1,
+      preview_opens: 1,
+      downloads_count: 0,
+      saves_count: 0,
+      rating_sum: 0,
+      ratings_count: 0,
+      helpful_count: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    state.customResources.unshift(newResource);
+
+    // If auto-approved, reward uploader reputation
+    if (initialStatus === "approved" && uploaderUser) {
+      uploaderUser.reputation_score = (uploaderUser.reputation_score || 0) + 50;
+    }
+
+    await savePlatformState(state);
+
+    await appendAuditLog({
+      actor_username: session.username,
+      actor_role: session.role,
+      action: "RESOURCE_UPLOADED",
+      target: `/resource/${slug}`,
+      status: "success",
+      details: `Uploaded PDF "${title}" (${(file.size / 1024).toFixed(0)} KB) [${initialStatus}]`,
+    });
+
+    revalidatePath("/");
+    revalidatePath("/explore");
+    revalidatePath("/classes");
+    revalidatePath(`/class/${classId}`);
+    revalidatePath("/question-papers");
+    revalidatePath("/dashboard");
+    revalidatePath("/admin");
+    revalidatePath("/leaderboard");
+
+    return {
+      success: true,
+      slug,
+      status: initialStatus,
+    };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Upload failed";
+    return { success: false, error: message };
+  }
+}
+
+/**
+ * Real Star Rating Action (1-5 stars)
+ */
+export async function rateResourceAction(
+  resourceId: string,
+  stars: number
+): Promise<{ success: boolean; ratingAvg?: string; count?: number; error?: string }> {
+  if (stars < 1 || stars > 5) {
+    return { success: false, error: "Rating must be between 1 and 5 stars." };
+  }
+
+  try {
+    const state = await loadPlatformState();
+    const res = state.customResources.find((r) => r.id === resourceId);
+    if (!res) {
+      return { success: false, error: "Resource not found." };
+    }
+
+    res.rating_sum = (res.rating_sum || 0) + stars;
+    res.ratings_count = (res.ratings_count || 0) + 1;
+
+    // Reward contributor reputation
+    const uploader = state.users.find(
+      (u) => u.id === res.uploader_id || u.username_normalized === res.uploader?.username.toLowerCase()
+    );
+    if (uploader) {
+      uploader.reputation_score = (uploader.reputation_score || 0) + stars * 5;
+    }
+
+    await savePlatformState(state);
+    revalidatePath(`/resource/${res.slug}`);
+    revalidatePath("/explore");
+    revalidatePath("/leaderboard");
+
+    return {
+      success: true,
+      ratingAvg: (res.rating_sum / res.ratings_count).toFixed(1),
+      count: res.ratings_count,
+    };
+  } catch {
+    return { success: false, error: "Could not save rating." };
+  }
+}
+
+/**
+ * Submit Teacher Verification Request
+ */
+export async function submitTeacherVerificationAction(formData: FormData): Promise<AuthResult> {
+  const session = await getCurrentSession();
+  if (!session) {
+    return { success: false, error: "Please sign in first." };
+  }
+
+  const schoolName = (formData.get("schoolName") as string)?.trim();
+  const specialization = (formData.get("specialization") as string)?.trim();
+  const experienceYears = parseInt((formData.get("experienceYears") as string) || "1", 10) || 1;
+
+  if (!schoolName || !specialization) {
+    return { success: false, error: "Please provide both your institution name and specialization." };
+  }
+
+  const state = await loadPlatformState();
+  const user = state.users.find((u) => u.username_normalized === session.username.toLowerCase());
+  if (user) {
+    user.verification_status = "pending";
+    user.institution_name = schoolName;
+  }
+
+  const existingIdx = state.verificationRequests.findIndex(
+    (v) => v.username.toLowerCase() === session.username.toLowerCase()
+  );
+
+  const reqItem = {
+    id: `ver-${Date.now()}`,
+    user_id: session.userId,
+    username: session.username,
+    full_name: user?.full_name || session.fullName,
+    school_name: schoolName,
+    subject_specialization: specialization,
+    experience_years: experienceYears,
+    status: "pending" as const,
+    created_at: new Date().toISOString(),
+  };
+
+  if (existingIdx !== -1) {
+    state.verificationRequests[existingIdx] = reqItem;
+  } else {
+    state.verificationRequests.unshift(reqItem);
+  }
+
+  await savePlatformState(state);
+
+  await appendAuditLog({
+    actor_username: session.username,
+    actor_role: session.role,
+    action: "TEACHER_VERIFICATION_REQUESTED",
+    target: "/teacher/verification",
+    status: "success",
+    details: `${schoolName} (${specialization}, ${experienceYears} yrs)`,
+  });
+
+  revalidatePath("/teacher/verification");
+  revalidatePath("/admin");
+  return { success: true };
+}
+
+/**
  * Secondary Step-Up Authentication for /admin Vault Unlock
  */
 export async function unlockAdminVaultAction(formData: FormData): Promise<AuthResult> {
@@ -359,7 +567,7 @@ export async function unlockAdminVaultAction(formData: FormData): Promise<AuthRe
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 60 * 30, // Strict 30-minute step-up session
+    maxAge: 60 * 30,
     path: "/",
   });
 
@@ -395,51 +603,185 @@ export async function lockAdminVaultAction(): Promise<void> {
 }
 
 /**
- * Server-enforced resource moderation action (Approve / Reject)
+ * Server-enforced resource moderation action (Approve / Reject / Delete)
  */
 export async function moderateResourceAction(formData: FormData): Promise<void> {
   const session = await getCurrentSession();
   const unlocked = await isAdminVaultUnlocked();
 
   if (!session || (session.role !== "admin" && session.role !== "moderator") || !unlocked) {
-    await appendAuditLog({
-      actor_username: session?.username || "anonymous",
-      actor_role: session?.role || "none",
-      action: "UNAUTHORIZED_MODERATION_ATTEMPT",
-      target: "/admin",
-      status: "blocked",
-      details: "Attempted resource moderation without unlocked admin session",
-    });
     throw new Error("Unauthorized moderation request");
   }
 
   const resourceId = formData.get("resourceId") as string;
-  const newStatus = formData.get("newStatus") as "approved" | "rejected" | "pending_review";
+  const newStatus = formData.get("newStatus") as "approved" | "rejected" | "pending_review" | "delete";
 
-  if (!resourceId || !["approved", "rejected", "pending_review"].includes(newStatus)) {
-    return;
-  }
+  if (!resourceId) return;
 
   const state = await loadPlatformState();
-  // Re-verify admin is still active in DB
-  const adminRecord = state.users.find((u) => u.username_normalized === session.username.toLowerCase());
-  if (adminRecord && !adminRecord.is_active) {
-    throw new Error("Admin account is no longer active");
+  const resIdx = state.customResources.findIndex((r) => r.id === resourceId);
+
+  if (newStatus === "delete") {
+    if (resIdx !== -1) {
+      const removed = state.customResources[resIdx];
+      state.customResources.splice(resIdx, 1);
+      delete state.resourceStatusOverrides[resourceId];
+      try {
+        const supabase = getServiceRoleClient();
+        await supabase.storage.from("resources").remove([removed.storage_path]);
+      } catch {
+        // Ignore storage removal errors
+      }
+      await savePlatformState(state);
+      await appendAuditLog({
+        actor_username: session.username,
+        actor_role: session.role,
+        action: "RESOURCE_DELETED",
+        target: `resource:${resourceId}`,
+        status: "warning",
+        details: `Deleted resource "${removed.title}"`,
+      });
+    }
+  } else if (["approved", "rejected", "pending_review"].includes(newStatus)) {
+    state.resourceStatusOverrides[resourceId] = newStatus;
+    if (resIdx !== -1) {
+      const prevStatus = state.customResources[resIdx].status;
+      state.customResources[resIdx].status = newStatus;
+
+      // Award +50 reputation points when transitioning to approved
+      if (prevStatus !== "approved" && newStatus === "approved") {
+        const uploader = state.users.find(
+          (u) =>
+            u.id === state.customResources[resIdx].uploader_id ||
+            u.username_normalized === state.customResources[resIdx].uploader?.username.toLowerCase()
+        );
+        if (uploader) {
+          uploader.reputation_score = (uploader.reputation_score || 0) + 50;
+        }
+      }
+    }
+    await savePlatformState(state);
+
+    await appendAuditLog({
+      actor_username: session.username,
+      actor_role: session.role,
+      action: `RESOURCE_${newStatus.toUpperCase()}`,
+      target: `resource:${resourceId}`,
+      status: "success",
+      details: `Changed resource status to ${newStatus}`,
+    });
   }
 
-  state.resourceStatusOverrides[resourceId] = newStatus;
+  revalidatePath("/admin");
+  revalidatePath("/explore");
+  revalidatePath("/classes");
+  revalidatePath("/question-papers");
+  revalidatePath("/leaderboard");
+  revalidatePath("/dashboard");
+  revalidatePath("/");
+}
+
+/**
+ * Admin Teacher Verification Approval / Rejection
+ */
+export async function reviewTeacherVerificationAction(formData: FormData): Promise<void> {
+  const session = await getCurrentSession();
+  const unlocked = await isAdminVaultUnlocked();
+
+  if (!session || (session.role !== "admin" && session.role !== "moderator") || !unlocked) {
+    throw new Error("Unauthorized verification review");
+  }
+
+  const requestId = formData.get("requestId") as string;
+  const decision = formData.get("decision") as "verified" | "rejected";
+
+  const state = await loadPlatformState();
+  const reqItem = state.verificationRequests.find((r) => r.id === requestId);
+  if (!reqItem) return;
+
+  reqItem.status = decision;
+
+  const user = state.users.find(
+    (u) => u.username_normalized === reqItem.username.toLowerCase()
+  );
+  if (user) {
+    user.verification_status = decision;
+    if (decision === "verified") {
+      user.role = "teacher";
+      user.reputation_score = (user.reputation_score || 0) + 100;
+    }
+  }
+
+  // Also update uploader badge on any resources uploaded by this user
+  for (const res of state.customResources) {
+    if (res.uploader && res.uploader.username.toLowerCase() === reqItem.username.toLowerCase()) {
+      res.uploader.verification_status = decision;
+      if (decision === "verified") res.uploader.role = "teacher";
+    }
+  }
+
   await savePlatformState(state);
 
   await appendAuditLog({
     actor_username: session.username,
     actor_role: session.role,
-    action: `RESOURCE_${newStatus.toUpperCase()}`,
-    target: `resource:${resourceId}`,
+    action: `TEACHER_VERIFICATION_${decision.toUpperCase()}`,
+    target: `@${reqItem.username}`,
     status: "success",
-    details: `Changed resource status to ${newStatus}`,
+    details: `${decision === "verified" ? "Verified" : "Rejected"} educator status for @${reqItem.username}`,
   });
 
   revalidatePath("/admin");
-  revalidatePath("/explore");
-  revalidatePath("/");
+  revalidatePath("/leaderboard");
+  revalidatePath(`/u/${reqItem.username}`);
+  revalidatePath("/teacher/verification");
+}
+
+/**
+ * Admin User Account Management (Role / Active Toggle)
+ */
+export async function manageUserAdminAction(formData: FormData): Promise<void> {
+  const session = await getCurrentSession();
+  const unlocked = await isAdminVaultUnlocked();
+
+  if (!session || session.role !== "admin" || !unlocked) {
+    throw new Error("Unauthorized user management request");
+  }
+
+  const targetUsername = (formData.get("targetUsername") as string)?.toLowerCase();
+  const operation = formData.get("operation") as "toggle_active" | "make_teacher" | "make_moderator" | "make_student";
+
+  if (!targetUsername || targetUsername === "studentrepo_admin") {
+    return; // Protect root admin
+  }
+
+  const state = await loadPlatformState();
+  const user = state.users.find((u) => u.username_normalized === targetUsername);
+  if (!user) return;
+
+  if (operation === "toggle_active") {
+    user.is_active = !user.is_active;
+  } else if (operation === "make_teacher") {
+    user.role = "teacher";
+    user.verification_status = "verified";
+  } else if (operation === "make_moderator") {
+    user.role = "moderator";
+  } else if (operation === "make_student") {
+    user.role = "student";
+  }
+
+  await savePlatformState(state);
+
+  await appendAuditLog({
+    actor_username: session.username,
+    actor_role: session.role,
+    action: `USER_ADMIN_${operation.toUpperCase()}`,
+    target: `@${user.username}`,
+    status: "success",
+    details: `Updated @${user.username} (role=${user.role}, active=${user.is_active})`,
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/leaderboard");
+  revalidatePath(`/u/${user.username}`);
 }

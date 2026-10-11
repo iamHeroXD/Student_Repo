@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { mockResources } from "@/lib/data/resources";
+import { getResourceBySlug } from "@/lib/supabase/persistence";
 import { DocumentPreview } from "@/components/resources/DocumentPreview";
 import { formatFileSize, formatDate } from "@/lib/utils";
 import { ResourceActions } from "@/components/resources/ResourceActions";
@@ -11,21 +11,17 @@ import {
   ArrowLeft
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 interface ResourceDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
 }
 
-export function generateStaticParams() {
-  return mockResources.map((r) => ({
-    slug: r.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: ResourceDetailPageProps) {
   const resolved = await params;
-  const resource = mockResources.find((r) => r.slug === resolved.slug);
+  const resource = await getResourceBySlug(resolved.slug);
   if (!resource) return { title: "Resource Not Found" };
   return {
     title: resource.title,
@@ -35,7 +31,7 @@ export async function generateMetadata({ params }: ResourceDetailPageProps) {
 
 export default async function ResourceDetailPage({ params }: ResourceDetailPageProps) {
   const resolved = await params;
-  const resource = mockResources.find((r) => r.slug === resolved.slug);
+  const resource = await getResourceBySlug(resolved.slug);
 
   if (!resource) {
     notFound();
@@ -45,11 +41,10 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
     ? (resource.rating_sum / resource.ratings_count).toFixed(1)
     : "Unrated";
 
-  const contributorUsername = resource.uploader?.username || "radhakrishnan_bio";
+  const contributorUsername = resource.uploader?.username || "studentrepo_admin";
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Back button */}
       <div className="mb-6">
         <Link
           href="/explore"
@@ -63,7 +58,6 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
         {/* Main Document Details & Reader */}
         <div className="lg:col-span-2 space-y-6">
           <div>
-            {/* Badges */}
             <div className="flex flex-wrap items-center gap-2 mb-3">
               <span className="rounded-lg bg-[#F1F5F9] px-2.5 py-1 text-xs font-semibold text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
                 {resource.class_id.replace("-", " ")}
@@ -74,6 +68,11 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
               {resource.stream_id && (
                 <span className="rounded-lg bg-[#F1F5F9] px-2.5 py-1 text-xs font-medium text-[#64748B] dark:bg-[#1E2922] dark:text-[#94A3B8] capitalize">
                   {resource.stream_id} Stream
+                </span>
+              )}
+              {resource.status !== "approved" && (
+                <span className="rounded-lg bg-amber-500/15 px-2.5 py-1 text-xs font-bold text-amber-600 dark:text-amber-400 uppercase">
+                  {resource.status.replace("_", " ")}
                 </span>
               )}
             </div>
@@ -87,12 +86,12 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
             </p>
           </div>
 
-          {/* Interactive Document Preview */}
+          {/* Real Embedded PDF Preview */}
           <DocumentPreview 
+            resourceId={resource.id}
             title={resource.title}
             pageCount={resource.page_count}
             downloadAllowed={resource.download_allowed}
-            samplePath={resource.storage_path}
           />
 
           {/* Attribution & Rights Statement */}
@@ -113,7 +112,6 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
 
         {/* Sidebar Information & Actions */}
         <div className="space-y-6">
-          {/* Quick Actions Card */}
           <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0] dark:border-[#1E2922]">
               <span className="text-xs font-semibold text-[#64748B] dark:text-[#94A3B8]">Document Rating</span>
@@ -124,7 +122,7 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
               </div>
             </div>
 
-            <ResourceActions slug={resource.slug} />
+            <ResourceActions resourceId={resource.id} slug={resource.slug} />
           </div>
 
           {/* Contributor Card */}
@@ -148,7 +146,7 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
                   )}
                 </div>
                 <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
-                  {resource.uploader?.role === "teacher" ? "Verified Educator" : "Community Contributor"}
+                  @{contributorUsername} • {resource.uploader?.role === "teacher" ? "Verified Educator" : "Contributor"}
                 </span>
               </div>
             </Link>
@@ -178,6 +176,11 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
             <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
               <span className="text-[#64748B] dark:text-[#94A3B8]">Language</span>
               <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{resource.language}</span>
+            </div>
+
+            <div className="flex justify-between py-1.5 border-b border-[#E2E8F0] dark:border-[#1E2922]">
+              <span className="text-[#64748B] dark:text-[#94A3B8]">Downloads</span>
+              <span className="font-semibold text-[#090A0B] dark:text-[#F8FAFC]">{resource.downloads_count || 0}</span>
             </div>
 
             <div className="flex justify-between py-1.5">
