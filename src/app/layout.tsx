@@ -32,9 +32,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-stone-50/50 text-stone-900 dark:bg-stone-950 dark:text-stone-100 selection:bg-amber-500/20 selection:text-amber-900">
+      <body className="min-h-full flex flex-col bg-[#FFFFFF] text-[#090A0B] dark:bg-[#090A0B] dark:text-[#F8FAFC] selection:bg-emerald-500/20 selection:text-emerald-600 transition-colors duration-200">
         <Header />
         <main className="flex-1">
           {children}

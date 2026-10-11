@@ -23,6 +23,7 @@ export function DocumentPreview({ title, pageCount, downloadAllowed, samplePath 
   const [currentPage, setCurrentPage] = useState(1);
   const [zoomLevel, setZoomLevel] = useState(100);
   const [downloading, setDownloading] = useState(false);
+  const [downloadNote, setDownloadNote] = useState<string | null>(null);
 
   const handleNextPage = () => {
     if (currentPage < pageCount) setCurrentPage(currentPage + 1);
@@ -42,14 +43,22 @@ export function DocumentPreview({ title, pageCount, downloadAllowed, samplePath 
 
   const handleDownload = () => {
     setDownloading(true);
+    setDownloadNote(null);
     setTimeout(() => {
       setDownloading(false);
-      alert("Preparing authorized download stream via signed token...");
-    }, 600);
+      setDownloadNote("Sample preview mode active. Connect Supabase Storage to stream full PDF files.");
+      setTimeout(() => setDownloadNote(null), 4500);
+    }, 500);
   };
 
   return (
     <div className="flex flex-col rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310] transition">
+      {downloadNote && (
+        <div className="border-b border-[#10B981]/20 bg-[#10B981]/10 px-4 py-2 text-xs font-medium text-[#059669] dark:text-[#10B981] flex items-center justify-between">
+          <span>{downloadNote}</span>
+          <button onClick={() => setDownloadNote(null)} className="text-2xs underline ml-3">Dismiss</button>
+        </div>
+      )}
       {/* Top Viewer Toolbar */}
       <div className="flex flex-wrap items-center justify-between border-b border-[#E2E8F0] bg-[#F8FAFC] px-4 py-3 dark:border-[#1E2922] dark:bg-[#121713] gap-2">
         {/* Navigation */}

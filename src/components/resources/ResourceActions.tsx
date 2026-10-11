@@ -1,32 +1,71 @@
 "use client";
 
-import { Bookmark, Share2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Bookmark, Share2, Check } from "lucide-react";
 
-export function ResourceActions() {
+interface ResourceActionsProps {
+  slug?: string;
+}
+
+export function ResourceActions({ slug = "default" }: ResourceActionsProps) {
+  const [saved, setSaved] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    try {
+      const list = JSON.parse(localStorage.getItem("sr_bookmarks") || "[]") as string[];
+      setSaved(list.includes(slug));
+    } catch {
+      // ignore storage errors
+    }
+  }, [slug]);
+
   const handleSave = () => {
-    alert("Saved to your personal library bookmark list!");
+    try {
+      const list = JSON.parse(localStorage.getItem("sr_bookmarks") || "[]") as string[];
+      const next = list.includes(slug) ? list.filter((s) => s !== slug) : [...list, slug];
+      localStorage.setItem("sr_bookmarks", JSON.stringify(next));
+      setSaved(next.includes(slug));
+    } catch {
+      setSaved(!saved);
+    }
   };
 
   const handleShare = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
-      alert("Resource link copied to clipboard!");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
   return (
-    <div className="grid grid-cols-2 gap-2 text-xs">
-      <button 
+    <div className="grid grid-cols-2 gap-2.5 text-xs">
+      <button
         onClick={handleSave}
-        className="flex items-center justify-center gap-1.5 rounded-lg border border-stone-200 py-2 font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-700 dark:text-stone-300 dark:hover:bg-stone-800 transition"
+        className={`flex items-center justify-center gap-1.5 rounded-xl border py-2.5 font-semibold transition active:scale-[0.98] ${
+          saved
+            ? "border-[#10B981] bg-[#10B981]/10 text-[#059669] dark:text-[#10B981]"
+            : "border-[#E2E8F0] bg-white text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713]"
+        }`}
       >
-        <Bookmark className="h-4 w-4" /> Save
+        <Bookmark className={`h-4 w-4 ${saved ? "fill-current" : ""}`} />
+        {saved ? "Saved" : "Save"}
       </button>
-      <button 
+      <button
         onClick={handleShare}
-        className="flex items-center justify-center gap-1.5 rounded-lg border border-stone-200 py-2 font-medium text-stone-700 hover:bg-stone-50 dark:border-stone-700 dark:text-stone-300 dark:hover:bg-stone-800 transition"
+        className="flex items-center justify-center gap-1.5 rounded-xl border border-[#E2E8F0] bg-white py-2.5 font-semibold text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#F8FAFC] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition active:scale-[0.98]"
       >
-        <Share2 className="h-4 w-4" /> Share
+        {copied ? (
+          <>
+            <Check className="h-4 w-4 text-[#10B981]" />
+            <span className="text-[#10B981]">Copied Link</span>
+          </>
+        ) : (
+          <>
+            <Share2 className="h-4 w-4" /> Share
+          </>
+        )}
       </button>
     </div>
   );

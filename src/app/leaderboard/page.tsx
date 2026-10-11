@@ -1,5 +1,4 @@
-import { siteConfig } from "@/config/site";
-import { Award, CheckCircle2, Star, TrendingUp, Users } from "lucide-react";
+import { Award, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = {
@@ -28,24 +27,24 @@ const contributors: Contributor[] = [
 
 export default function LeaderboardPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <div className="inline-flex items-center gap-1.5 rounded-md bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-700 dark:text-amber-400 mb-2">
+        <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-[#10B981]/10 px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] dark:text-[#10B981] mb-3">
           <Award className="h-3.5 w-3.5" /> Quality Recognition System
         </div>
-        <h1 className="text-3xl font-extrabold text-stone-900 dark:text-stone-100">
+        <h1 className="text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
           Academic Leaderboard
         </h1>
-        <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mt-1 max-w-2xl">
+        <p className="text-xs sm:text-sm text-[#64748B] dark:text-[#94A3B8] mt-1.5 max-w-2xl">
           Rewarding genuine educational contributions. Rankings are calculated based on peer ratings, helpfulness votes, and verified note quality rather than raw download volume.
         </p>
       </div>
 
       {/* Leaderboard Table */}
-      <div className="rounded-xl border border-stone-200 bg-white overflow-hidden shadow-2xs dark:border-stone-800 dark:bg-stone-900">
+      <div className="rounded-2xl border border-[#E2E8F0] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-stone-200 bg-stone-50/70 text-stone-500 dark:border-stone-800 dark:bg-stone-800/50">
+            <thead className="border-b border-[#E2E8F0] bg-[#F8FAFC] text-[#64748B] dark:border-[#1E2922] dark:bg-[#121713] dark:text-[#94A3B8]">
               <tr>
                 <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Rank</th>
                 <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Contributor</th>
@@ -54,36 +53,38 @@ export default function LeaderboardPage() {
                 <th className="px-5 py-3.5 font-bold uppercase tracking-wider text-right">Reputation Score</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
+            <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#1E2922]">
               {contributors.map((c) => (
-                <tr key={c.rank} className="hover:bg-stone-50/50 dark:hover:bg-stone-800/30 transition">
-                  <td className="px-5 py-4 font-bold text-stone-900 dark:text-stone-100">
+                <tr key={c.rank} className="hover:bg-[#F8FAFC] dark:hover:bg-[#121713]/60 transition">
+                  <td className="px-5 py-4 font-bold text-[#090A0B] dark:text-[#F8FAFC]">
                     <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs ${
-                      c.rank === 1 ? "bg-amber-100 text-amber-700 font-black" :
-                      c.rank === 2 ? "bg-stone-200 text-stone-700" :
-                      c.rank === 3 ? "bg-amber-50 text-amber-800" : "text-stone-400"
+                      c.rank === 1 ? "bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] font-black" :
+                      c.rank === 2 ? "bg-[#E2E8F0] text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC]" :
+                      c.rank === 3 ? "bg-[#10B981]/10 text-[#059669] dark:text-[#10B981]" : "text-[#64748B]"
                     }`}>
                       {c.rank}
                     </span>
                   </td>
                   <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-stone-900 dark:text-stone-100">{c.name}</span>
-                      {c.verified && (
-                        <span title="Verified Educator">
-                          <CheckCircle2 className="h-3.5 w-3.5 text-amber-500" />
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-2xs text-stone-400">@{c.username} • {c.role}</span>
+                    <Link href={`/u/${c.username}`} className="group inline-block">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-semibold text-[#090A0B] group-hover:text-[#10B981] dark:text-[#F8FAFC] transition">{c.name}</span>
+                        {c.verified && (
+                          <span title="Verified Educator">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-2xs text-[#64748B] dark:text-[#94A3B8]">@{c.username} • {c.role}</span>
+                    </Link>
                   </td>
-                  <td className="px-5 py-4 text-stone-600 dark:text-stone-400">
+                  <td className="px-5 py-4 text-[#475569] dark:text-[#94A3B8]">
                     {c.institution}
                   </td>
-                  <td className="px-5 py-4 text-center font-medium text-stone-700 dark:text-stone-300">
+                  <td className="px-5 py-4 text-center font-medium text-[#090A0B] dark:text-[#F8FAFC]">
                     {c.approvedNotes}
                   </td>
-                  <td className="px-5 py-4 text-right font-bold text-amber-600 dark:text-amber-400">
+                  <td className="px-5 py-4 text-right font-bold text-[#059669] dark:text-[#10B981]">
                     {c.score} pts
                   </td>
                 </tr>

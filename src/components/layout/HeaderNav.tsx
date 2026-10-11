@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/brand/Logo";
+import { ThemeToggle } from "./ThemeToggle";
 import { 
   Search, 
   Upload, 
@@ -75,7 +76,9 @@ export function HeaderNav({ session }: HeaderNavProps) {
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <ThemeToggle />
+
           <Link
             href="/explore"
             className="flex items-center justify-center p-2 text-[#64748B] hover:text-[#090A0B] hover:bg-stone-100 rounded-lg dark:text-[#94A3B8] dark:hover:text-[#F8FAFC] dark:hover:bg-[#1E2922] transition"

@@ -41,34 +41,37 @@ export default async function ClassOverviewPage({ params }: ClassOverviewPagePro
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-6">
         <Link
-          href="/explore"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-stone-500 hover:text-stone-900 transition"
+          href="/classes"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#10B981] dark:text-[#94A3B8] transition"
         >
-          <ArrowLeft className="h-4 w-4" /> All Resources
+          <ArrowLeft className="h-4 w-4" /> All Classes
         </Link>
       </div>
 
-      <div className="mb-8 flex items-center gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/10 text-amber-600 ring-1 ring-amber-500/20">
+      <div className="mb-8 flex items-center gap-3.5">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#10B981]/10 text-[#10B981] ring-1 ring-[#10B981]/20">
           <GraduationCap className="h-6 w-6" />
         </div>
         <div>
-          <h1 className="text-3xl font-extrabold text-stone-900 dark:text-stone-100">
+          <h1 className="text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
             {targetClass.name}
           </h1>
-          <p className="text-xs text-stone-500 mt-1">
+          <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">
             Kerala State Board Curriculum • SCERT / DHSE
           </p>
         </div>
       </div>
 
       <div className="space-y-6">
-        <div className="flex items-center justify-between text-xs text-stone-500">
+        <div className="flex items-center justify-between text-xs text-[#64748B] dark:text-[#94A3B8]">
           <span>Available learning materials ({classResources.length})</span>
+          <Link href={`/explore?class=${targetClass.slug}`} className="font-semibold text-[#10B981] hover:underline">
+            Filter by subject in Explore →
+          </Link>
         </div>
 
         {classResources.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-stone-300 p-12 text-center text-xs text-stone-500">
+          <div className="rounded-2xl border border-dashed border-[#E2E8F0] p-12 text-center text-xs text-[#64748B] dark:border-[#1E2922] dark:text-[#94A3B8]">
             No materials uploaded for this class yet. Be the first teacher or student to contribute!
           </div>
         ) : (
