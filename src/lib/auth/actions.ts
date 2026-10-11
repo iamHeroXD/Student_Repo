@@ -197,6 +197,8 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
     const passwordHash = await bcrypt.hash(password, 10);
     const newUserId = crypto.randomUUID();
 
+    const hasStream = targetClass === "plus-one" || targetClass === "plus-two";
+
     const newUser: StoredUser = {
       id: newUserId,
       username,
@@ -205,9 +207,10 @@ export async function registerAction(formData: FormData): Promise<AuthResult> {
       role: safeRole,
       is_active: true,
       full_name: fullName,
+      avatar_url: null,
       verification_status: "none",
       target_class: targetClass || null,
-      target_stream: targetStream || null,
+      target_stream: hasStream ? (targetStream || "science") : null,
       education_board: educationBoard,
       institution_name: institutionName || null,
       reputation_score: 10,
@@ -273,13 +276,17 @@ export async function uploadResourceAction(formData: FormData): Promise<AuthResu
   const title = (formData.get("title") as string)?.trim();
   const description = (formData.get("description") as string)?.trim();
   const classId = (formData.get("classId") as string) || "plus-two";
-  const streamId = (formData.get("streamId") as string) || "science";
+  const rawStreamId = (formData.get("streamId") as string) || "science";
+  const streamId = classId === "plus-one" || classId === "plus-two" ? rawStreamId : null;
   const subjectId = (formData.get("subjectId") as string) || `${classId}-general`;
   const resourceTypeId = (formData.get("resourceTypeId") as string) || "notes";
   const language = (formData.get("language") as string) || "English";
   const authorName = (formData.get("authorName") as string)?.trim() || session.fullName;
   const institution = (formData.get("institution") as string)?.trim() || "";
   const pageCount = Math.max(1, parseInt((formData.get("pageCount") as string) || "1", 10) || 1);
+  const quickNotes = (formData.get("quickNotes") as string)?.trim() || null;
+  const pyqAnalysis = (formData.get("pyqAnalysis") as string)?.trim() || null;
+  const examPredictions = (formData.get("examPredictions") as string)?.trim() || null;
 
   if (!file || file.size === 0) {
     return { success: false, error: "Please select a valid PDF file to upload." };
@@ -358,11 +365,15 @@ export async function uploadResourceAction(formData: FormData): Promise<AuthResu
       author_name: authorName,
       school_or_institution: institution || uploaderUser?.institution_name || undefined,
       rights_declaration: "Authorized for open educational use on Student_Repo.",
+      quick_notes: quickNotes,
+      pyq_analysis: pyqAnalysis,
+      exam_predictions: examPredictions,
       uploader_id: session.userId,
       uploader: {
         id: session.userId,
         username: session.username,
         full_name: uploaderUser?.full_name || session.fullName,
+        avatar_url: uploaderUser?.avatar_url || null,
         role: uploaderUser?.role || session.role,
         verification_status: uploaderUser?.verification_status || session.verificationStatus,
         reputation_score: uploaderUser?.reputation_score || 10,
@@ -785,3 +796,115 @@ export async function manageUserAdminAction(formData: FormData): Promise<void> {
   revalidatePath("/leaderboard");
   revalidatePath(`/u/${user.username}`);
 }
+
+/**
+ * Update User Profile Picture (PFP), Display Name & Bio
+ */
+export async function updateUserProfileAction(
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  const session = await getCurrentSession();
+  if (!session) {
+    return { success: false, error: "Please sign in to update your profile." };
+  }
+
+  const avatarDataUrl = (formData.get("avatarDataUrl") as string)?.trim() || "";
+  const fullName = (formData.get("fullName") as string)?.trim();
+  const bio = (formData.get("bio") as string)?.trim();
+
+  if (avatarDataUrl && avatarDataUrl.length > 450_000) {
+    return { success: false, error: "Profile picture is too large. Please choose a smaller image." };
+  }
+
+  try {
+    const state = await loadPlatformState();
+    const user = state.users.find(
+      (u) => u.username_normalized === session.username.toLowerCase()
+    );
+    if (!user) {
+      return { success: false, error: "Account not found." };
+    }
+
+    if (avatarDataUrl === "__CLEAR__") {
+      user.avatar_url = null;
+    } else if (avatarDataUrl) {
+      user.avatar_url = avatarDataUrl;
+    }
+
+    if (fullName && fullName.length >= 2) {
+      user.full_name = fullName;
+    }
+    if (typeof bio === "string") {
+      user.bio = bio.slice(0, 240);
+    }
+
+    // Propagate updated avatar and name to all resources uploaded by this user
+    for (const res of state.customResources) {
+      if (
+        res.uploader_id === user.id ||
+        res.uploader?.username.toLowerCase() === user.username_normalized
+      ) {
+        if (res.uploader) {
+          res.uploader.avatar_url = user.avatar_url || null;
+          res.uploader.full_name = user.full_name;
+        }
+      }
+    }
+
+    await savePlatformState(state);
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/u/${user.username}`);
+    revalidatePath("/leaderboard");
+    revalidatePath("/explore");
+    revalidatePath("/");
+
+    return { success: true };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Failed to update profile";
+    return { success: false, error: message };
+  }
+}
+
+/**
+ * Save Quick Notes, Previous Year (PYQ) Analysis & Exam Predictions for a PDF Resource
+ */
+export async function saveResourceStudyNotesAction(
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  const session = await getCurrentSession();
+  if (!session) {
+    return { success: false, error: "Sign in to contribute study notes & predictions." };
+  }
+
+  const resourceId = (formData.get("resourceId") as string)?.trim();
+  const quickNotes = (formData.get("quickNotes") as string)?.trim() || null;
+  const pyqAnalysis = (formData.get("pyqAnalysis") as string)?.trim() || null;
+  const examPredictions = (formData.get("examPredictions") as string)?.trim() || null;
+
+  if (!resourceId) {
+    return { success: false, error: "Missing resource ID." };
+  }
+
+  try {
+    const state = await loadPlatformState();
+    const res = state.customResources.find((r) => r.id === resourceId);
+    if (!res) {
+      return { success: false, error: "Resource not found." };
+    }
+
+    res.quick_notes = quickNotes;
+    res.pyq_analysis = pyqAnalysis;
+    res.exam_predictions = examPredictions;
+    res.updated_at = new Date().toISOString();
+
+    await savePlatformState(state);
+
+    revalidatePath(`/resource/${res.slug}`);
+    return { success: true };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Could not save study notes";
+    return { success: false, error: message };
+  }
+}
+

@@ -1,4 +1,4 @@
-import { Award, CheckCircle2, Upload, Users } from "lucide-react";
+import { Award, CheckCircle2, Upload, Users, User } from "lucide-react";
 import Link from "next/link";
 import { loadPlatformState } from "@/lib/supabase/persistence";
 
@@ -27,6 +27,7 @@ export default async function LeaderboardPage() {
       return {
         username: u.username,
         name: u.full_name,
+        avatar_url: u.avatar_url || null,
         role:
           u.role === "teacher"
             ? "Educator"
@@ -44,7 +45,7 @@ export default async function LeaderboardPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:py-10 sm:px-6 lg:px-8 animate-fade-up">
       <div className="mb-6">
-        <div className="clay-pill inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-white px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] dark:bg-[#0F1310] dark:text-[#10B981] mb-2.5">
+        <div className="clay-pill inline-flex items-center gap-1.5 rounded-full border border-[#2FB617]/25 bg-white px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#259212] dark:bg-[#0F1310] dark:text-[#2FB617] mb-2.5">
           <Award className="h-3.5 w-3.5" /> Top Contributors
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F4EEE2] tracking-tight">
@@ -57,7 +58,7 @@ export default async function LeaderboardPage() {
 
       {rankedContributors.length === 0 ? (
         <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-8 sm:p-10 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="animate-float-slow clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-[#10B981]/12 text-[#10B981] mx-auto mb-2.5 ring-1 ring-[#10B981]/20">
+          <div className="animate-float-slow clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2FB617]/12 text-[#2FB617] mx-auto mb-2.5 ring-1 ring-[#2FB617]/20">
             <Users className="h-5 w-5" />
           </div>
           <h3 className="text-sm font-bold text-[#090A0B] dark:text-[#F4EEE2]">
@@ -69,15 +70,15 @@ export default async function LeaderboardPage() {
           <div className="mt-4 flex flex-col sm:flex-row justify-center gap-2.5">
             <Link
               href="/register"
-              className="clay-btn inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition"
+              className="clay-btn inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition"
             >
               Create Account
             </Link>
             <Link
               href="/upload"
-              className="clay-pill inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2] transition"
+              className="clay-pill inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2] transition"
             >
-              <Upload className="h-3.5 w-3.5 text-[#10B981]" />
+              <Upload className="h-3.5 w-3.5 text-[#2FB617]" />
               Upload PDF
             </Link>
           </div>
@@ -92,25 +93,36 @@ export default async function LeaderboardPage() {
                 <Link
                   key={c.username}
                   href={`/u/${c.username}`}
-                  className="flex items-center justify-between rounded-2xl border border-[#D8CEBE] bg-white p-4 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+                  className="clay-card flex items-center justify-between rounded-2xl border border-[#D8CEBE] bg-white p-4 dark:border-[#1E2922] dark:bg-[#0F1310]"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                         rank === 1
-                          ? "bg-[#10B981]/15 text-[#059669] dark:text-[#10B981]"
+                          ? "bg-[#2FB617]/15 text-[#259212] dark:text-[#2FB617]"
                           : "bg-[#E5DEC9] text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC]"
                       }`}
                     >
                       #{rank}
                     </span>
+                    {c.avatar_url ? (
+                      <img
+                        src={c.avatar_url}
+                        alt={c.name}
+                        className="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-[#2FB617]/30"
+                      />
+                    ) : (
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2FB617]/10 text-[#2FB617]">
+                        <User className="h-4 w-4" />
+                      </div>
+                    )}
                     <div className="min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className="font-semibold text-xs text-[#090A0B] dark:text-[#F8FAFC] truncate">
                           {c.name}
                         </span>
                         {c.verified && (
-                          <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981] shrink-0" />
+                          <CheckCircle2 className="h-3.5 w-3.5 text-[#2FB617] shrink-0" />
                         )}
                       </div>
                       <span className="block text-2xs text-[#64748B] dark:text-[#94A3B8] truncate">
@@ -119,7 +131,7 @@ export default async function LeaderboardPage() {
                     </div>
                   </div>
                   <div className="text-right shrink-0 ml-2">
-                    <span className="block text-xs font-extrabold text-[#10B981]">
+                    <span className="block text-xs font-extrabold text-[#2FB617]">
                       {c.score} pts
                     </span>
                     <span className="text-[10px] text-[#64748B] dark:text-[#94A3B8]">
@@ -132,7 +144,7 @@ export default async function LeaderboardPage() {
           </div>
 
           {/* Tablet & Desktop Table View */}
-          <div className="hidden sm:block rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="clay-card hidden sm:block rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden dark:border-[#1E2922] dark:bg-[#0F1310]">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="border-b border-[#D8CEBE] bg-[#E8DFCE] text-[#64748B] dark:border-[#1E2922] dark:bg-[#121713] dark:text-[#94A3B8]">
@@ -153,11 +165,11 @@ export default async function LeaderboardPage() {
                           <span
                             className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs ${
                               rank === 1
-                                ? "bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] font-black"
+                                ? "bg-[#2FB617]/15 text-[#259212] dark:text-[#2FB617] font-black"
                                 : rank === 2
                                 ? "bg-[#D8CEBE] text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC]"
                                 : rank === 3
-                                ? "bg-[#10B981]/10 text-[#059669] dark:text-[#10B981]"
+                                ? "bg-[#2FB617]/10 text-[#259212] dark:text-[#2FB617]"
                                 : "text-[#64748B]"
                             }`}
                           >
@@ -165,20 +177,33 @@ export default async function LeaderboardPage() {
                           </span>
                         </td>
                         <td className="px-5 py-4">
-                          <Link href={`/u/${c.username}`} className="group inline-block">
-                            <div className="flex items-center gap-1.5">
-                              <span className="font-semibold text-[#090A0B] group-hover:text-[#10B981] dark:text-[#F8FAFC] transition">
-                                {c.name}
-                              </span>
-                              {c.verified && (
-                                <span title="Verified Educator">
-                                  <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
+                          <Link href={`/u/${c.username}`} className="group inline-flex items-center gap-2.5">
+                            {c.avatar_url ? (
+                              <img
+                                src={c.avatar_url}
+                                alt={c.name}
+                                className="h-8 w-8 rounded-full object-cover ring-1 ring-[#2FB617]/30 shrink-0"
+                              />
+                            ) : (
+                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#2FB617]/10 text-[#2FB617] shrink-0">
+                                <User className="h-4 w-4" />
+                              </div>
+                            )}
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-semibold text-[#090A0B] group-hover:text-[#2FB617] dark:text-[#F8FAFC] transition">
+                                  {c.name}
                                 </span>
-                              )}
+                                {c.verified && (
+                                  <span title="Verified Educator">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-[#2FB617]" />
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-2xs text-[#64748B] dark:text-[#94A3B8]">
+                                @{c.username} • {c.role}
+                              </span>
                             </div>
-                            <span className="text-2xs text-[#64748B] dark:text-[#94A3B8]">
-                              @{c.username} • {c.role}
-                            </span>
                           </Link>
                         </td>
                         <td className="px-5 py-4 text-[#475569] dark:text-[#94A3B8]">
@@ -187,7 +212,7 @@ export default async function LeaderboardPage() {
                         <td className="px-5 py-4 text-center font-medium text-[#090A0B] dark:text-[#F8FAFC]">
                           {c.approvedNotes}
                         </td>
-                        <td className="px-5 py-4 text-right font-bold text-[#059669] dark:text-[#10B981]">
+                        <td className="px-5 py-4 text-right font-bold text-[#259212] dark:text-[#2FB617]">
                           {c.score} pts
                         </td>
                       </tr>
@@ -202,3 +227,4 @@ export default async function LeaderboardPage() {
     </div>
   );
 }
+

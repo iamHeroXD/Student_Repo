@@ -8,7 +8,7 @@ export const metadata = {
 export default function GuidelinesPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-[#10B981]/10 px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] dark:text-[#10B981] mb-4">
+      <div className="inline-flex items-center gap-1.5 rounded-full border border-[#2FB617]/25 bg-[#2FB617]/10 px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#259212] dark:text-[#2FB617] mb-4">
         Academic Integrity
       </div>
       <h1 className="text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">

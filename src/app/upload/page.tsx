@@ -24,7 +24,7 @@ export default async function UploadPage() {
 
       {!session ? (
         <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-7 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/12 text-[#10B981] mx-auto mb-3">
+          <div className="clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/12 text-[#2FB617] mx-auto mb-3">
             <Lock className="h-5 w-5" />
           </div>
           <h2 className="text-base font-bold text-[#090A0B] dark:text-[#F4EEE2]">
@@ -36,14 +36,14 @@ export default async function UploadPage() {
           <div className="mt-5 flex justify-center gap-2.5">
             <Link
               href="/login"
-              className="clay-btn inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition"
+              className="clay-btn inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition"
             >
               <LogIn className="h-3.5 w-3.5" />
               Sign In
             </Link>
             <Link
               href="/register"
-              className="clay-pill inline-flex items-center rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition"
+              className="clay-pill inline-flex items-center rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] transition"
             >
               Register
             </Link>

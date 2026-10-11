@@ -69,8 +69,8 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
           onClick={handleSave}
           className={`flex items-center justify-center gap-1.5 rounded-xl border py-2.5 font-semibold transition active:scale-[0.98] ${
             saved
-              ? "border-[#10B981] bg-[#10B981]/10 text-[#059669] dark:text-[#10B981]"
-              : "border-[#D8CEBE] bg-white text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713]"
+              ? "border-[#2FB617] bg-[#2FB617]/10 text-[#259212] dark:text-[#2FB617]"
+              : "border-[#D8CEBE] bg-white text-[#090A0B] hover:border-[#2FB617]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713]"
           }`}
         >
           <Bookmark className={`h-4 w-4 ${saved ? "fill-current" : ""}`} />
@@ -78,12 +78,12 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
         </button>
         <button
           onClick={handleShare}
-          className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white py-2.5 font-semibold text-[#090A0B] hover:border-[#10B981]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition active:scale-[0.98]"
+          className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white py-2.5 font-semibold text-[#090A0B] hover:border-[#2FB617]/50 hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] dark:hover:bg-[#121713] transition active:scale-[0.98]"
         >
           {copied ? (
             <>
-              <Check className="h-4 w-4 text-[#10B981]" />
-              <span className="text-[#10B981]">Copied Link</span>
+              <Check className="h-4 w-4 text-[#2FB617]" />
+              <span className="text-[#2FB617]">Copied Link</span>
             </>
           ) : (
             <>
@@ -111,8 +111,8 @@ export function ResourceActions({ resourceId, slug }: ResourceActionsProps) {
               <Star
                 className={`h-5 w-5 ${
                   star <= selectedStar
-                    ? "fill-[#10B981] text-[#10B981]"
-                    : "text-[#94A3B8] hover:text-[#10B981]"
+                    ? "fill-[#2FB617] text-[#2FB617]"
+                    : "text-[#94A3B8] hover:text-[#2FB617]"
                 }`}
               />
             </button>

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getResourceBySlug } from "@/lib/supabase/persistence";
+import { getCurrentSession } from "@/lib/auth/session";
 import { DocumentPreview } from "@/components/resources/DocumentPreview";
+import { ResourceStudyCompanion } from "@/components/resources/ResourceStudyCompanion";
 import { formatFileSize, formatDate } from "@/lib/utils";
 import { ResourceActions } from "@/components/resources/ResourceActions";
 import Link from "next/link";
@@ -31,7 +33,10 @@ export async function generateMetadata({ params }: ResourceDetailPageProps) {
 
 export default async function ResourceDetailPage({ params }: ResourceDetailPageProps) {
   const resolved = await params;
-  const resource = await getResourceBySlug(resolved.slug);
+  const [resource, sessionUser] = await Promise.all([
+    getResourceBySlug(resolved.slug),
+    getCurrentSession(),
+  ]);
 
   if (!resource) {
     notFound();
@@ -42,13 +47,18 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
     : "Unrated";
 
   const contributorUsername = resource.uploader?.username || "studentrepo_admin";
+  const showStreamBadge =
+    (resource.class_id === "plus-one" || resource.class_id === "plus-two") &&
+    Boolean(resource.stream_id);
+
+  const canEditInsights = Boolean(sessionUser);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 animate-fade-up">
       <div className="mb-6">
         <Link
           href="/explore"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#10B981] dark:text-[#94A3B8] transition"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#2FB617] dark:text-[#94A3B8] transition"
         >
           <ArrowLeft className="h-4 w-4" /> Back to library
         </Link>
@@ -62,10 +72,10 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
               <span className="rounded-lg bg-[#E5DEC9] px-2.5 py-1 text-xs font-semibold text-[#090A0B] dark:bg-[#1E2922] dark:text-[#F8FAFC] capitalize">
                 {resource.class_id.replace("-", " ")}
               </span>
-              <span className="rounded-lg bg-[#10B981]/10 px-2.5 py-1 text-xs font-semibold text-[#059669] ring-1 ring-[#10B981]/20 dark:text-[#10B981] capitalize">
+              <span className="rounded-lg bg-[#2FB617]/10 px-2.5 py-1 text-xs font-semibold text-[#259212] ring-1 ring-[#2FB617]/20 dark:text-[#2FB617] capitalize">
                 {resource.resource_type_id.replace("-", " ")}
               </span>
-              {resource.stream_id && (
+              {showStreamBadge && (
                 <span className="rounded-lg bg-[#E5DEC9] px-2.5 py-1 text-xs font-medium text-[#64748B] dark:bg-[#1E2922] dark:text-[#94A3B8] capitalize">
                   {resource.stream_id} Stream
                 </span>
@@ -94,8 +104,22 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
             downloadAllowed={resource.download_allowed}
           />
 
+          {/* Quick Notes, Previous Year (PYQ) Analysis & Exam Predictions */}
+          <ResourceStudyCompanion
+            resourceId={resource.id}
+            slug={resource.slug}
+            title={resource.title}
+            classId={resource.class_id}
+            subjectId={resource.subject_id}
+            resourceTypeId={resource.resource_type_id}
+            quickNotes={resource.quick_notes}
+            pyqAnalysis={resource.pyq_analysis}
+            examPredictions={resource.exam_predictions}
+            canEdit={canEditInsights}
+          />
+
           {/* Attribution & Rights Statement */}
-          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-2">
               Attribution & Rights Declaration
             </h3>
@@ -112,11 +136,11 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
 
         {/* Sidebar Information & Actions */}
         <div className="space-y-6">
-          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-4 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <div className="flex items-center justify-between pb-3 border-b border-[#D8CEBE] dark:border-[#1E2922]">
               <span className="text-xs font-semibold text-[#64748B] dark:text-[#94A3B8]">Document Rating</span>
               <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-[#10B981] text-[#10B981]" />
+                <Star className="h-4 w-4 fill-[#2FB617] text-[#2FB617]" />
                 <span className="font-bold text-sm text-[#090A0B] dark:text-[#F8FAFC]">{avgRating}</span>
                 <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">({resource.ratings_count} votes)</span>
               </div>
@@ -126,22 +150,30 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
           </div>
 
           {/* Contributor Card */}
-          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-3">
               Contributor Profile
             </h3>
             <Link href={`/u/${contributorUsername}`} className="flex items-center gap-3 group">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#10B981]/10 text-[#10B981]">
-                <User className="h-5 w-5" />
-              </div>
+              {resource.uploader?.avatar_url ? (
+                <img
+                  src={resource.uploader.avatar_url}
+                  alt={resource.author_name || resource.uploader?.full_name || contributorUsername}
+                  className="h-11 w-11 rounded-full object-cover ring-2 ring-[#2FB617]/30 shrink-0"
+                />
+              ) : (
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#2FB617]/10 text-[#2FB617] shrink-0">
+                  <User className="h-5 w-5" />
+                </div>
+              )}
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-semibold text-sm text-[#090A0B] group-hover:text-[#10B981] dark:text-[#F8FAFC] transition">
+                  <span className="font-semibold text-sm text-[#090A0B] group-hover:text-[#2FB617] dark:text-[#F8FAFC] transition">
                     {resource.author_name || resource.uploader?.full_name}
                   </span>
                   {resource.uploader?.verification_status === "verified" && (
                     <span title="Verified Contributor">
-                      <CheckCircle2 className="h-4 w-4 text-[#10B981]" />
+                      <CheckCircle2 className="h-4 w-4 text-[#2FB617]" />
                     </span>
                   )}
                 </div>
@@ -153,7 +185,7 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
           </div>
 
           {/* Metadata Specs Card */}
-          <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-3 dark:border-[#1E2922] dark:bg-[#0F1310] text-xs">
+          <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-5 space-y-3 dark:border-[#1E2922] dark:bg-[#0F1310] text-xs">
             <h3 className="font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8] mb-2">
               Document Specifications
             </h3>
@@ -193,3 +225,4 @@ export default async function ResourceDetailPage({ params }: ResourceDetailPageP
     </div>
   );
 }
+

@@ -68,7 +68,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                   }`}
                 >
                   {isActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#2FB617]" />
                   )}
                   {item.label}
                 </Link>
@@ -91,9 +91,9 @@ export function HeaderNav({ session }: HeaderNavProps) {
 
           <Link
             href="/upload"
-            className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] shadow-2xs hover:bg-[#E8DFCE] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#151C17] transition active:scale-98"
+            className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3.5 py-2 text-xs font-semibold text-[#090A0B] shadow-2xs hover:bg-[#E8DFCE] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] dark:hover:bg-[#151C17] transition active:scale-98"
           >
-            <Upload className="h-3.5 w-3.5 text-[#10B981]" />
+            <Upload className="h-3.5 w-3.5 text-[#2FB617]" />
             Upload PDF
           </Link>
 
@@ -102,7 +102,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               {(session.role === "admin" || session.role === "moderator") && (
                 <Link
                   href="/admin"
-                  className="hidden sm:inline-flex items-center gap-1 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-2 text-xs font-semibold text-emerald-600 dark:text-[#10B981] hover:bg-emerald-500/20 transition active:scale-98"
+                  className="hidden sm:inline-flex items-center gap-1 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-2 text-xs font-semibold text-emerald-600 dark:text-[#2FB617] hover:bg-emerald-500/20 transition active:scale-98"
                 >
                   <ShieldCheck className="h-3.5 w-3.5" />
                   <span className="hidden lg:inline">Admin</span>
@@ -110,7 +110,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               )}
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#0A0D0B] px-3 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-[#1E2922] dark:bg-[#10B981] dark:text-[#0A0D0B] dark:hover:bg-[#059669] transition active:scale-98"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#0A0D0B] px-3 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-[#1E2922] dark:bg-[#2FB617] dark:text-[#0A0D0B] dark:hover:bg-[#259212] transition active:scale-98"
               >
                 <User className="h-3.5 w-3.5 shrink-0" />
                 <span className="max-w-[75px] sm:max-w-[110px] truncate">{session.username}</span>
@@ -120,13 +120,13 @@ export function HeaderNav({ session }: HeaderNavProps) {
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 href="/login"
-                className="hidden sm:inline-flex text-xs font-semibold text-[#090A0B] hover:text-[#10B981] dark:text-[#F8FAFC] dark:hover:text-[#10B981] px-2.5 py-2 transition"
+                className="hidden sm:inline-flex text-xs font-semibold text-[#090A0B] hover:text-[#2FB617] dark:text-[#F8FAFC] dark:hover:text-[#2FB617] px-2.5 py-2 transition"
               >
                 Log In
               </Link>
               <Link
                 href="/register"
-                className="inline-flex items-center justify-center rounded-xl bg-[#10B981] px-3 sm:px-3.5 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] transition active:scale-98"
+                className="inline-flex items-center justify-center rounded-xl bg-[#2FB617] px-3 sm:px-3.5 py-2 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] transition active:scale-98"
               >
                 Join Free
               </Link>
@@ -154,7 +154,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
-              <BookOpen className="h-4 w-4 text-[#10B981] shrink-0" />
+              <BookOpen className="h-4 w-4 text-[#2FB617] shrink-0" />
               Explore Library
             </Link>
             <Link
@@ -162,7 +162,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
-              <GraduationCap className="h-4 w-4 text-[#10B981] shrink-0" />
+              <GraduationCap className="h-4 w-4 text-[#2FB617] shrink-0" />
               Curriculum & Classes
             </Link>
             <Link
@@ -170,7 +170,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
-              <FileText className="h-4 w-4 text-[#10B981] shrink-0" />
+              <FileText className="h-4 w-4 text-[#2FB617] shrink-0" />
               Question Papers Archive
             </Link>
             <Link
@@ -178,7 +178,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
-              <Calendar className="h-4 w-4 text-[#10B981] shrink-0" />
+              <Calendar className="h-4 w-4 text-[#2FB617] shrink-0" />
               Personal Study Planner
             </Link>
             <Link
@@ -186,7 +186,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-[#E8DFCE] hover:text-[#090A0B] dark:hover:bg-[#121713] dark:hover:text-[#F8FAFC] transition"
             >
-              <Award className="h-4 w-4 text-[#10B981] shrink-0" />
+              <Award className="h-4 w-4 text-[#2FB617] shrink-0" />
               Contributor Leaderboard
             </Link>
 
@@ -194,7 +194,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
               <Link
                 href="/upload"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-[#10B981] py-3 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] transition"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#2FB617] py-3 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] transition"
               >
                 <Upload className="h-4 w-4" />
                 Upload PDF Material
@@ -207,14 +207,14 @@ export function HeaderNav({ session }: HeaderNavProps) {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
-                    <LayoutDashboard className="h-3.5 w-3.5 text-[#10B981]" />
+                    <LayoutDashboard className="h-3.5 w-3.5 text-[#2FB617]" />
                     Dashboard
                   </Link>
                   {(session.role === "admin" || session.role === "moderator") ? (
                     <Link
                       href="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center gap-1.5 rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 py-2.5 text-xs font-semibold text-[#059669] dark:text-[#10B981] transition"
+                      className="flex items-center justify-center gap-1.5 rounded-xl border border-[#2FB617]/30 bg-[#2FB617]/10 py-2.5 text-xs font-semibold text-[#259212] dark:text-[#2FB617] transition"
                     >
                       <ShieldCheck className="h-3.5 w-3.5" />
                       Admin Console
@@ -225,7 +225,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                     >
-                      <User className="h-3.5 w-3.5 text-[#10B981]" />
+                      <User className="h-3.5 w-3.5 text-[#2FB617]" />
                       Profile
                     </Link>
                   )}
@@ -237,7 +237,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
-                    <LogIn className="h-3.5 w-3.5 text-[#10B981]" />
+                    <LogIn className="h-3.5 w-3.5 text-[#2FB617]" />
                     Log In
                   </Link>
                   <Link
@@ -245,7 +245,7 @@ export function HeaderNav({ session }: HeaderNavProps) {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-2.5 text-xs font-semibold text-[#090A0B] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F8FAFC] transition"
                   >
-                    <UserPlus className="h-3.5 w-3.5 text-[#10B981]" />
+                    <UserPlus className="h-3.5 w-3.5 text-[#2FB617]" />
                     Register
                   </Link>
                 </div>

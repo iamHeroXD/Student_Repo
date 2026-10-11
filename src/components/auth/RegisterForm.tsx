@@ -14,9 +14,12 @@ interface RegisterFormProps {
 
 export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedClass, setSelectedClass] = useState("plus-two");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  const showStream = selectedClass === "plus-one" || selectedClass === "plus-two";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,6 +28,9 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
     const formData = new FormData(e.currentTarget);
     formData.set("role", isTeacher ? "teacher" : "student");
+    if (!showStream) {
+      formData.delete("targetStream");
+    }
     const res = await registerAction(formData);
 
     if (!res.success) {
@@ -37,22 +43,22 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-10 sm:py-12 sm:px-6">
-      <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
+    <div className="mx-auto max-w-md px-4 py-8 sm:py-10 sm:px-6 animate-fade-up">
+      <div className="flex flex-col items-center text-center mb-6">
         <Link href="/">
           <Logo size="lg" showWordmark={false} />
         </Link>
-        <h1 className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] mt-4 tracking-tight">
+        <h1 className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F4EEE2] mt-3.5 tracking-tight">
           {isTeacher ? "Create Teacher Account" : "Create Student Account"}
         </h1>
-        <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1 max-w-sm">
-          No email address or phone number required. Your privacy is respected.
+        <p className="text-xs text-[#5C574F] dark:text-[#94A3B8] mt-1">
+          Username & password only • No email or phone required
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl border border-[#D8CEBE] bg-white p-5 sm:p-6 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]"
+        className="clay-card space-y-4 rounded-2xl border border-[#D8CEBE] bg-white p-5 sm:p-6 dark:border-[#1E2922] dark:bg-[#0F1310]"
       >
         {error && (
           <div className="flex items-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/25 p-3 text-xs text-rose-600 dark:text-rose-400">
@@ -63,11 +69,11 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
 
         {/* Username */}
         <div>
-          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
-            Choose Username
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F4EEE2]">
+            Username
           </label>
           <div className="relative mt-1.5">
-            <User className="absolute left-3.5 top-3.5 h-4 w-4 text-[#64748B]" />
+            <User className="absolute left-3.5 top-3.5 h-4 w-4 text-[#5C574F]" />
             <input
               type="text"
               name="username"
@@ -77,38 +83,37 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               maxLength={24}
               autoCapitalize="none"
               autoCorrect="off"
-              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#8C8375] focus:border-[#2FB617] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
             />
           </div>
-          <span className="text-2xs text-[#64748B] dark:text-[#94A3B8] mt-1 block">
-            3–24 characters: letters, numbers, and underscores only.
-          </span>
         </div>
 
         {/* Display Name */}
         <div>
-          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
-            Full Name or Display Name
+          <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F4EEE2]">
+            Full Name
           </label>
           <input
             type="text"
             name="fullName"
-            placeholder="Enter your full name"
+            placeholder="Enter your name"
             required
-            className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#8C8375] focus:border-[#2FB617] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
           />
         </div>
 
-        {/* Class Selection for Student */}
+        {/* Class Selection for Student (Stream only appears for Plus One & Plus Two) */}
         {!isTeacher && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div className={`grid grid-cols-1 ${showStream ? "sm:grid-cols-2" : ""} gap-3.5`}>
             <div>
-              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
+              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F4EEE2]">
                 Academic Class
               </label>
               <select
                 name="targetClass"
-                className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                value={selectedClass}
+                onChange={(e) => setSelectedClass(e.target.value)}
+                className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
               >
                 {siteConfig.supportedClasses.map((c) => (
                   <option key={c.id} value={c.slug}>
@@ -118,21 +123,26 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               </select>
             </div>
 
-            <div>
-              <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC]">
-                Stream
-              </label>
-              <select
-                name="targetStream"
-                className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
-              >
-                {siteConfig.streams.map((s) => (
-                  <option key={s.id} value={s.slug}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {showStream && (
+              <div className="animate-fade-in">
+                <label className="text-xs font-semibold text-[#090A0B] dark:text-[#F4EEE2]">
+                  Stream (HSE)
+                </label>
+                <select
+                  name="targetStream"
+                  defaultValue="science"
+                  className="w-full mt-1.5 rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] p-3 text-base sm:text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
+                >
+                  {siteConfig.streams
+                    .filter((s) => s.slug !== "general")
+                    .map((s) => (
+                      <option key={s.id} value={s.slug}>
+                        {s.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
           </div>
         )}
 
@@ -148,7 +158,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
                 type="text"
                 name="institutionName"
                 placeholder="Enter school or institution name"
-                className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#2FB617] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
           </div>
@@ -167,7 +177,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               placeholder="Minimum 6 characters"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-10 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#2FB617] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
             <button
               type="button"
@@ -193,7 +203,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
               placeholder="Re-type password"
               required
               minLength={6}
-              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#10B981] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-[#E8DFCE] py-3 pl-10 pr-3 text-base sm:text-xs text-[#090A0B] placeholder:text-[#94A3B8] focus:border-[#2FB617] focus:bg-white focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
             />
           </div>
         </div>
@@ -201,7 +211,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-xl bg-[#10B981] py-3 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] disabled:opacity-50 transition active:scale-[0.99]"
+          className="w-full rounded-xl bg-[#2FB617] py-3 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] disabled:opacity-50 transition active:scale-[0.99]"
         >
           {loading ? "Creating Account..." : "Create Account"}
         </button>
@@ -211,7 +221,7 @@ export function RegisterForm({ isTeacher = false }: RegisterFormProps) {
             Already registered?{" "}
             <Link
               href={isTeacher ? "/teacher/login" : "/login"}
-              className="font-semibold text-[#10B981] hover:underline"
+              className="font-semibold text-[#2FB617] hover:underline"
             >
               Log in with username
             </Link>

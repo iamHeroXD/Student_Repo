@@ -49,7 +49,7 @@ export function SearchHero({
     <div className="w-full max-w-2xl flex flex-col items-center">
       <form onSubmit={handleSearch} className="w-full relative group">
         <div className="relative flex items-center">
-          <Search className="absolute left-3.5 sm:left-4.5 h-4.5 w-4.5 sm:h-5 sm:w-5 text-[#5C574F] group-focus-within:text-[#10B981] group-focus-within:scale-110 transition-all duration-200 pointer-events-none" />
+          <Search className="absolute left-3.5 sm:left-4.5 h-4.5 w-4.5 sm:h-5 sm:w-5 text-[#5C574F] group-focus-within:text-[#2FB617] group-focus-within:scale-110 transition-all duration-200 pointer-events-none" />
           
           <input
             ref={inputRef}
@@ -57,7 +57,7 @@ export function SearchHero({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className="clay-input w-full rounded-2xl border border-[#D8CEBE] bg-white py-3.5 sm:py-4 pl-10 sm:pl-12 pr-28 sm:pr-36 text-base sm:text-sm text-[#090A0B] placeholder:text-[#8C8375] hover:border-[#B8AC99] focus:border-[#10B981] focus:outline-none focus:ring-4 focus:ring-emerald-500/12 dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] dark:placeholder:text-[#64748B] dark:hover:border-[#2C3D32] dark:focus:border-[#10B981] dark:focus:ring-emerald-500/15 transition-all duration-200"
+            className="clay-input w-full rounded-2xl border border-[#D8CEBE] bg-white py-3.5 sm:py-4 pl-10 sm:pl-12 pr-28 sm:pr-36 text-base sm:text-sm text-[#090A0B] placeholder:text-[#8C8375] hover:border-[#B8AC99] focus:border-[#2FB617] focus:outline-none focus:ring-4 focus:ring-emerald-500/12 dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] dark:placeholder:text-[#64748B] dark:hover:border-[#2C3D32] dark:focus:border-[#2FB617] dark:focus:ring-emerald-500/15 transition-all duration-200"
           />
 
           {!query && (
@@ -79,7 +79,7 @@ export function SearchHero({
 
           <button
             type="submit"
-            className="clay-btn-dark absolute right-2 top-2 bottom-2 sm:right-2.5 sm:top-2.5 sm:bottom-2.5 inline-flex items-center gap-1.5 rounded-xl bg-[#090A0B] px-3.5 sm:px-4.5 text-xs font-semibold text-white hover:bg-[#10B981] active:scale-96 dark:bg-[#10B981] dark:text-[#090A0B] dark:hover:bg-[#059669] dark:hover:text-white transition-all duration-200"
+            className="clay-btn-dark absolute right-2 top-2 bottom-2 sm:right-2.5 sm:top-2.5 sm:bottom-2.5 inline-flex items-center gap-1.5 rounded-xl bg-[#090A0B] px-3.5 sm:px-4.5 text-xs font-semibold text-white hover:bg-[#2FB617] active:scale-96 dark:bg-[#2FB617] dark:text-[#090A0B] dark:hover:bg-[#259212] dark:hover:text-white transition-all duration-200"
           >
             <span>Search</span>
             <ArrowRight className="hidden sm:inline h-3.5 w-3.5" />
@@ -90,14 +90,14 @@ export function SearchHero({
       {/* Suggested quick chips */}
       <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 text-2xs text-[#5C574F] dark:text-[#94A3B8]">
         <span className="flex items-center gap-1 text-[#8C8375] mr-0.5">
-          <Sparkles className="h-3 w-3 text-[#10B981] animate-pulse-subtle" /> Quick:
+          <Sparkles className="h-3 w-3 text-[#2FB617] animate-pulse-subtle" /> Quick:
         </span>
         {["Plus Two Physics", "SSLC Maths", "Biology Notes", "Question Papers"].map((chip) => (
           <button
             key={chip}
             type="button"
             onClick={() => handleQuickSuggestion(chip)}
-            className="clay-pill rounded-full border border-[#D8CEBE] bg-white px-2.5 py-1 text-2xs font-medium text-[#090A0B] hover:-translate-y-0.5 hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition-all duration-200 active:scale-95"
+            className="clay-pill rounded-full border border-[#D8CEBE] bg-white px-2.5 py-1 text-2xs font-medium text-[#090A0B] hover:-translate-y-0.5 hover:border-[#2FB617] hover:text-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#F4EEE2] dark:hover:border-[#2FB617] dark:hover:text-[#2FB617] transition-all duration-200 active:scale-95"
           >
             {chip}
           </button>

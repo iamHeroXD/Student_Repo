@@ -9,7 +9,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <div className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-[#10B981] mb-3">
+      <div className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-[#2FB617] mb-3">
         <FileCheck className="h-3.5 w-3.5" /> Platform Terms
       </div>
       <h1 className="text-3xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC]">

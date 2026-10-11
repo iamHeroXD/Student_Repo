@@ -39,14 +39,14 @@ export default async function ClassOverviewPage({ params }: ClassOverviewPagePro
       <div className="mb-6">
         <Link
           href="/classes"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#10B981] dark:text-[#94A3B8] transition"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#2FB617] dark:text-[#94A3B8] transition"
         >
           <ArrowLeft className="h-4 w-4" /> All Classes
         </Link>
       </div>
 
       <div className="mb-8 flex items-center gap-3.5">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#10B981]/10 text-[#10B981] ring-1 ring-[#10B981]/20">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2FB617]/10 text-[#2FB617] ring-1 ring-[#2FB617]/20">
           <GraduationCap className="h-6 w-6" />
         </div>
         <div>
@@ -62,7 +62,7 @@ export default async function ClassOverviewPage({ params }: ClassOverviewPagePro
       <div className="space-y-6">
         <div className="flex items-center justify-between text-xs text-[#64748B] dark:text-[#94A3B8]">
           <span>Available learning materials ({classResources.length})</span>
-          <Link href={`/explore?class=${targetClass.slug}`} className="font-semibold text-[#10B981] hover:underline">
+          <Link href={`/explore?class=${targetClass.slug}`} className="font-semibold text-[#2FB617] hover:underline">
             Filter in Explore →
           </Link>
         </div>
@@ -72,7 +72,7 @@ export default async function ClassOverviewPage({ params }: ClassOverviewPagePro
             <p>No materials uploaded for {targetClass.name} yet.</p>
             <Link
               href="/upload"
-              className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-semibold text-white hover:bg-[#059669] transition"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-semibold text-white hover:bg-[#259212] transition"
             >
               <Upload className="h-3.5 w-3.5" />
               Upload PDF for {targetClass.name}

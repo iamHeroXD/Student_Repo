@@ -38,12 +38,12 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
       title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#D8CEBE] bg-white text-[#64748B] hover:border-[#10B981] hover:text-[#10B981] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8] dark:hover:border-[#10B981] dark:hover:text-[#10B981] transition active:scale-90"
+      className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#D8CEBE] bg-white text-[#64748B] hover:border-[#2FB617] hover:text-[#2FB617] dark:border-[#1E2922] dark:bg-[#0F1310] dark:text-[#94A3B8] dark:hover:border-[#2FB617] dark:hover:text-[#2FB617] transition active:scale-90"
     >
       {theme === "light" ? (
         <Moon className="h-4 w-4" />
       ) : (
-        <Sun className="h-4 w-4 text-[#10B981]" />
+        <Sun className="h-4 w-4 text-[#2FB617]" />
       )}
     </button>
   );

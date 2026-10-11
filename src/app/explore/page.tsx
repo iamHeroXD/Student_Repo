@@ -89,7 +89,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
 
           {resources.length === 0 ? (
             <div className="clay-card flex flex-col items-center justify-center rounded-2xl border border-[#D8CEBE] bg-white p-9 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-              <div className="animate-float-slow clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-[#10B981]/12 text-[#10B981] mb-2.5 ring-1 ring-[#10B981]/20">
+              <div className="animate-float-slow clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2FB617]/12 text-[#2FB617] mb-2.5 ring-1 ring-[#2FB617]/20">
                 <BookOpen className="h-5 w-5" />
               </div>
               <h3 className="font-bold text-[#090A0B] dark:text-[#F4EEE2] text-sm">
@@ -102,7 +102,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
               </p>
               <Link
                 href="/upload"
-                className="clay-btn mt-3.5 inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition-all active:scale-96"
+                className="clay-btn mt-3.5 inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition-all active:scale-96"
               >
                 <Upload className="h-3.5 w-3.5" />
                 Upload PDF

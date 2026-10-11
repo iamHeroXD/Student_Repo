@@ -38,7 +38,7 @@ export default async function TeacherVerificationPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <div className="text-center mb-8">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/15 text-[#10B981] mx-auto mb-3">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2FB617]/15 text-[#2FB617] mx-auto mb-3">
           <Award className="h-6 w-6" />
         </div>
         <h1 className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
@@ -53,13 +53,13 @@ export default async function TeacherVerificationPage() {
         <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#E8DFCE] border border-[#D8CEBE] text-xs text-[#090A0B] dark:bg-[#0A0D0B] dark:border-[#1E2922] dark:text-[#F8FAFC]">
           <div className="flex items-center gap-2.5">
             {currentStatus === "verified" ? (
-              <CheckCircle2 className="h-5 w-5 text-[#10B981] shrink-0" />
+              <CheckCircle2 className="h-5 w-5 text-[#2FB617] shrink-0" />
             ) : (
-              <Clock className="h-5 w-5 text-[#10B981] shrink-0" />
+              <Clock className="h-5 w-5 text-[#2FB617] shrink-0" />
             )}
             <div>
               <strong>Current Status: </strong>
-              <span className="capitalize font-semibold text-[#10B981]">
+              <span className="capitalize font-semibold text-[#2FB617]">
                 {currentStatus === "none"
                   ? "Unverified (Standard Contributor)"
                   : currentStatus}
@@ -68,15 +68,15 @@ export default async function TeacherVerificationPage() {
           </div>
           <Link
             href="/dashboard"
-            className="text-2xs font-semibold text-[#64748B] hover:text-[#10B981]"
+            className="text-2xs font-semibold text-[#64748B] hover:text-[#2FB617]"
           >
             Dashboard →
           </Link>
         </div>
 
         {currentStatus === "verified" ? (
-          <div className="rounded-xl border border-[#10B981]/30 bg-[#10B981]/10 p-5 text-center">
-            <h3 className="text-sm font-bold text-[#059669] dark:text-[#10B981]">
+          <div className="rounded-xl border border-[#2FB617]/30 bg-[#2FB617]/10 p-5 text-center">
+            <h3 className="text-sm font-bold text-[#259212] dark:text-[#2FB617]">
               Your Educator Account is Verified!
             </h3>
             <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-1">
@@ -95,7 +95,7 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.school_name || userRecord?.institution_name || ""}
                 placeholder="e.g. Govt Higher Secondary School, Kozhikode"
                 required
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -109,7 +109,7 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.subject_specialization || ""}
                 placeholder="e.g. Higher Secondary Physics / Mathematics"
                 required
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -123,7 +123,7 @@ export default async function TeacherVerificationPage() {
                 defaultValue={existingReq?.experience_years || 3}
                 min={1}
                 required
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -135,7 +135,7 @@ export default async function TeacherVerificationPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-[#10B981] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] transition"
+              className="w-full rounded-xl bg-[#2FB617] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] transition"
             >
               {existingReq?.status === "pending"
                 ? "Update Verification Request"

@@ -68,10 +68,10 @@ export function MobileBottomNav({ session }: MobileBottomNavProps) {
                 href={item.href}
                 className="flex flex-col items-center justify-center -mt-3"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#10B981] text-white shadow-md shadow-[#10B981]/25 active:scale-95 transition">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2FB617] text-white shadow-md shadow-[#2FB617]/25 active:scale-95 transition">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="mt-0.5 text-[10px] font-bold text-[#10B981]">
+                <span className="mt-0.5 text-[10px] font-bold text-[#2FB617]">
                   {item.label}
                 </span>
               </Link>
@@ -84,7 +84,7 @@ export function MobileBottomNav({ session }: MobileBottomNavProps) {
               href={item.href}
               className={`flex flex-col items-center justify-center gap-1 py-1.5 transition active:scale-95 ${
                 item.active
-                  ? "text-[#10B981] font-bold"
+                  ? "text-[#2FB617] font-bold"
                   : "text-[#64748B] dark:text-[#94A3B8] font-medium"
               }`}
             >

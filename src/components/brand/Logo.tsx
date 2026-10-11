@@ -35,7 +35,7 @@ export function Logo({ className = "", size = "md", showWordmark = true }: LogoP
         {/* Emerald Green Folder Tab */}
         <path
           d="M4 14C4 11.7909 5.79086 10 8 10H19.5L24 15H40C42.2091 15 44 16.7909 44 19V22H4V14Z"
-          fill="#10B981"
+          fill="#2FB617"
         />
 
         {/* White inner document paper preview layer */}
@@ -53,7 +53,7 @@ export function Logo({ className = "", size = "md", showWordmark = true }: LogoP
         {/* Emerald Bookmark cutout ribbon */}
         <path
           d="M31 18V29L35 26.5L39 29V18H31Z"
-          fill="#10B981"
+          fill="#2FB617"
         />
       </svg>
 

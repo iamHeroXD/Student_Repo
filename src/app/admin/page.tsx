@@ -58,7 +58,7 @@ export default async function AdminDashboardPage() {
         <div className="mt-6 flex justify-center gap-3">
           <Link
             href="/login"
-            className="rounded-xl bg-[#10B981] px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#059669] transition"
+            className="rounded-xl bg-[#2FB617] px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#259212] transition"
           >
             Sign In with Admin Account
           </Link>
@@ -109,7 +109,7 @@ export default async function AdminDashboardPage() {
       {/* Top Admin Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D8CEBE] pb-6 dark:border-[#1E2922]">
         <div className="flex items-center gap-3.5">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/25">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2FB617]/15 text-[#2FB617] border border-[#2FB617]/25">
             <ShieldCheck className="h-6 w-6" />
           </div>
           <div>
@@ -117,12 +117,12 @@ export default async function AdminDashboardPage() {
               <h1 className="text-2xl font-extrabold text-[#090A0B] dark:text-[#F8FAFC] tracking-tight">
                 Security & Moderation Console
               </h1>
-              <span className="rounded-full bg-[#10B981]/15 px-2.5 py-0.5 text-2xs font-bold text-[#059669] dark:text-[#10B981] uppercase">
+              <span className="rounded-full bg-[#2FB617]/15 px-2.5 py-0.5 text-2xs font-bold text-[#259212] dark:text-[#2FB617] uppercase">
                 {session.role} • Vault Unlocked
               </span>
             </div>
             <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mt-0.5">
-              Operator: @{session.username} • Connected to Supabase (<code className="text-[#10B981]">qqiljphntcyvcyadskmc</code>)
+              Operator: @{session.username} • Connected to Supabase (<code className="text-[#2FB617]">qqiljphntcyvcyadskmc</code>)
             </p>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default async function AdminDashboardPage() {
         <div className="flex flex-wrap items-center gap-2.5">
           <Link
             href="/upload"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-semibold text-white hover:bg-[#059669] transition"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#2FB617] px-4 py-2 text-xs font-semibold text-white hover:bg-[#259212] transition"
           >
             <Upload className="h-3.5 w-3.5" />
             Upload & Publish PDF
@@ -164,14 +164,14 @@ export default async function AdminDashboardPage() {
 
         <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Pending PDF Review</span>
-          <div className="text-2xl font-extrabold text-[#10B981] mt-1">
+          <div className="text-2xl font-extrabold text-[#2FB617] mt-1">
             {pendingResources}
           </div>
         </div>
 
         <div className="rounded-2xl border border-[#D8CEBE] bg-white p-5 shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">Teacher Verifications</span>
-          <div className="text-2xl font-extrabold text-[#10B981] mt-1">
+          <div className="text-2xl font-extrabold text-[#2FB617] mt-1">
             {pendingVerifications} pending
           </div>
         </div>
@@ -190,7 +190,7 @@ export default async function AdminDashboardPage() {
           <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
             PDF Submissions & Moderation Queue ({resources.length})
           </span>
-          <Link href="/upload" className="text-2xs font-semibold text-[#10B981] hover:underline">
+          <Link href="/upload" className="text-2xs font-semibold text-[#2FB617] hover:underline">
             + Upload New PDF
           </Link>
         </div>
@@ -215,7 +215,7 @@ export default async function AdminDashboardPage() {
                 {resources.map((res) => (
                   <tr key={res.id} className="hover:bg-[#E8DFCE] dark:hover:bg-[#121713]/60 transition">
                     <td className="px-5 py-3.5 font-semibold text-[#090A0B] dark:text-[#F8FAFC] max-w-xs truncate">
-                      <Link href={`/resource/${res.slug}`} className="hover:text-[#10B981] transition">
+                      <Link href={`/resource/${res.slug}`} className="hover:text-[#2FB617] transition">
                         {res.title}
                       </Link>
                     </td>
@@ -227,7 +227,7 @@ export default async function AdminDashboardPage() {
                     </td>
                     <td className="px-5 py-3.5">
                       {res.status === "approved" ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[#10B981]/15 px-2.5 py-0.5 text-2xs font-bold text-[#059669] dark:text-[#10B981] capitalize">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#2FB617]/15 px-2.5 py-0.5 text-2xs font-bold text-[#259212] dark:text-[#2FB617] capitalize">
                           <CheckCircle2 className="h-3 w-3" /> Approved
                         </span>
                       ) : res.status === "rejected" ? (
@@ -248,7 +248,7 @@ export default async function AdminDashboardPage() {
                             <input type="hidden" name="newStatus" value="approved" />
                             <button
                               type="submit"
-                              className="rounded-lg bg-[#10B981] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#059669] transition"
+                              className="rounded-lg bg-[#2FB617] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#259212] transition"
                             >
                               Approve
                             </button>
@@ -290,7 +290,7 @@ export default async function AdminDashboardPage() {
       {/* 2. Teacher Verification Queue */}
       <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
         <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
-          <Award className="h-4 w-4 text-[#10B981]" />
+          <Award className="h-4 w-4 text-[#2FB617]" />
           <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
             Educator Verification Requests ({state.verificationRequests.length})
           </span>
@@ -330,7 +330,7 @@ export default async function AdminDashboardPage() {
                       {req.subject_specialization} ({req.experience_years} yrs)
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="rounded-full bg-[#10B981]/10 px-2.5 py-0.5 text-2xs font-bold text-[#10B981] uppercase">
+                      <span className="rounded-full bg-[#2FB617]/10 px-2.5 py-0.5 text-2xs font-bold text-[#2FB617] uppercase">
                         {req.status}
                       </span>
                     </td>
@@ -342,7 +342,7 @@ export default async function AdminDashboardPage() {
                             <input type="hidden" name="decision" value="verified" />
                             <button
                               type="submit"
-                              className="rounded-lg bg-[#10B981] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#059669] transition"
+                              className="rounded-lg bg-[#2FB617] px-2.5 py-1 text-2xs font-semibold text-white hover:bg-[#259212] transition"
                             >
                               Verify Educator
                             </button>
@@ -375,7 +375,7 @@ export default async function AdminDashboardPage() {
         {/* Registered Accounts Directory & Role Controls */}
         <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
-            <Users className="h-4 w-4 text-[#10B981]" />
+            <Users className="h-4 w-4 text-[#2FB617]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
               User Accounts & Role Management ({state.users.length})
             </span>
@@ -390,12 +390,12 @@ export default async function AdminDashboardPage() {
                   <div className="flex items-center gap-1.5">
                     <Link
                       href={`/u/${u.username}`}
-                      className="font-semibold text-[#090A0B] hover:text-[#10B981] dark:text-[#F8FAFC]"
+                      className="font-semibold text-[#090A0B] hover:text-[#2FB617] dark:text-[#F8FAFC]"
                     >
                       {u.full_name}
                     </Link>
                     {u.verification_status === "verified" && (
-                      <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#2FB617]" />
                     )}
                     {!u.is_active && (
                       <span className="rounded bg-rose-500/15 px-1.5 py-0.5 text-2xs font-bold text-rose-600">
@@ -416,7 +416,7 @@ export default async function AdminDashboardPage() {
                         <input type="hidden" name="operation" value="make_teacher" />
                         <button
                           type="submit"
-                          className="rounded-lg border border-[#10B981]/30 bg-[#10B981]/10 px-2 py-1 text-2xs font-semibold text-[#059669] dark:text-[#10B981] hover:bg-[#10B981]/20 transition"
+                          className="rounded-lg border border-[#2FB617]/30 bg-[#2FB617]/10 px-2 py-1 text-2xs font-semibold text-[#259212] dark:text-[#2FB617] hover:bg-[#2FB617]/20 transition"
                         >
                           Verify Teacher
                         </button>
@@ -442,7 +442,7 @@ export default async function AdminDashboardPage() {
         {/* Immutable Security Audit Log */}
         <div className="rounded-2xl border border-[#D8CEBE] bg-white overflow-hidden shadow-2xs dark:border-[#1E2922] dark:bg-[#0F1310]">
           <div className="flex items-center gap-2 border-b border-[#D8CEBE] bg-[#E8DFCE] px-5 py-3.5 dark:border-[#1E2922] dark:bg-[#121713]">
-            <Activity className="h-4 w-4 text-[#10B981]" />
+            <Activity className="h-4 w-4 text-[#2FB617]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
               Security Audit Trail
             </span>
@@ -458,7 +458,7 @@ export default async function AdminDashboardPage() {
                     <span
                       className={`rounded px-1.5 py-0.5 text-2xs font-bold uppercase ${
                         log.status === "success"
-                          ? "bg-[#10B981]/15 text-[#059669] dark:text-[#10B981]"
+                          ? "bg-[#2FB617]/15 text-[#259212] dark:text-[#2FB617]"
                           : log.status === "blocked"
                           ? "bg-rose-500/15 text-rose-600 dark:text-rose-400"
                           : "bg-amber-500/15 text-amber-600 dark:text-amber-400"

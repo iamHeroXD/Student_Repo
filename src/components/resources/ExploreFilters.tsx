@@ -51,10 +51,10 @@ export function ExploreFilters() {
           className="flex flex-1 items-center justify-between lg:cursor-default text-left"
         >
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#090A0B] dark:text-[#F8FAFC]">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[#10B981]" />
+            <SlidersHorizontal className="h-3.5 w-3.5 text-[#2FB617]" />
             <span>Filter Library</span>
             {activeCount > 0 && (
-              <span className="rounded-full bg-[#10B981] px-2 py-0.5 text-2xs font-bold text-white">
+              <span className="rounded-full bg-[#2FB617] px-2 py-0.5 text-2xs font-bold text-white">
                 {activeCount}
               </span>
             )}
@@ -71,7 +71,7 @@ export function ExploreFilters() {
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="ml-3 flex items-center gap-1 text-2xs font-semibold text-[#10B981] hover:underline"
+            className="ml-3 flex items-center gap-1 text-2xs font-semibold text-[#2FB617] hover:underline"
           >
             <X className="h-3 w-3" />
             Reset
@@ -87,14 +87,26 @@ export function ExploreFilters() {
       >
         {/* Class Filter */}
         <div className="space-y-1.5">
-          <label className="text-2xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8]">
+          <label className="text-2xs font-bold uppercase tracking-wider text-[#5C574F] dark:text-[#94A3B8]">
             Academic Class
           </label>
           <select
             value={currentClass}
-            onChange={(e) => updateParam("class", e.target.value)}
+            onChange={(e) => {
+              const nextClass = e.target.value;
+              const params = new URLSearchParams(searchParams.toString());
+              if (nextClass === "all") {
+                params.delete("class");
+              } else {
+                params.set("class", nextClass);
+              }
+              if (nextClass !== "plus-one" && nextClass !== "plus-two") {
+                params.delete("stream");
+              }
+              router.push(`/explore?${params.toString()}`);
+            }}
             aria-label="Filter by Academic Class"
-            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
           >
             <option value="all">All Classes</option>
             {siteConfig.supportedClasses.map((c) => (
@@ -105,25 +117,29 @@ export function ExploreFilters() {
           </select>
         </div>
 
-        {/* Stream Filter */}
-        <div className="space-y-1.5">
-          <label className="text-2xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#94A3B8]">
-            Curriculum Stream
-          </label>
-          <select
-            value={currentStream}
-            onChange={(e) => updateParam("stream", e.target.value)}
-            aria-label="Filter by Subject Stream"
-            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
-          >
-            <option value="all">All Streams</option>
-            {siteConfig.streams.map((s) => (
-              <option key={s.id} value={s.slug}>
-                {s.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Stream Filter — ONLY shown when Plus One or Plus Two is selected */}
+        {(currentClass === "plus-one" || currentClass === "plus-two") && (
+          <div className="space-y-1.5 animate-fade-in">
+            <label className="text-2xs font-bold uppercase tracking-wider text-[#5C574F] dark:text-[#94A3B8]">
+              Stream (HSE)
+            </label>
+            <select
+              value={currentStream}
+              onChange={(e) => updateParam("stream", e.target.value)}
+              aria-label="Filter by Subject Stream"
+              className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2]"
+            >
+              <option value="all">All Streams</option>
+              {siteConfig.streams
+                .filter((s) => s.slug !== "general")
+                .map((s) => (
+                  <option key={s.id} value={s.slug}>
+                    {s.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
 
         {/* Resource Type */}
         <div className="space-y-1.5">
@@ -134,7 +150,7 @@ export function ExploreFilters() {
             value={currentType}
             onChange={(e) => updateParam("type", e.target.value)}
             aria-label="Filter by Resource Type"
-            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="all">All Material Types</option>
             {siteConfig.resourceTypes.map((t) => (
@@ -154,7 +170,7 @@ export function ExploreFilters() {
             value={currentSort}
             onChange={(e) => updateParam("sort", e.target.value)}
             aria-label="Sort Results"
-            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+            className="w-full rounded-xl border border-[#D8CEBE] bg-white px-3 py-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
           >
             <option value="popular">Most Relevant & Popular</option>
             <option value="recent">Recently Added</option>

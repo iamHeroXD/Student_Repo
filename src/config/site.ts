@@ -13,7 +13,7 @@ export const siteConfig = {
     copyright: "/copyright",
   },
   theme: {
-    primaryColor: "#10B981", // Emerald Green
+    primaryColor: "#2FB617", // Emerald Green
     primaryDark: "#0A0D0B",  // Deep Black
     surfaceBg: "#F1E9DB",    // Warm Parchment Cream
   },

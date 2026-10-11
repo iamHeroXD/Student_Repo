@@ -123,7 +123,7 @@ export default function StudyPlannerPage() {
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder="e.g. Revise Electrostatics derivations"
                 required
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
@@ -134,7 +134,7 @@ export default function StudyPlannerPage() {
               <select
                 value={newSubject}
                 onChange={(e) => setNewSubject(e.target.value)}
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               >
                 <option value="Biology">Biology</option>
                 <option value="Physics">Physics</option>
@@ -157,21 +157,21 @@ export default function StudyPlannerPage() {
                 type="date"
                 value={newDueDate}
                 onChange={(e) => setNewDueDate(e.target.value)}
-                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#10B981] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
+                className="w-full mt-1 rounded-xl border border-[#D8CEBE] p-2.5 text-xs text-[#090A0B] focus:border-[#2FB617] focus:outline-none dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-[#10B981] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] active:scale-98 transition"
+              className="w-full rounded-xl bg-[#2FB617] py-2.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] active:scale-98 transition"
             >
               Save Study Task
             </button>
           </form>
 
           {/* Customizable Exam Countdown Widget */}
-          <div className="rounded-2xl border border-[#10B981]/25 bg-[#10B981]/5 p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
-            <div className="flex items-center justify-between text-[#10B981] font-semibold text-xs mb-2">
+          <div className="rounded-2xl border border-[#2FB617]/25 bg-[#2FB617]/5 p-5 dark:border-[#1E2922] dark:bg-[#0F1310]">
+            <div className="flex items-center justify-between text-[#2FB617] font-semibold text-xs mb-2">
               <span className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" /> Exam Countdown
               </span>
@@ -212,7 +212,7 @@ export default function StudyPlannerPage() {
 
           {tasks.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-              <CalendarPlus className="h-9 w-9 text-[#10B981] mx-auto mb-2.5" />
+              <CalendarPlus className="h-9 w-9 text-[#2FB617] mx-auto mb-2.5" />
               <h4 className="text-sm font-bold text-[#090A0B] dark:text-[#F8FAFC]">
                 Your Study Planner is Empty
               </h4>
@@ -228,7 +228,7 @@ export default function StudyPlannerPage() {
                   className={`flex items-center justify-between rounded-2xl border p-4 transition duration-150 ${
                     task.completed
                       ? "border-[#D8CEBE] bg-[#E8DFCE] opacity-60 dark:border-[#1E2922] dark:bg-[#0A0D0B]"
-                      : "border-[#D8CEBE] bg-white shadow-2xs hover:border-[#10B981]/50 dark:border-[#1E2922] dark:bg-[#0F1310]"
+                      : "border-[#D8CEBE] bg-white shadow-2xs hover:border-[#2FB617]/50 dark:border-[#1E2922] dark:bg-[#0F1310]"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -237,10 +237,10 @@ export default function StudyPlannerPage() {
                       aria-label={
                         task.completed ? "Mark task incomplete" : "Mark task complete"
                       }
-                      className="text-[#94A3B8] hover:text-[#10B981] transition active:scale-90"
+                      className="text-[#94A3B8] hover:text-[#2FB617] transition active:scale-90"
                     >
                       {task.completed ? (
-                        <CheckCircle2 className="h-5 w-5 text-[#10B981]" />
+                        <CheckCircle2 className="h-5 w-5 text-[#2FB617]" />
                       ) : (
                         <Circle className="h-5 w-5" />
                       )}
@@ -257,7 +257,7 @@ export default function StudyPlannerPage() {
                         {task.title}
                       </h4>
                       <div className="flex items-center gap-2 text-2xs text-[#94A3B8] mt-1">
-                        <span className="font-medium text-[#10B981]">
+                        <span className="font-medium text-[#2FB617]">
                           {task.subject}
                         </span>
                         <span>•</span>

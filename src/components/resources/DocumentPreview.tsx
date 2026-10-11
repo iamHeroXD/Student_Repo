@@ -23,7 +23,7 @@ export function DocumentPreview({
       {/* Top Viewer Toolbar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#D8CEBE] bg-[#E8DFCE] px-4 py-3 dark:border-[#1E2922] dark:bg-[#121713] gap-3">
         <div className="flex items-center gap-2 text-xs font-semibold text-[#090A0B] dark:text-[#F8FAFC] min-w-0">
-          <FileText className="h-4 w-4 text-[#10B981] shrink-0" />
+          <FileText className="h-4 w-4 text-[#2FB617] shrink-0" />
           <span className="truncate">{title}</span>
           <span className="shrink-0 rounded-md bg-[#D8CEBE]/70 px-2 py-0.5 text-2xs text-[#64748B] dark:bg-[#1E2922] dark:text-[#94A3B8]">
             {pageCount} {pageCount === 1 ? "Page" : "Pages"}
@@ -35,9 +35,9 @@ export function DocumentPreview({
             href={inlinePdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3 py-2 sm:py-1.5 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] transition"
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-3 py-2 sm:py-1.5 text-xs font-semibold text-[#090A0B] hover:border-[#2FB617] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] transition"
           >
-            <ExternalLink className="h-3.5 w-3.5 text-[#10B981]" />
+            <ExternalLink className="h-3.5 w-3.5 text-[#2FB617]" />
             Open Full Tab
           </a>
 
@@ -45,7 +45,7 @@ export function DocumentPreview({
             <a
               href={downloadPdfUrl}
               download
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#10B981] px-3.5 py-2 sm:py-1.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#059669] active:scale-95 transition"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#2FB617] px-3.5 py-2 sm:py-1.5 text-xs font-semibold text-white shadow-2xs hover:bg-[#259212] active:scale-95 transition"
             >
               <Download className="h-3.5 w-3.5" />
               Download PDF

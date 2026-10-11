@@ -45,6 +45,10 @@ export interface Resource {
   school_or_institution?: string | null;
   rights_declaration: string;
   
+  quick_notes?: string | null;
+  pyq_analysis?: string | null;
+  exam_predictions?: string | null;
+  
   uploader_id: string;
   uploader?: Profile;
   status: ResourceStatus;

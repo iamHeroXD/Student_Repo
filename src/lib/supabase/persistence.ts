@@ -13,6 +13,8 @@ export interface StoredUser {
   role: "student" | "teacher" | "admin" | "moderator";
   is_active: boolean;
   full_name: string;
+  avatar_url?: string | null;
+  bio?: string | null;
   verification_status: "none" | "pending" | "verified" | "rejected" | "revoked";
   target_class?: string | null;
   target_stream?: string | null;
