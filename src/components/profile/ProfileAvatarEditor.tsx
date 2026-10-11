@@ -14,10 +14,6 @@ interface ProfileAvatarEditorProps {
 
 const PRESET_AVATARS = [
   {
-    label: "Repo Owl Mascot",
-    url: "/brand/mascot.png",
-  },
-  {
     label: "Forest Scholar",
     url: `data:image/svg+xml;utf8,${encodeURIComponent(
       `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="28" fill="#090A0B"/><circle cx="60" cy="46" r="20" fill="#2FB617"/><path d="M26 102c6-20 20-30 34-30s28 10 34 30" fill="#2FB617"/></svg>`

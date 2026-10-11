@@ -33,10 +33,6 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
-  icons: {
-    icon: "/brand/mascot.png",
-    apple: "/brand/mascot.png",
-  },
 };
 
 export default function RootLayout({
