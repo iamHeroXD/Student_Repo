@@ -43,41 +43,41 @@ export default async function LeaderboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:py-10 sm:px-6 lg:px-8 animate-fade-up">
-      <div className="mb-6 sm:mb-8">
-        <div className="inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-white px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] shadow-2xs dark:bg-[#0F1310] dark:text-[#10B981] mb-3">
-          <Award className="h-3.5 w-3.5" /> Quality Recognition System
+      <div className="mb-6">
+        <div className="clay-pill inline-flex items-center gap-1.5 rounded-full border border-[#10B981]/25 bg-white px-3 py-1 text-2xs font-bold uppercase tracking-wider text-[#059669] dark:bg-[#0F1310] dark:text-[#10B981] mb-2.5">
+          <Award className="h-3.5 w-3.5" /> Top Contributors
         </div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#090A0B] dark:text-[#F4EEE2] tracking-tight">
-          Academic Leaderboard
+          Leaderboard
         </h1>
-        <p className="text-xs sm:text-sm text-[#5C574F] dark:text-[#94A3B8] mt-1.5 max-w-2xl">
-          Rankings are calculated dynamically from real contributor accounts, approved PDF study materials (+50 pts), and student star ratings.
+        <p className="text-xs text-[#5C574F] dark:text-[#94A3B8] mt-0.5">
+          Live rankings from approved PDF uploads (+50 pts) and ratings.
         </p>
       </div>
 
       {rankedContributors.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-[#D8CEBE] bg-white p-8 sm:p-12 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
-          <div className="animate-float-slow flex h-12 w-12 items-center justify-center rounded-2xl bg-[#10B981]/12 text-[#10B981] mx-auto mb-3 ring-1 ring-[#10B981]/20">
-            <Users className="h-6 w-6" />
+        <div className="clay-card rounded-2xl border border-[#D8CEBE] bg-white p-8 sm:p-10 text-center dark:border-[#1E2922] dark:bg-[#0F1310]">
+          <div className="animate-float-slow clay-pill flex h-11 w-11 items-center justify-center rounded-2xl bg-[#10B981]/12 text-[#10B981] mx-auto mb-2.5 ring-1 ring-[#10B981]/20">
+            <Users className="h-5 w-5" />
           </div>
           <h3 className="text-sm font-bold text-[#090A0B] dark:text-[#F4EEE2]">
-            No Contributor Rankings Yet
+            No Contributors Yet
           </h3>
-          <p className="text-xs text-[#5C574F] dark:text-[#94A3B8] mt-1 max-w-md mx-auto">
-            Create a student or teacher account and upload verified study materials to appear on the official leaderboard.
+          <p className="text-xs text-[#5C574F] dark:text-[#94A3B8] mt-0.5">
+            Upload your first PDF to claim the #1 spot.
           </p>
-          <div className="mt-5 flex flex-col sm:flex-row justify-center gap-2.5 sm:gap-3">
+          <div className="mt-4 flex flex-col sm:flex-row justify-center gap-2.5">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#059669] transition"
+              className="clay-btn inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#10B981] px-4 py-2 text-xs font-bold text-[#090A0B] hover:text-white transition"
             >
               Create Account
             </Link>
             <Link
               href="/upload"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2.5 text-xs font-semibold text-[#090A0B] hover:bg-[#E8DFCE] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F8FAFC] transition"
+              className="clay-pill inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#D8CEBE] bg-white px-4 py-2 text-xs font-semibold text-[#090A0B] hover:border-[#10B981] dark:border-[#1E2922] dark:bg-[#0A0D0B] dark:text-[#F4EEE2] transition"
             >
-              <Upload className="h-3.5 w-3.5" />
+              <Upload className="h-3.5 w-3.5 text-[#10B981]" />
               Upload PDF
             </Link>
           </div>

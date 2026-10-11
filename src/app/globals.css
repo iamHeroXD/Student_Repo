@@ -131,20 +131,95 @@ a, button, input, select, textarea {
   background-size: 22px 22px;
 }
 
-/* Interactive Minimalist Card Lift */
-.card-interactive {
+/* Minimalist Claymorphism Surfaces & Interactive Lift */
+.card-interactive,
+.clay-card {
+  background: var(--card-bg);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 10px 24px -8px rgba(9, 10, 11, 0.07),
+    0 2px 6px -1px rgba(9, 10, 11, 0.04),
+    inset 0 2px 3px rgba(255, 255, 255, 0.75),
+    inset 0 -3px 6px rgba(196, 183, 160, 0.35);
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
               border-color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card-interactive:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px -10px rgba(9, 10, 11, 0.08), 0 4px 10px -4px rgba(16, 185, 129, 0.06);
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 32px -10px rgba(9, 10, 11, 0.11),
+    0 4px 12px -2px rgba(16, 185, 129, 0.09),
+    inset 0 2px 4px rgba(255, 255, 255, 0.85),
+    inset 0 -3px 6px rgba(16, 185, 129, 0.12);
+}
+
+.dark .card-interactive,
+.dark .clay-card {
+  background: var(--card-bg);
+  box-shadow:
+    0 12px 26px -8px rgba(0, 0, 0, 0.55),
+    inset 0 1.5px 2.5px rgba(255, 255, 255, 0.06),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.55);
 }
 
 .dark .card-interactive:hover {
-  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.55), 0 4px 12px -4px rgba(16, 185, 129, 0.12);
+  box-shadow:
+    0 18px 34px -10px rgba(0, 0, 0, 0.7),
+    0 4px 14px -3px rgba(16, 185, 129, 0.16),
+    inset 0 1.5px 3px rgba(16, 185, 129, 0.18),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.65);
+}
+
+.clay-pill {
+  box-shadow:
+    0 4px 10px -3px rgba(9, 10, 11, 0.06),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px rgba(196, 183, 160, 0.35);
+}
+
+.dark .clay-pill {
+  box-shadow:
+    0 4px 12px -3px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.07),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.clay-btn {
+  box-shadow:
+    0 8px 18px -5px rgba(16, 185, 129, 0.32),
+    inset 0 2px 3px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.22);
+}
+
+.clay-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow:
+    0 12px 22px -5px rgba(16, 185, 129, 0.42),
+    inset 0 2px 3px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.25);
+}
+
+.clay-btn-dark {
+  box-shadow:
+    0 8px 18px -5px rgba(9, 10, 11, 0.25),
+    inset 0 1.5px 2.5px rgba(255, 255, 255, 0.18),
+    inset 0 -3px 5px rgba(0, 0, 0, 0.45);
+}
+
+.clay-input {
+  box-shadow:
+    0 6px 18px -6px rgba(9, 10, 11, 0.06),
+    inset 0 2px 4px rgba(196, 183, 160, 0.25),
+    inset 0 -1.5px 2px rgba(255, 255, 255, 0.7);
+}
+
+.dark .clay-input {
+  box-shadow:
+    0 8px 20px -6px rgba(0, 0, 0, 0.45),
+    inset 0 2px 4px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.05);
 }
 
 /* Minimalist Scrollbar */
